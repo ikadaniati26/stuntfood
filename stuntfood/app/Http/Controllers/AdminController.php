@@ -63,21 +63,88 @@ class AdminController extends Controller
    
     public function edit($id)
     {
-       $data = DataMakanan::find($id);
-       return view('formEdit', compact('data'));
+       $data = DataMakanan::all()->first();
+       return view('website.admin.formEdit', compact('data'));
     }
     
     public function update(Request $request, $id)
     {
-        $data = DataMakanan::find($id);
-        $data->update($request->all());
-        return redirect()->route('prosesadmin')->with('success', 'Data berhasil diupdate');
+        $paket = $request->paket;
+        $waktu_makan = $request->waktu_makan;
+        $nama_makanan = $request->nama_makanan;
+        $protein = $request->protein;
+        $lemak = $request->lemak;
+        $karbohidrat = $request->karbohidrat;
+
+        DataMakanan::where('idData_makanan', $id)->update([
+            'paket'=> $paket,
+            'waktu_makan' => $waktu_makan,
+            'nama_makanan'=> $nama_makanan,
+            'protein' => $protein,
+            'lemak' => $lemak,
+            'karbohidrat' => $karbohidrat
+        ]);
+        return redirect('datamakananadmin')->with('success', 'Data berhasil diupdate');
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete($id)
     {
-        //
+        DataMakanan::where('idData_makanan', $id)->delete();
+        return redirect('datamakananadmin')->with('success', 'Data berhasil dihapus');
     }
+    
+    public function submitForm(Request $request)
+    {
+        $validatedData = $request->validate([
+        ]);
+    
+        // Simpan data ke dalam database
+        $data = new DataMakanan(); 
+        $data->waktu_makan = $request->waktu_makan; // Contoh pengaturan atribut 'nama'
+        $data->paket = $request->paket; 
+        $data->nama_makanan = $request->nama_makanan;
+        $data->protein = $request->protein;
+        $data->karbohidrat = $request->karbohidrat;
+        $data->lemak = $request->lemak;
+        $data->energi = $request->energi;
+        
+        // Contoh pengaturan atribut 'alamat'
+        // Lanjutkan hingga semua atribut yang ingin Anda simpan telah ditetapkan
+    
+        // Simpan data ke dalam database
+        $data->save();
+    
+        // Berikan respons
+      //  return response()->json(['success' => true]);
+       // Redirect ke halaman yang sesuai
+       return redirect()->back()->with('success', 'Data berhasil disimpan.');
+    }
+
+    public function prosesForm(Request $request)
+    {
+        // Validasi data formulir jika diperlukan
+        $request->validate([
+            // Atur validasi sesuai kebutuhan Anda
+        ]);
+
+        // Looping data formulir yang diterima
+        foreach ($request->waktu_makan as $key => $value) {
+            // Simpan data ke dalam database menggunakan model
+            DataMakanan::create([
+                'waktu_makan' => $request->waktu_makan[$key],
+                'paket' => $request->paket[$key],
+                'nama_makanan' => $request->nama_makanan[$key],
+                'protein' => $request->protein[$key],
+                'lemak' => $request->lemak[$key],
+                'karbohidrat' => $request->karbohidrat[$key],
+                'energi' => $request->energi[$key],
+            ]);
+        }
+
+        // Redirect ke halaman yang sesuai
+        return redirect()->back()->with('success', 'Data berhasil disimpan.');
+    }
+    
 }

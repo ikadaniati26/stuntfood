@@ -1,112 +1,118 @@
 @extends('website.main.index')
 
 @section('content')
-<div class="card mt-3 mb-5 mx-5">
-    <div class="card-body">
-        <h5 class="card-title">#Form Input Makan Pagi</h5>
-        <form action="{{ route('prosesadmin') }}" method="post" id="dynamicForm">
-            @csrf
-            <div id="formContainer">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="waktu_makan" class="form-label">Waktu Makan</label>
-                                <select class="form-control" name="waktu_makan[]">
-                                    <option value="makan_pagi">Makan Pagi</option>
-                                    <option value="makan_siang">Makan Siang</option>
-                                    <option value="makan_malam">Makan Malam</option>
-                                    <option value="selingan_pagi">Selingan Pagi</option>
-                                    <option value="selingan_sore">Selingan Sore</option> 
-                                </select>
+    <form action="{{ route('prosesadmin') }}" method="post">
+        @csrf
+        <div class="container mt-3 mb-3">
+
+            @if(session("success"))
+            <div class="alert alert-success">
+              {{session("success")}}
+            </div>
+          @endif
+          
+            <div class="card mt-1  shadow" id="cardTemplate">
+                <div class="card-body">
+                    <div class="form-group form-template ">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold">#Form Input Data</h5>
+                            <button type="button" class="btn btn-danger btn-sm removeForm"
+                                style="width: 40px; height: 40px;"><i class="fas fa-times"
+                                    style="color: rgb(255, 255, 255);"></i></button>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="waktu_makan" class="form-label">Waktu Makan</label>
+                                    <select class="form-control" name="waktu_makan[]">
+                                        <option value="makanpagi">Makan Pagi</option>
+                                        <option value="makansiang">Makan Siang</option>
+                                        <option value="makanmalam">Makan Malam</option>
+                                        <option value="selinganpagi">Selingan Pagi</option>
+                                        <option value="selingansore">Selingan Sore</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="paket" class="form-label">Paket</label>
+                                    <select class="form-control" name="paket[]">
+                                        <option value="A">Paket A</option>
+                                        <option value="B">Paket B</option>
+                                        <option value="C">Paket C</option>
+                                        <option value="D">Paket D</option>
+                                        <option value="E">Paket E</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nama_makanan" class="form-label">Nama Makanan</label>
+                                    <input type="text" class="form-control" name="nama_makanan[]">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="protein" class="form-label">Protein</label>
+                                    <input type="text" class="form-control" name="protein[]">
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="paket" class="form-label">Paket</label>
-                                <select class="form-control" name="paket[]">
-                                    <option value="A">Paket A</option>
-                                    <option value="B">Paket B</option>
-                                    <option value="C">Paket C</option>
-                                    <option value="D">Paket D</option>
-                                    <option value="E">Paket E</option> 
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nama_makanan" class="form-label">Nama Makanan</label>
-                                <input type="text" class="form-control" name="nama_makanan[]">
-                            </div>
-                            <div class="mb-3">
-                                <label for="protein" class="form-label">Protein</label>
-                                <input type="text" class="form-control" name="protein[]">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="lemak" class="form-label">Lemak</label>
+                                    <input type="text" class="form-control" name="lemak[]">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="karbohidrat" class="form-label">Karbohidrat</label>
+                                    <input type="text" class="form-control" name="karbohidrat[]">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="energi" class="form-label">Energi</label>
+                                    <input type="text" class="form-control" name="energi[]">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="lemak" class="form-label">Lemak</label>
-                                <input type="text" class="form-control" name="lemak[]">
-                            </div>
-                            <div class="mb-3">
-                                <label for="karbohidrat" class="form-label">Karbohidrat</label>
-                                <input type="text" class="form-control" name="karbohidrat[]">
-                            </div>
-                            <div class="mb-3">
-                                <label for="energi" class="form-label">Energi</label>
-                                <input type="text" class="form-control" name="energi[]">
-                            </div>
-                        </div>
+
                     </div>
-                    
-                    <button type="button" class="btn btn-danger removeForm btn-sm">
-                        <i class="fas fa-times"></i> <!-- Ikon "x" dari Font Awesome -->
-                    </button>
-                    <hr>
                 </div>
             </div>
-            <button type="button" class="btn btn-success btn-sm" id="addForm">Tambah Form</button> 
-            <button type="button" class="btn btn-primary btn-sm" id="submitForm">Submit</button> <!-- Ganti type dengan "button" -->
-        </form>
-    </div>
-</div>
+        </div>
+        <!-- Tombol untuk menyalin form -->
+        <div class="container d-flex  gap-2 mt-3 mx-4">
+            <button type="button" class="btn btn-primary " id="copyForm"
+                style="background-color: blue">TambahForm</button>
+            <button type="submit" class="btn btn-success" id="submitButton" style="background-color: green">Submit</button>
+        </div>
+    </form>
 
-<!-- Tautkan Font Awesome CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const formContainer = document.querySelector('.container');
+            let formCount = 1;
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            // Tambah form
+            const copyFormButton = document.getElementById('copyForm');
+            copyFormButton.addEventListener('click', function() {
+                if (formCount < 10) {
+                    const cardTemplate = document.getElementById('cardTemplate');
+                    const newCard = cardTemplate.cloneNode(true);
+                    newCard.removeAttribute('id'); // Hapus id untuk menghindari duplikasi
 
-<script>
-    $(document).ready(function() {
-        // Tambahkan form baru
-        $("#addForm").click(function() {
-            var newForm = $("#formContainer .form-group:first").clone();
-            newForm.find('input, select').val(''); // Kosongkan nilai input
-            $("#formContainer").append(newForm);
-        });
-    
-        // Hapus form
-        $(document).on("click", ".removeForm", function() {
-            $(this).closest(".form-group").remove();
-        });
-    
-        // Kirim formulir melalui AJAX
-        $("#submitForm").click(function() {
-            var formData = $("#dynamicForm").serialize(); // Mengambil data formulir dalam bentuk string
-            $.ajax({
-                type: "POST",
-                url: "{{ route('prosesadmin') }}",
-                data: formData,
-                success: function(response) {
-                    alert("Formulir berhasil disimpan!"); // Tampilkan pesan berhasil
-                    // Kosongkan formulir
-                    $("#formContainer").empty();
-                    // Tambahkan kembali form kosong
-                    $("#formContainer").append('<div class="form-group">...</div>');
-                },
-                error: function(xhr, status, error) {
-                    console.error(error); // Log error ke konsol
-                    alert("Terjadi kesalahan, formulir gagal disimpan."); // Tampilkan pesan error
+                    // Reset nilai input pada form baru
+                    const inputs = newCard.querySelectorAll('input, select');
+                    inputs.forEach(input => {
+                        input.value = ''; // Reset nilai input
+                    });
+
+                    // Tambahkan form baru ke dalam container
+                    formContainer.appendChild(newCard);
+
+                    formCount++; // Tambahkan jumlah form yang sudah ditambahkan
+                } else {
+                    alert("Anda telah mencapai batas maksimal form.");
                 }
             });
-        });
-    });
-</script>
 
+            // Hapus form
+            $(document).on("click", ".removeForm", function() {
+                $(this).closest(".card").remove();
+                formCount--; // Kurangi jumlah form yang telah dihapus
+            });
+        });
+    </script>
 @endsection

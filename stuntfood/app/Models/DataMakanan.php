@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DataMakanan extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'idDataMakanan';
+    // protected $primaryKey = 'idDataMakanan';
     public $timestamps = false;
     protected $table = "data_makanan";
-    protected $fillable = ['iddatamakanan','waktu_makan','paket', 'nama_makanan', 'protein', 'karbohidrat', 'lemak', 'energi'];
+    protected $fillable = ['idData_makanan','paket','waktu_makan', 'nama_makanan', 'protein', 'karbohidrat', 'lemak', 'energi'];
 }

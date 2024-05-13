@@ -15,7 +15,6 @@
         <!-- Search -->
         <div class="navbar-nav align-items-center">
           <div class="nav-item d-flex align-items-center mt-3">
-            <i class="bx bx-search fs-4 lh-0"></i>
             <h5  class="form-control border-0 shadow-none">
               {{-- type="text"
              
