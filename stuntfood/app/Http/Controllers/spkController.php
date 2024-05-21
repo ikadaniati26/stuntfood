@@ -148,83 +148,44 @@ class spkController extends Controller
         $sayurM        = $makanMalam * 15 / 100;
         $buahM        = $makanMalam * 15 / 100;
 
+        // Simpan nilai untuk makan pagi di session dengan kunci yang berbeda
+        $request->session()->put('makananPokok_pagi', $makananPokok);
+        $request->session()->put('lauk_pagi', $lauk);
+        $request->session()->put('sayur_pagi', $sayur);
+        $request->session()->put('buah_pagi', $buah);
+
+        // Simpan nilai untuk makan siang di session dengan kunci yang berbeda
+        $request->session()->put('makananPokok_siang', $makananPokokS);
+        $request->session()->put('lauk_siang', $laukS);
+        $request->session()->put('sayur_siang', $sayurS);
+        $request->session()->put('buah_siang', $buahS);
+
+        // Simpan nilai untuk makan malam di session dengan kunci yang berbeda
+        $request->session()->put('makananPokok_malam', $makananPokokM);
+        $request->session()->put('lauk_malam', $laukM);
+        $request->session()->put('sayur_malam', $sayurM);
+        $request->session()->put('buah_malam', $buahM);
+
+
+
         $nilaiisipiring = [$makananPokok, $lauk, $sayur, $buah, $makananPokokS, $laukS, $sayurS, $buahS, $makananPokokM, $laukM, $sayurM, $buahM];
 
-
         //========PERHITUGNAN BERAT MAKANAN POKOK, LAUK, SAYUR DAN BUAH=====
-        $query = DataMakanan::all();
-        $jenisMakanan = ['makananpokok','lauk','sayur', 'buah', ];
-        $waktuMakan = ['makan pagi', 'makan siang', 'makan malam'];
+        $query = DataMakanan::distinct()->pluck('paket');
 
-        $energiMakanan = [];
-
-        foreach ($waktuMakan as $waktu) {
-            $energiMakanan[$waktu] = [];
-            foreach ($jenisMakanan as $jenis) {
-                $energiMakanan[$waktu][$jenis] = DB::table('data_makanan')
-                    ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
-                    ->where('data_makanan.waktu_makan', $waktu)
-                    ->where('sub_menu.jenis_makanan', $jenis)
-                    ->pluck('sub_menu.energi')
-                    ->first();
-            }
-        }
-        // dd($energiMakanan);
-
-        // Menghitung berat energi untuk makanan pagi
-        $bp_pagi = ($makananPokok / $energiMakanan['makan pagi']['makananpokok']) * 100;
-        $bl_pagi = ($lauk / $energiMakanan['makan pagi']['lauk']) * 100;
-        $bs_pagi = ($sayur / $energiMakanan['makan pagi']['sayur']) * 100;
-        $bh_pagi = ($buah / $energiMakanan['makan pagi']['buah']) * 100;
-
-        // Menghitung berat energi untuk makanan siang
-        $bp_siang = ($makananPokokS / $energiMakanan['makan siang']['makananpokok']) * 100;
-        $bl_siang = ($laukS / $energiMakanan['makan siang']['lauk']) * 100;
-        $bs_siang = ($sayurS / $energiMakanan['makan siang']['sayur']) * 100;
-        $bh_siang = ($buahS / $energiMakanan['makan siang']['buah']) * 100;
-
-        // Menghitung berat energi untuk makanan malam
-        $bp_malam = ($makananPokokM / $energiMakanan['makan malam']['makananpokok']) * 100;
-        $bl_malam = ($laukM / $energiMakanan['makan malam']['lauk']) * 100;
-        $bs_malam = ($sayurM / $energiMakanan['makan malam']['sayur']) * 100;
-        $bh_malam = ($buahM / $energiMakanan['makan malam']['buah']) * 100;
-
-        // Menyimpan nilai berat energi makanan pagi, siang, dan malam ke dalam session
-        session([
-            'beratEnergi' => [
-                'pagi' => [
-                    'makananpokok' => $bp_pagi,
-                    'lauk' => $bl_pagi,
-                    'sayur' => $bs_pagi,
-                    'buah' => $bh_pagi,
-                ],
-                'siang' => [
-                    'makananpokok' => $bp_siang,
-                    'lauk' => $bl_siang,
-                    'sayur' => $bs_siang,
-                    'buah' => $bh_siang,
-                ],
-                'malam' => [
-                    'makananpokok' => $bp_malam,
-                    'lauk' => $bl_malam,
-                    'sayur' => $bs_malam,
-                    'buah' => $bh_malam,
-                ],
-            ]
-        ]);
-
-
-        return view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query'));
+        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query'));
+        return $Hasil;
     }
 
-    public function subMenu(string $namaPaket)
+    public function show(string $paket, Request $request)
     {
-        // $query = DataMakanan::where('idData_makanan', $id)->first();
-        $query = DataMakanan::where('paket', $namaPaket)->first();
-        $detail = DB::table('data_makanan')
+        $data = DataMakanan::where('paket', 'LIKE', $paket)->get();
+
+        //query dibawah ini merupakan query join datamakanan dan submenu
+        $joindata = DB::table('data_makanan')
             ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+            ->where('data_makanan.paket', 'LIKE', $paket)
             ->select(
-                'data_makanan.idData_makanan',
                 'data_makanan.paket',
                 'data_makanan.waktu_makan',
                 'data_makanan.menu',
@@ -234,44 +195,29 @@ class spkController extends Controller
                 'sub_menu.karbohidrat',
                 'sub_menu.lemak',
                 'sub_menu.energi'
-            )
-            ->where('data_makanan.paket', $namaPaket)
-            ->get();
+            )->get();
 
-        $selingan = DB::table('data_makanan')
-            ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
-            ->select(
-                'data_makanan.idData_makanan',
-                'data_makanan.paket',
-                'data_makanan.waktu_makan',
-                'selingan.nama_selingan',
-                'selingan.protein',
-                'selingan.karbohidrat',
-                'selingan.lemak',
-                'selingan.energi'
-            )
-            ->where('data_makanan.paket', $namaPaket)
-            ->get();
+        // Ambil nilai-nilai dari session untuk makan pagi
+        $makananPokok_pagi = $request->session()->get('makananPokok_pagi');
+        $lauk_pagi = $request->session()->get('lauk_pagi');
+        $sayur_pagi = $request->session()->get('sayur_pagi');
+        $buah_pagi = $request->session()->get('buah_pagi');
 
-        // Mengambil nilai berat dari session
-        $beratEnergi = session('beratEnergi', []);
+        // Ambil nilai-nilai dari session untuk makan siang
+        $makananPokok_siang = $request->session()->get('makananPokok_siang');
+        $lauk_siang = $request->session()->get('lauk_siang');
+        $sayur_siang = $request->session()->get('sayur_siang');
+        $buah_siang = $request->session()->get('buah_siang');
 
-        // Debugging: dump the session data
-        // dd($beratEnergi);
+        // Ambil nilai-nilai dari session untuk makan malam
+        $makananPokok_malam = $request->session()->get('makananPokok_malam');
+        $lauk_malam = $request->session()->get('lauk_malam');
+        $sayur_malam = $request->session()->get('sayur_malam');
+        $buah_malam = $request->session()->get('buah_malam');
 
-        if (!empty($beratEnergi)) {
-            $bpagi = $beratEnergi['pagi'];
-            $bsiang = $beratEnergi['siang'];
-            $bmalam = $beratEnergi['malam'];
-        } else {
-            $bpagi = $bsiang = $bmalam = [];
-        }
+        // dd($nilai);
 
-        return view('website.user.submenu', compact('query', 'detail', 'selingan', 'bpagi', 'bsiang', 'bmalam'));
-    }
-
-    public function show(string $id)
-    {
-        return view('website.user.showsolusi');
+       
+        return view('website.user.submenu', compact('joindata'));
     }
 }

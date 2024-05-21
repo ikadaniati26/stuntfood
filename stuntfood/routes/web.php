@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\authController;
 use App\Http\Controllers\spkController;
 use Illuminate\Routing\Events\Routing;
 use Illuminate\Routing\Route as RoutingRoute;
@@ -27,9 +28,8 @@ Route::post('/proses', [spkController::class,'proses'])->name('proses');
 Route::get('/show/{id}', [spkController::class,'show'])->name('detail');
 // Route::get('/submenu/{id}', [spkController::class,'submenu'])->name('submenu');
 Route::get('/submenu/{id}', [spkController::class,'proses'])->name('submenu');
-
-
-Route::get('/detail-paket/{paket_name}', [spkController::class,'subMenu'])->name('detail_paket');
+Route::get('/show/{paket}', [spkController::class,'show']);
+Route::post('/login',[authController::class,'login'])->name('login');
 
 
 

@@ -30,35 +30,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php
-                                            // Mengambil nilai berat energi dari session
-                                            $beratEnergi = session('beratEnergi', []);
-                                        @endphp
-                                
-                                        @foreach ($detail as $item)
-                                            @php
-                                                // Menentukan waktu makan yang sesuai untuk mengambil nilai dari session
-                                                $berat = '';
-                                                if ($item->waktu_makan == 'makan pagi' && !empty($beratEnergi['pagi'])) {
-                                                    $berat = $beratEnergi['pagi'][$item->jenis_makanan] ?? '';
-                                                } elseif ($item->waktu_makan == 'makan siang' && !empty($beratEnergi['siang'])) {
-                                                    $berat = $beratEnergi['siang'][$item->jenis_makanan] ?? '';
-                                                } elseif ($item->waktu_makan == 'makan malam' && !empty($beratEnergi['malam'])) {
-                                                    $berat = $beratEnergi['malam'][$item->jenis_makanan] ?? '';
-                                                }
-                                            @endphp
+                                        @foreach ($joindata as $index => $item)
+                                        @if ($index % 4 == 0)
                                             <tr>
-                                                <td>{{ $item->paket }}</td>
-                                                <td>{{ $item->waktu_makan }}</td>
+                                                <td rowspan="4">{{ $item->paket }}</td>
+                                                <td rowspan="4">{{ $item->waktu_makan }}</td>
                                                 <td>{{ $item->nama_makanan }}</td>
                                                 <td>{{ $item->jenis_makanan }}</td>
-                                                <td>{{ $berat }}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>{{ $item->lemak }}</td>
+                                                <td>{{ $item->berat ?? '' }}</td>
+                                                <td>{{ $item->protein ?? '' }}</td>
+                                                <td>{{ $item->karbohidrat ?? '' }}</td>
+                                                <td>{{ $item->lemak ?? '' }}</td>
                                                 <td>{{ $item->energi }}</td>
                                             </tr>
-                                        @endforeach
+                                        @else
+                                            <tr>
+                                                <td>{{ $item->nama_makanan }}</td>
+                                                <td>{{ $item->jenis_makanan }}</td>
+                                                <td>{{ $item->berat ?? '' }}</td>
+                                                <td>{{ $item->protein ?? '' }}</td>
+                                                <td>{{ $item->karbohidrat ?? '' }}</td>
+                                                <td>{{ $item->lemak ?? '' }}</td>
+                                                <td>{{ $item->energi }}</td>
+                                        @endif
+                                    @endforeach
                                     </tbody>
                                 </table>
                                 
@@ -89,7 +84,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php $no=1; @endphp
+                                        {{-- @php $no=1; @endphp
                                         @foreach ($selingan as $item)
                                             <tr>
                                                 <td>{{ $item->paket }}</td>
@@ -102,7 +97,7 @@
                                                 <td></td>
                                                 <td></td>
                                             </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>

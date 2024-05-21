@@ -275,142 +275,28 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Paket</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-border-bottom-1">
                                     @php
-                                        $paketGroups = []; // Inisialisasi array untuk mengelompokkan paket-paket
+                                        $no = 1;
                                     @endphp
-
-                                    {{-- Mengelompokkan paket-paket --}}
                                     @foreach ($query as $item)
-                                        @php
-                                            $paketName = $item->paket;
-                                            if (!isset($paketGroups[$paketName])) {
-                                                $paketGroups[$paketName] = [];
-                                            }
-                                            $paketGroups[$paketName][] = $item;
-                                        @endphp
-                                    @endforeach
-
-                                    {{-- Menampilkan satu baris untuk setiap paket --}}
-                                     @foreach ($paketGroups as $paketName => $paketItems)
                                         <tr>
-                                            <td>{{ $paketName }}</td>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $item }}</td>
                                             <td>
-                                                <a href="{{ route('detail_paket', ['paket_name' => $paketName]) }}" class="btn btn-info btn-sm" data-toggle="modal"
-                                                    data-target="#paketModal{{ $loop->iteration }}">
-                                                    <i class="fa-solid fa-eye"></i> 
+                                                <a href="{{ url('show', ['paket'=> $item]) }}"
+                                                    class="btn btn-info btn-sm">
+                                                    <i class="fa-solid fa-eye"></i>
                                                 </a>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="paketModal{{ $loop->iteration }}"
-                                                    tabindex="-1" role="dialog"
-                                                    aria-labelledby="paketModal{{ $loop->iteration }}Label"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title"
-                                                                    id="paketModal{{ $loop->iteration }}Label">
-                                                                    {{ $paketName }}</h5>
-                                                                <button type="button" class="close"
-                                                                    data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                Menampilkan detail dari setiap item dalam paket
-                                                                <ul>
-                                                                    @foreach ($paketItems as $paketItem)
-                                                                        <li>{{ $paketItem->nama_menu }}</li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </td>
                                         </tr>
-                                    @endforeach 
-                                    
+                                    @endforeach
 
                                 </tbody>
                             </table>
-
-                            {{-- <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Paket</th>
-                                        <th scope="col">Waktu Makan</th>
-                                        <th scope="col">Nama Makanan</th>
-                                        <th scope="col">Jenis Makanan</th>
-                                        <th scope="col">Berat</th>
-                                        <th scope="col">Protein</th>
-                                        <th scope="col">Karbohidrat</th>
-                                        <th scope="col">Lemak</th>
-                                        <th scope="col">Energi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $currentPaket = null;
-                                        $currentWaktu = null;
-                                    @endphp
-                                    @foreach ($submenu as $index => $item)
-                                        @if ($item->paket != $currentPaket)
-                                            @php
-                                                $currentPaket = $item->paket;
-                                                $rowspanPaket = $submenu->where('paket', $currentPaket)->count();
-                                            @endphp
-                                            @foreach ($submenu->where('paket', $currentPaket) as $subitem)
-                                                @if ($loop->first)
-                                                    <tr>
-                                                        <td rowspan="{{ $rowspanPaket }}">{{ $currentPaket }}</td>
-                                                @endif
-                                                @if ($subitem->waktu_makan != $currentWaktu)
-                                                    @php
-                                                        $currentWaktu = $subitem->waktu_makan;
-                                                        $rowspanWaktu = $submenu->where('paket', $currentPaket)->where('waktu_makan', $currentWaktu)->count();
-                                                    @endphp
-                                                    <td rowspan="{{ $rowspanWaktu }}">{{ $currentWaktu }}</td>
-                                                    <td>{{ $subitem->nama_makanan }}</td>
-                                                    <td>{{ $subitem->jenis_makanan }}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    @if ($loop->last)
-                                                        </tr>
-                                                    @endif
-                                                @else
-                                                    <tr>
-                                                        <td>{{ $subitem->nama_makanan }}</td>
-                                                        <td>{{ $subitem->jenis_makanan }}</td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        @if ($loop->last)
-                                                            </tr>
-                                                        @endif
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    @endforeach
-                                </tbody>
-                            </table> --}}
-
-
-
                         </div>
                     </div>
                 </div>

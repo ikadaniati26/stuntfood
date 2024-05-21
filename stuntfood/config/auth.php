@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Hash;
+
 return [
 
     /*
@@ -37,7 +39,7 @@ return [
 
     'guards' => [
         'web' => [
-            'driver' => 'session',
+            'driver' => 'array',
             'provider' => 'users',
         ],
     ],
@@ -61,8 +63,14 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',
+            'driver' => 'array',
             'model' => App\Models\User::class,
+            'users' => [
+                [
+                    'name' => 'admin',
+                    'password' => bcrypt('123'),
+                ]
+            ]
         ],
 
         // 'users' => [
