@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Models\DataMakanan;
+use App\Models\sub_menu;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class spkController extends Controller
 {
@@ -13,8 +15,9 @@ class spkController extends Controller
      */
     public function index()
     {
-        $query = DataMakanan::all();
-        //return view('spk', compact('query'));
+        $query = [];
+
+        return view('website.user.spk', compact('query'));
     }
 
     public function proses(Request $request)
@@ -25,22 +28,19 @@ class spkController extends Controller
         $beratbadan = $request->beratbadan;
         $aktivitas = $request->aktivitas;
         $stress = $request->stress;
-        $isipiring = $request->isipiring;
-        //baru
-        $waktumakan = $request->waktumakan;
-        $jenis = $request->jenis;
 
+        // =====================INPUTAN USER===========================
         $komponen_input = [$umur, $jeniskelamin, $beratbadan, $aktivitas, $stress];
+
 
         $nilaibmr = 0;
         $nilaiaktivitas = 0;
         $nilaistress = 0;
         $nilaiisipiring = 0;
-        // Menghitung bmr
+        // ================MENGHITUNG BMR BALITA=======================
         switch ($umur) {
             case ($umur >= 0 && $umur <= 3):
                 // Kategori umur 0-3
-                // Lakukan sesuatu
                 if ($jeniskelamin == 'laki-laki') {
                     $nilaibmr = 60.9 * $beratbadan - 54;
                 }
@@ -52,7 +52,6 @@ class spkController extends Controller
 
             case ($umur > 3 && $umur <= 10):
                 // Kategori umur 3-10
-                // Lakukan sesuatu
                 if ($jeniskelamin == 'laki-laki') {
                     $nilaibmr = 22.7 * $beratbadan + 495;
                 }
@@ -60,15 +59,11 @@ class spkController extends Controller
                     $nilaibmr = 22.5 * $beratbadan + 499;
                 }
                 break;
-
             default:
-                // Umur tidak masuk dalam kategori yang ditentukan
-                // Lakukan sesuatu
                 break;
         }
 
-
-        //logika aktivitas
+        //===============LOGIKA AKTIVITAS=============================
         switch ($aktivitas) {
             case 'bedrest':
                 $nilaiaktivitas = 1.0;
@@ -84,11 +79,11 @@ class spkController extends Controller
                 $nilaiaktivitas = 1.7;
                 break;
             default:
-                $nilaiaktivitas = 1.0; // Nilai default jika tidak ada aktivitas yang cocok
+                $nilaiaktivitas = 1.0;
                 break;
         }
 
-        //logika faktor stress
+        //================LOGIKA FAKTOR STRESS======================
         switch ($stress) {
             case 'tidakada':
                 $nilaistress = 1;
@@ -115,17 +110,17 @@ class spkController extends Controller
                 $nilaistress = (1.2 + 1.5) / 2;
                 break;
             case 'cederakepala':
-                $nilaistress = 1.3; // Nilai tetap
+                $nilaistress = 1.3;
                 break;
             case 'kanker':
                 $nilaistress = (1.1 + 1.45) / 2;
                 break;
             default:
-                $nilaistress = 1.0; // Nilai default jika tidak ada kondisi stres yang cocok
+                $nilaistress = 1.0;
                 break;
         }
 
-        //perhitungan total kalori
+        //===================PERHITUNGAN TOTAL KALORI================
         $tdee = $nilaibmr * $nilaiaktivitas * $nilaistress;
 
         $makanPagi = 25 / 100 * $tdee;
@@ -136,7 +131,7 @@ class spkController extends Controller
 
         $nilaiWaktu = [$makanPagi, $selinganPagi, $makanSiang, $selinganSiang, $makanMalam];
 
-        //logika rumus persentase isi piringku 2-5 tahun
+        //========LOGIKA RUMUS PERSENTASE ISI PIRINGKU 2-5 TAHUN=========
         //pagi
         $makananPokok = $makanPagi * 35 / 100;
         $lauk         = $makanPagi * 25 / 100;
@@ -154,64 +149,129 @@ class spkController extends Controller
         $buahM        = $makanMalam * 15 / 100;
 
         $nilaiisipiring = [$makananPokok, $lauk, $sayur, $buah, $makananPokokS, $laukS, $sayurS, $buahS, $makananPokokM, $laukM, $sayurM, $buahM];
-        //dd($nilaiisipiring);
 
 
-        //perhitungan berat makanan pokok, lauk, sayur, buah
-       $query = DataMakanan::all();
+        //========PERHITUGNAN BERAT MAKANAN POKOK, LAUK, SAYUR DAN BUAH=====
+        $query = DataMakanan::all();
+        $jenisMakanan = ['makananpokok','lauk','sayur', 'buah', ];
+        $waktuMakan = ['makan pagi', 'makan siang', 'makan malam'];
 
-        $mp = DataMakanan::where('jenis', 'makananpokok')->get();
-        $l = DataMakanan::where('jenis', 'lauk')->get();
-        $s = DataMakanan::where('jenis', 'sayur')->get();
-        $bh = DataMakanan::where('jenis', 'buah')->get();
-  
-        //mengambil energi mp, l , s, bh
-        $energi = DataMakanan::where('jenis', 'makananpokok')->select('energi')->first();
-        $energiL = DataMakanan::where('jenis', 'lauk')->select('energi')->first();
-        $energiS = DataMakanan::where('jenis', 'sayur')->select('energi')->first();
-        $energiB = DataMakanan::where('jenis', 'buah')->select('energi')->first();
-        
+        $energiMakanan = [];
 
-        //=====================MENGHITUNG BERAT UNTUK MAKAN PAGI=============================//
-        // Menghitung $b untuk makanan pokok
-        if ($energi) {
-            $energi = $energi->energi; // Mengambil nilai energi dari objek
-            $b = $makananPokok / $energi * 100;
-        } else {
-            // Handle jika data energi tidak ditemukan
-            $b = 0; // Atau berikan nilai default lainnya
+        foreach ($waktuMakan as $waktu) {
+            $energiMakanan[$waktu] = [];
+            foreach ($jenisMakanan as $jenis) {
+                $energiMakanan[$waktu][$jenis] = DB::table('data_makanan')
+                    ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+                    ->where('data_makanan.waktu_makan', $waktu)
+                    ->where('sub_menu.jenis_makanan', $jenis)
+                    ->pluck('sub_menu.energi')
+                    ->first();
+            }
         }
-        
-        // Menghitung $bl untuk lauk
-        if ($energiL) {
-            $energiL = $energiL->energi; // Mengambil nilai energi dari objek
-            $bl = $lauk / $energiL * 100;
+        // dd($energiMakanan);
+
+        // Menghitung berat energi untuk makanan pagi
+        $bp_pagi = ($makananPokok / $energiMakanan['makan pagi']['makananpokok']) * 100;
+        $bl_pagi = ($lauk / $energiMakanan['makan pagi']['lauk']) * 100;
+        $bs_pagi = ($sayur / $energiMakanan['makan pagi']['sayur']) * 100;
+        $bh_pagi = ($buah / $energiMakanan['makan pagi']['buah']) * 100;
+
+        // Menghitung berat energi untuk makanan siang
+        $bp_siang = ($makananPokokS / $energiMakanan['makan siang']['makananpokok']) * 100;
+        $bl_siang = ($laukS / $energiMakanan['makan siang']['lauk']) * 100;
+        $bs_siang = ($sayurS / $energiMakanan['makan siang']['sayur']) * 100;
+        $bh_siang = ($buahS / $energiMakanan['makan siang']['buah']) * 100;
+
+        // Menghitung berat energi untuk makanan malam
+        $bp_malam = ($makananPokokM / $energiMakanan['makan malam']['makananpokok']) * 100;
+        $bl_malam = ($laukM / $energiMakanan['makan malam']['lauk']) * 100;
+        $bs_malam = ($sayurM / $energiMakanan['makan malam']['sayur']) * 100;
+        $bh_malam = ($buahM / $energiMakanan['makan malam']['buah']) * 100;
+
+        // Menyimpan nilai berat energi makanan pagi, siang, dan malam ke dalam session
+        session([
+            'beratEnergi' => [
+                'pagi' => [
+                    'makananpokok' => $bp_pagi,
+                    'lauk' => $bl_pagi,
+                    'sayur' => $bs_pagi,
+                    'buah' => $bh_pagi,
+                ],
+                'siang' => [
+                    'makananpokok' => $bp_siang,
+                    'lauk' => $bl_siang,
+                    'sayur' => $bs_siang,
+                    'buah' => $bh_siang,
+                ],
+                'malam' => [
+                    'makananpokok' => $bp_malam,
+                    'lauk' => $bl_malam,
+                    'sayur' => $bs_malam,
+                    'buah' => $bh_malam,
+                ],
+            ]
+        ]);
+
+
+        return view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query'));
+    }
+
+    public function subMenu(string $namaPaket)
+    {
+        // $query = DataMakanan::where('idData_makanan', $id)->first();
+        $query = DataMakanan::where('paket', $namaPaket)->first();
+        $detail = DB::table('data_makanan')
+            ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+            ->select(
+                'data_makanan.idData_makanan',
+                'data_makanan.paket',
+                'data_makanan.waktu_makan',
+                'data_makanan.menu',
+                'sub_menu.nama_makanan',
+                'sub_menu.jenis_makanan',
+                'sub_menu.protein',
+                'sub_menu.karbohidrat',
+                'sub_menu.lemak',
+                'sub_menu.energi'
+            )
+            ->where('data_makanan.paket', $namaPaket)
+            ->get();
+
+        $selingan = DB::table('data_makanan')
+            ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+            ->select(
+                'data_makanan.idData_makanan',
+                'data_makanan.paket',
+                'data_makanan.waktu_makan',
+                'selingan.nama_selingan',
+                'selingan.protein',
+                'selingan.karbohidrat',
+                'selingan.lemak',
+                'selingan.energi'
+            )
+            ->where('data_makanan.paket', $namaPaket)
+            ->get();
+
+        // Mengambil nilai berat dari session
+        $beratEnergi = session('beratEnergi', []);
+
+        // Debugging: dump the session data
+        // dd($beratEnergi);
+
+        if (!empty($beratEnergi)) {
+            $bpagi = $beratEnergi['pagi'];
+            $bsiang = $beratEnergi['siang'];
+            $bmalam = $beratEnergi['malam'];
         } else {
-            // Handle jika data energi tidak ditemukan
-            $bl = 0; // Atau berikan nilai default lainnya
+            $bpagi = $bsiang = $bmalam = [];
         }
-        
-        // Menghitung $bs untuk sayur
-        if ($energiS) {
-            $energiS = $energiS->energi; // Mengambil nilai energi dari objek
-            $bs = $sayur / $energiS * 100;
-        } else {
-            // Handle jika data energi tidak ditemukan
-            $bs = 0; // Atau berikan nilai default lainnya
-        }
-        
-        // Menghitung $bh untuk buah
-        if ($energiB) {
-            $energiB = $energiB->energi; // Mengambil nilai energi dari objek
-            $bh = $buah / $energiB * 100;
-        } else {
-            // Handle jika data energi tidak ditemukan
-            $bh = 0; // Atau berikan nilai default lainnya
-        }
-        
-    
-      
-        return view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'b','bl','bs','bh','mp','l','s','bh','query'));
+
+        return view('website.user.submenu', compact('query', 'detail', 'selingan', 'bpagi', 'bsiang', 'bmalam'));
+    }
+
+    public function show(string $id)
+    {
+        return view('website.user.showsolusi');
     }
 }
-

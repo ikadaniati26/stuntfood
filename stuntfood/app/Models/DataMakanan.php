@@ -11,5 +11,7 @@ class DataMakanan extends Model
     // protected $primaryKey = 'idDataMakanan';
     public $timestamps = false;
     protected $table = "data_makanan";
-    protected $fillable = ['idData_makanan','paket','waktu_makan', 'nama_makanan', 'protein', 'karbohidrat', 'lemak', 'energi'];
+    protected $fillable = ['idData_makanan','paket','waktu_makan', 'menu'];
+
+
 }

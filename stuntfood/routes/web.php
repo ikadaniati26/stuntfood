@@ -21,14 +21,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landingpage.lp');
 });
-// Route::view('index', 'website.user.datamakanan')->name('dashboarduser');
-// Route::view('/datamakanan', '/user/datamakanan');
-Route::view('/spk', 'website.user.spk')->name('form_user');
-// Route::get('/spk', [spkController::class,'index'])->name('formuser');
-Route::post('/proses', [spkController::class,'proses'])->name('proses');
-// Route::get('datamakananuser',[spkController::class,'datamakananuser']);
 
-// Route::view('/form','admin.formInput')->name('form');
+Route::get('/spk', [spkController::class,'index'])->name('form_user');
+Route::post('/proses', [spkController::class,'proses'])->name('proses');
+Route::get('/show/{id}', [spkController::class,'show'])->name('detail');
+// Route::get('/submenu/{id}', [spkController::class,'submenu'])->name('submenu');
+Route::get('/submenu/{id}', [spkController::class,'proses'])->name('submenu');
+
+
+Route::get('/detail-paket/{paket_name}', [spkController::class,'subMenu'])->name('detail_paket');
+
 
 
 // //========== Admin ==============// 
@@ -47,4 +49,17 @@ Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('hapus')
 Route::post('/prosesadmin',[AdminController::class, 'prosesForm'])->name('prosesadmin');
 
 
+//=========== PERHITUNGAN =========//
+Route::get('/data-makanan', [spkController::class, 'subMenu']);
 
+
+// Route::view('index', 'website.user.datamakanan')->name('dashboarduser');
+// Route::view('/datamakanan', '/user/datamakanan');
+
+//=============== LP ===============//
+// Route::view('/spk', 'website.user.spk')->name('form_user');
+// Route::get('/spk', [spkController::class, 'index'])->name('form_user');
+
+// Route::get('datamakananuser',[spkController::class,'datamakananuser']);
+
+// Route::view('/form','admin.formInput')->name('form');
