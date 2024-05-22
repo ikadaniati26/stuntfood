@@ -215,9 +215,87 @@ class spkController extends Controller
         $sayur_malam = $request->session()->get('sayur_malam');
         $buah_malam = $request->session()->get('buah_malam');
 
-        // dd($nilai);
+        $Berat = [
+            ($makananPokok_pagi / $joindata[0]->energi) * 100,
+            ($lauk_pagi / $joindata[1]->energi) * 100,
+            ($sayur_pagi / $joindata[2]->energi) * 100,
+            ($buah_pagi / $joindata[3]->energi) * 100,
+
+            ($makananPokok_siang / $joindata[4]->energi) * 100,
+            ($lauk_siang / $joindata[5]->energi) * 100,
+            ($sayur_siang / $joindata[6]->energi) * 100,
+            ($buah_siang / $joindata[7]->energi) * 100,
+
+            ($makananPokok_malam / $joindata[8]->energi) * 100,
+            ($lauk_malam / $joindata[9]->energi) * 100,
+            ($sayur_malam / $joindata[10]->energi) * 100,
+            ($buah_malam / $joindata[11]->energi) * 100,
+        ];
+
+        $Protein = [
+            ($Berat[0] / 100) * $joindata[0]->protein,
+            ($Berat[1] / 100) * $joindata[1]->protein,
+            ($Berat[2] / 100) * $joindata[2]->protein,
+            ($Berat[3] / 100) * $joindata[3]->protein,
+            ($Berat[4] / 100) * $joindata[4]->protein,
+            ($Berat[5] / 100) * $joindata[5]->protein,
+            ($Berat[6] / 100) * $joindata[6]->protein,
+            ($Berat[7] / 100) * $joindata[7]->protein,
+            ($Berat[8] / 100) * $joindata[8]->protein,
+            ($Berat[9] / 100) * $joindata[9]->protein,
+            ($Berat[10] / 100) * $joindata[10]->protein,
+            ($Berat[11] / 100) * $joindata[11]->protein,
+        ];
+
+        $Karbo = [
+            ($Berat[0] / 100) * $joindata[0]->karbohidrat,
+            ($Berat[1] / 100) * $joindata[1]->karbohidrat,
+            ($Berat[2] / 100) * $joindata[2]->karbohidrat,
+            ($Berat[3] / 100) * $joindata[3]->karbohidrat,
+            ($Berat[4] / 100) * $joindata[4]->karbohidrat,
+            ($Berat[5] / 100) * $joindata[5]->karbohidrat,
+            ($Berat[6] / 100) * $joindata[6]->karbohidrat,
+            ($Berat[7] / 100) * $joindata[7]->karbohidrat,
+            ($Berat[8] / 100) * $joindata[8]->karbohidrat,
+            ($Berat[9] / 100) * $joindata[9]->karbohidrat,
+            ($Berat[10] / 100) * $joindata[10]->karbohidrat,
+            ($Berat[11] / 100) * $joindata[11]->karbohidrat,
+        ];
+
+        $Lemak = [
+            ($Berat[0] / 100) * $joindata[0]->lemak,
+            ($Berat[1] / 100) * $joindata[1]->lemak,
+            ($Berat[2] / 100) * $joindata[2]->lemak,
+            ($Berat[3] / 100) * $joindata[3]->lemak,
+            ($Berat[4] / 100) * $joindata[4]->lemak,
+            ($Berat[5] / 100) * $joindata[5]->lemak,
+            ($Berat[6] / 100) * $joindata[6]->lemak,
+            ($Berat[7] / 100) * $joindata[7]->lemak,
+            ($Berat[8] / 100) * $joindata[8]->lemak,
+            ($Berat[9] / 100) * $joindata[9]->lemak,
+            ($Berat[10] / 100) * $joindata[10]->lemak,
+            ($Berat[11] / 100) * $joindata[11]->lemak,
+        ];
+
+        $Energi = [
+            ($Berat[0] / 100) * $joindata[0]->energi,
+            ($Berat[1] / 100) * $joindata[1]->energi,
+            ($Berat[2] / 100) * $joindata[2]->energi,
+            ($Berat[3] / 100) * $joindata[3]->energi,
+            ($Berat[4] / 100) * $joindata[4]->energi,
+            ($Berat[5] / 100) * $joindata[5]->energi,
+            ($Berat[6] / 100) * $joindata[6]->energi,
+            ($Berat[7] / 100) * $joindata[7]->energi,
+            ($Berat[8] / 100) * $joindata[8]->energi,
+            ($Berat[9] / 100) * $joindata[9]->energi,
+            ($Berat[10] / 100) * $joindata[10]->energi,
+            ($Berat[11] / 100) * $joindata[11]->energi,
+        ];
+
+
+        // dd($joindata[0]->energi);
 
        
-        return view('website.user.submenu', compact('joindata'));
+        return view('website.user.submenu', compact('joindata', 'Berat', 'Protein', 'Karbo', 'Lemak', 'Energi'));
     }
 }

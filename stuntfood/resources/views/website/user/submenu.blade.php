@@ -5,8 +5,8 @@
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
                 <div class="col">
-                    <div class="card mb-4  shadow">
-                        <div class="me-3 px-5 mt-5">
+                    <div class="card mb-4 shadow">
+                        <div class="me-3 px-5 mt-5 mb-5">
                             <div>
                                 <h3>Tabel Sub Menu</h3>
                                 <p>berdasarkan paket menu yang direkomendasikan diatas, maka disarankan memberikan makanan
@@ -15,7 +15,7 @@
                             </div>
 
                             <div class="table-responsive text-nowrap px-5 mt-2">
-                                <table class="table table-striped">
+                                <table class="table table-striped mb-5" >
                                     <thead>
                                         <tr>
                                             <th scope="col">Paket</th>
@@ -31,37 +31,37 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($joindata as $index => $item)
-                                        @if ($index % 4 == 0)
-                                            <tr>
-                                                <td rowspan="4">{{ $item->paket }}</td>
-                                                <td rowspan="4">{{ $item->waktu_makan }}</td>
-                                                <td>{{ $item->nama_makanan }}</td>
-                                                <td>{{ $item->jenis_makanan }}</td>
-                                                <td>{{ $item->berat ?? '' }}</td>
-                                                <td>{{ $item->protein ?? '' }}</td>
-                                                <td>{{ $item->karbohidrat ?? '' }}</td>
-                                                <td>{{ $item->lemak ?? '' }}</td>
-                                                <td>{{ $item->energi }}</td>
-                                            </tr>
-                                        @else
-                                            <tr>
-                                                <td>{{ $item->nama_makanan }}</td>
-                                                <td>{{ $item->jenis_makanan }}</td>
-                                                <td>{{ $item->berat ?? '' }}</td>
-                                                <td>{{ $item->protein ?? '' }}</td>
-                                                <td>{{ $item->karbohidrat ?? '' }}</td>
-                                                <td>{{ $item->lemak ?? '' }}</td>
-                                                <td>{{ $item->energi }}</td>
-                                        @endif
-                                    @endforeach
+                                            @if ($index % 4 == 0)
+                                                <tr>
+                                                    <td rowspan="4">{{ $item->paket }}</td>
+                                                    <td rowspan="4">{{ $item->waktu_makan }}</td>
+                                                    <td>{{ $item->nama_makanan }}</td>
+                                                    <td>{{ $item->jenis_makanan }}</td>
+                                                    <td>{{ number_format($Berat[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($Protein[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($Karbo[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($Lemak[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($Energi[$index], 2, '.', '') }}</td>
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <td>{{ $item->nama_makanan }}</td>
+                                                    <td>{{ $item->jenis_makanan }}</td>
+                                                    <td>{{ number_format($Berat[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($Protein[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($Karbo[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($Lemak[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($Energi[$index], 2, '.', '') }}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+
                                     </tbody>
                                 </table>
-                                
-
-
                             </div>
                         </div>
                     </div>
+
                     <div class="card mb-4  shadow">
                         <div class="me-3 px-5 mt-5">
                             <div>

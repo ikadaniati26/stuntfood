@@ -65,12 +65,6 @@ return [
         'users' => [
             'driver' => 'array',
             'model' => App\Models\User::class,
-            'users' => [
-                [
-                    'name' => 'admin',
-                    'password' => bcrypt('123'),
-                ]
-            ]
         ],
 
         // 'users' => [
