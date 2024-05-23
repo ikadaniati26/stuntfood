@@ -265,7 +265,43 @@
                             </form>
                         </div>
                         <div class="card-header  d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL BERAT MENU </h5>
+                            <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL ALTERNATIF</h5>
+                        </div>
+                        <div class="table-responsive text-nowrap mx-5 mb-5">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Paket</th>
+                                        <th>Total Protein</th>
+                                        <th>Total Karbohidrat</th>
+                                        <th>Total Lemak</th>
+                                        <th>TotaL Energi</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-1">
+                                    @php
+                                        $no = 1;
+                                    ;
+                                    @endphp
+                                    @foreach($query as $item)
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $item }}</td>
+                                            <td> </td>
+                                            <td></td>
+                                            <td></td>
+                                            {{-- <td>{{ count($Protein) }}">Total Protein: {{ number_format($totalProtein, 2, '.', '') }}</td> --}}
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="card-header  d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL MENU YANG
+                                DIREKOMENDASIKAN</h5>
                         </div>
 
 
@@ -287,7 +323,7 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $item }}</td>
                                             <td>
-                                                <a href="{{ url('show', ['paket'=> $item]) }}"
+                                                <a href="{{ url('show', ['paket' => $item]) }}"
                                                     class="btn btn-info btn-sm">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>

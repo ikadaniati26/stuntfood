@@ -126,10 +126,10 @@ class spkController extends Controller
         $makanPagi = 25 / 100 * $tdee;
         $selinganPagi = 10 / 100 * $tdee;
         $makanSiang = 30 / 100 * $tdee;
-        $selinganSiang = 10 / 100 * $tdee;
+        $selinganSore = 10 / 100 * $tdee;
         $makanMalam = 25 / 100 * $tdee;
 
-        $nilaiWaktu = [$makanPagi, $selinganPagi, $makanSiang, $selinganSiang, $makanMalam];
+        $nilaiWaktu = [$makanPagi, $selinganPagi, $makanSiang, $selinganSore, $makanMalam];
 
         //========LOGIKA RUMUS PERSENTASE ISI PIRINGKU 2-5 TAHUN=========
         //pagi
@@ -166,16 +166,26 @@ class spkController extends Controller
         $request->session()->put('sayur_malam', $sayurM);
         $request->session()->put('buah_malam', $buahM);
 
-
+        // simpan nilai untuk selingan pagi di session dengan kunci yang berbeda
+        $request->session()->put('selingan_pagi', $selinganPagi);
+        $request->session()->put('selingan_sore', $selinganSore);
 
         $nilaiisipiring = [$makananPokok, $lauk, $sayur, $buah, $makananPokokS, $laukS, $sayurS, $buahS, $makananPokokM, $laukM, $sayurM, $buahM];
 
         //========PERHITUGNAN BERAT MAKANAN POKOK, LAUK, SAYUR DAN BUAH=====
         $query = DataMakanan::distinct()->pluck('paket');
 
+
+        //========PERHITUNGAN TABEL ALTERNATIF(TOTAL PROTEIN, TOTAL KARBO, TOTAL LEMAK DAN TOTAL ENERGI)=====
+        
+
         $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query'));
         return $Hasil;
     }
+
+
+
+
 
     public function show(string $paket, Request $request)
     {
@@ -197,6 +207,7 @@ class spkController extends Controller
                 'sub_menu.energi'
             )->get();
 
+            // dd($dataSelingan);
         // Ambil nilai-nilai dari session untuk makan pagi
         $makananPokok_pagi = $request->session()->get('makananPokok_pagi');
         $lauk_pagi = $request->session()->get('lauk_pagi');
@@ -246,6 +257,7 @@ class spkController extends Controller
             ($Berat[10] / 100) * $joindata[10]->protein,
             ($Berat[11] / 100) * $joindata[11]->protein,
         ];
+      
 
         $Karbo = [
             ($Berat[0] / 100) * $joindata[0]->karbohidrat,
@@ -279,7 +291,7 @@ class spkController extends Controller
 
         $Energi = [
             ($Berat[0] / 100) * $joindata[0]->energi,
-            ($Berat[1] / 100) * $joindata[1]->energi,
+            ($Berat[1] / 100) * $joindata[1]->energi,   
             ($Berat[2] / 100) * $joindata[2]->energi,
             ($Berat[3] / 100) * $joindata[3]->energi,
             ($Berat[4] / 100) * $joindata[4]->energi,
@@ -291,11 +303,52 @@ class spkController extends Controller
             ($Berat[10] / 100) * $joindata[10]->energi,
             ($Berat[11] / 100) * $joindata[11]->energi,
         ];
+    
 
+         //query dibawah ini merupakan query join datamakanan dan selingan
+        $dataSelingan = DB::table('data_makanan')
+         ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+         ->where('data_makanan.paket', '=', $paket)
+         ->where(function ($query) {
+             $query->where('data_makanan.waktu_makan', 'LIKE', 'selingan pagi')
+                   ->orWhere('data_makanan.waktu_makan', 'LIKE', 'selingan sore');
+         })
+         ->select(
+             'data_makanan.paket', 
+             'data_makanan.waktu_makan', 
+             'data_makanan.menu',
+             'selingan.protein', 
+             'selingan.karbohidrat', 
+             'selingan.lemak', 
+             'selingan.energi'
+         )->get();
 
-        // dd($joindata[0]->energi);
+        //  dd($dataSelingan);
+        //mengambil session selingan 
+        $selinganPagi = $request->session()->get('selingan_pagi');
+        $selinganSore = $request->session()->get('selingan_sore');
 
+        $BeratSelingan = [
+            ($selinganPagi / $dataSelingan[0]->energi) * 100,
+            ($selinganSore / $dataSelingan[1]->energi) * 100,
+        ];
+        $ProteinSelingan= [
+            ($BeratSelingan[0] / 100) * $dataSelingan[0]->protein,
+            ($BeratSelingan[1] / 100) * $dataSelingan[1]->protein,
+        ];
+        $KarbohidratSelingan= [
+            ($BeratSelingan[0] / 100) * $dataSelingan[0]->karbohidrat,
+            ($BeratSelingan[1] / 100) * $dataSelingan[1]->karbohidrat,
+        ];
+        $LemakSelingan= [
+            ($BeratSelingan[0] / 100) * $dataSelingan[0]->lemak,
+            ($BeratSelingan[1] / 100) * $dataSelingan[1]->lemak,
+        ];
+        $EnergiSelingan= [
+            ($BeratSelingan[0] / 100) * $dataSelingan[0]->energi,
+            ($BeratSelingan[1] / 100) * $dataSelingan[1]->energi,
+        ];
        
-        return view('website.user.submenu', compact('joindata', 'Berat', 'Protein', 'Karbo', 'Lemak', 'Energi'));
+        return view('website.user.submenu', compact('joindata', 'Berat', 'Protein', 'Karbo', 'Lemak', 'Energi','dataSelingan','BeratSelingan','ProteinSelingan','KarbohidratSelingan','LemakSelingan','EnergiSelingan'));
     }
 }

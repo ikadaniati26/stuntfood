@@ -15,7 +15,7 @@
                             </div>
 
                             <div class="table-responsive text-nowrap px-5 mt-2">
-                                <table class="table table-striped mb-5" >
+                                <table class="table table-striped mb-5">
                                     <thead>
                                         <tr>
                                             <th scope="col">Paket</th>
@@ -84,20 +84,33 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @php $no=1; @endphp
-                                        @foreach ($selingan as $item)
-                                            <tr>
-                                                <td>{{ $item->paket }}</td>
-                                                <td>{{ $item->waktu_makan }}</td>
-                                                <td>{{ $item->nama_selingan }}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        @endforeach --}}
+                                         @php $no=1; @endphp
+                                        @foreach ($dataSelingan as $index => $item)
+                                            @if ($index % 4 == 0)
+                                                <tr>
+                                                    <td rowspan="4">{{ $item->paket }}</td>
+                                                    <td rowspan="4">{{ $item->waktu_makan }}</td>
+                                                    <td>{{ $item->menu }}</td>
+                                                    <td>{{ number_format($BeratSelingan[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($ProteinSelingan[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($KarbohidratSelingan[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($LemakSelingan[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($EnergiSelingan[$index], 2, '.', '') }}</td>
+                                                </tr>
+                                                @else
+                                                <tr>
+                                                    <td>{{ $item->menu }}</td>
+                                                    <td>{{ number_format($BeratSelingan[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($ProteinSelingan[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($KarbohidratSelingan[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($LemakSelingan[$index], 2, '.', '') }}</td>
+                                                    <td>{{ number_format($EnergiSelingan[$index], 2, '.', '') }}</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach 
+                                     
+
+                                     
                                     </tbody>
                                 </table>
                             </div>
