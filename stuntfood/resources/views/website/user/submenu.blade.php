@@ -89,7 +89,7 @@
                                             @if ($index % 4 == 0)
                                                 <tr>
                                                     <td rowspan="4">{{ $item->paket }}</td>
-                                                    <td rowspan="4">{{ $item->waktu_makan }}</td>
+                                                    <td>{{ $item->waktu_makan }}</td>
                                                     <td>{{ $item->menu }}</td>
                                                     <td>{{ number_format($BeratSelingan[$index], 2, '.', '') }}</td>
                                                     <td>{{ number_format($ProteinSelingan[$index], 2, '.', '') }}</td>
@@ -99,6 +99,7 @@
                                                 </tr>
                                                 @else
                                                 <tr>
+                                                    <td>{{ $item->waktu_makan }}</td>
                                                     <td>{{ $item->menu }}</td>
                                                     <td>{{ number_format($BeratSelingan[$index], 2, '.', '') }}</td>
                                                     <td>{{ number_format($ProteinSelingan[$index], 2, '.', '') }}</td>

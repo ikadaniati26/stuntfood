@@ -7,9 +7,38 @@ use App\Models\DataMakanan;
 use App\Models\sub_menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Foreach_;
 
 class spkController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        // $paketList = DataMakanan::distinct()->pluck('paket');
+        // $allJoinData = [];
+
+        // foreach ($paketList as $paket) {
+        //     $joindata = DB::table('data_makanan')
+        //         ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+        //         ->where('data_makanan.paket', $paket)
+        //         ->select(
+        //             'data_makanan.paket',
+        //             'data_makanan.waktu_makan',
+        //             'data_makanan.menu',
+        //             'sub_menu.nama_makanan',
+        //             'sub_menu.jenis_makanan',
+        //             'sub_menu.protein',
+        //             'sub_menu.karbohidrat',
+        //             'sub_menu.lemak',
+        //             'sub_menu.energi'
+        //         )->get();
+
+        // Simpan hasil query untuk paket saat ini ke dalam array
+        // $allJoinData[$paket] = $joindata;
+        // }
+
+        // dd($makananPokok_pagi);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -22,16 +51,15 @@ class spkController extends Controller
 
     public function proses(Request $request)
     {
-
+        // =====================INPUTAN USER=========================== //
         $umur = $request->umur;
         $jeniskelamin = $request->jk;
         $beratbadan = $request->beratbadan;
         $aktivitas = $request->aktivitas;
         $stress = $request->stress;
 
-        // =====================INPUTAN USER===========================
         $komponen_input = [$umur, $jeniskelamin, $beratbadan, $aktivitas, $stress];
-
+        // =====================INPUTAN USER=========================== //
 
         $nilaibmr = 0;
         $nilaiaktivitas = 0;
@@ -146,50 +174,456 @@ class spkController extends Controller
         $makananPokokM = $makanMalam * 35 / 100;
         $laukM         = $makanMalam * 25 / 100;
         $sayurM        = $makanMalam * 15 / 100;
-        $buahM        = $makanMalam * 15 / 100;
+        $buahM         = $makanMalam * 15 / 100;
 
-        // Simpan nilai untuk makan pagi di session dengan kunci yang berbeda
+        $nilaiisipiring = [$makananPokok, $lauk, $sayur, $buah, $makananPokokS, $laukS, $sayurS, $buahS, $makananPokokM, $laukM, $sayurM, $buahM];
+
+
+        // NILAI PRESENTASE DIKIRIM KE FUNGSI SHOW UNTUK MENAMPILKAN DETAIL //
         $request->session()->put('makananPokok_pagi', $makananPokok);
         $request->session()->put('lauk_pagi', $lauk);
         $request->session()->put('sayur_pagi', $sayur);
         $request->session()->put('buah_pagi', $buah);
 
-        // Simpan nilai untuk makan siang di session dengan kunci yang berbeda
         $request->session()->put('makananPokok_siang', $makananPokokS);
         $request->session()->put('lauk_siang', $laukS);
         $request->session()->put('sayur_siang', $sayurS);
         $request->session()->put('buah_siang', $buahS);
 
-        // Simpan nilai untuk makan malam di session dengan kunci yang berbeda
         $request->session()->put('makananPokok_malam', $makananPokokM);
         $request->session()->put('lauk_malam', $laukM);
         $request->session()->put('sayur_malam', $sayurM);
         $request->session()->put('buah_malam', $buahM);
 
-        // simpan nilai untuk selingan pagi di session dengan kunci yang berbeda
         $request->session()->put('selingan_pagi', $selinganPagi);
         $request->session()->put('selingan_sore', $selinganSore);
+        // NILAI PRESENTASE DIKIRIM KE FUNGSI SHOW UNTUK MENAMPILKAN DETAIL //
 
-        $nilaiisipiring = [$makananPokok, $lauk, $sayur, $buah, $makananPokokS, $laukS, $sayurS, $buahS, $makananPokokM, $laukM, $sayurM, $buahM];
 
-        //========PERHITUGNAN BERAT MAKANAN POKOK, LAUK, SAYUR DAN BUAH=====
+        //======== MENAMPILKAN PAKET MAKANAN YANG TERSEDIA =====//
         $query = DataMakanan::distinct()->pluck('paket');
 
 
-        //========PERHITUNGAN TABEL ALTERNATIF(TOTAL PROTEIN, TOTAL KARBO, TOTAL LEMAK DAN TOTAL ENERGI)=====
-        
+        //========PERHITUNGAN TABEL ALTERNATIF(TOTAL PROTEIN, TOTAL KARBO, TOTAL LEMAK DAN TOTAL ENERGI)=====//
 
-        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query'));
+        //==================QUERY MENGAMBIL SEMUA PAKET MAKANAN=================//
+        $paketList = DataMakanan::distinct()->pluck('paket');
+
+        $allJoinData = [];
+        foreach ($paketList as $paket) {
+            $joindata = DB::table('data_makanan')
+                ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+                ->where('data_makanan.paket', $paket)
+                ->select(
+                    'data_makanan.paket',
+                    'data_makanan.waktu_makan',
+                    'data_makanan.menu',
+                    'sub_menu.nama_makanan',
+                    'sub_menu.jenis_makanan',
+                    'sub_menu.protein',
+                    'sub_menu.karbohidrat',
+                    'sub_menu.lemak',
+                    'sub_menu.energi'
+                )->get();
+
+            $allJoinData[$paket] = $joindata;
+        }
+        //==================QUERY MENGAMBIL SEMUA PAKET MAKANAN=================//
+
+
+        //=============MENGAMBIL NILAI ENERGI=========//
+        $simpan = [];
+        $subArray = [];
+        $counter = 0;
+        foreach ($allJoinData as $key => $values) {
+            foreach ($values as $value) {
+                $subArray[] = $value->energi;
+                $counter++;
+
+                if ($counter == 12) {
+                    $simpan[] = $subArray;
+                    $subArray = []; // Reset sub-array
+                    $counter = 0; // Reset counter
+                }
+            }
+        }
+
+        //=============MENGAMBIL NILAI BERAT=========//
+        // Simpan merupakan variabel dari energi
+        $Berat = [];
+        foreach ($simpan as $key => $value) {
+            $Berat[$key] = [
+                ($makananPokok / $value[0]) * 100,
+                ($lauk /  $value[1]) * 100,
+                ($sayur /  $value[2]) * 100,
+                ($buah /  $value[3]) * 100,
+
+                ($makananPokokS /  $value[4]) * 100,
+                ($laukS /  $value[5]) * 100,
+                ($sayurS /  $value[6]) * 100,
+                ($buahS / $value[7]) * 100,
+
+                ($makananPokokM /  $value[8]) * 100,
+                ($laukM /  $value[9]) * 100,
+                ($sayurM /  $value[10]) * 100,
+                ($buahM /  $value[11]) * 100,
+            ];
+        }
+
+
+        //==========MENGAMBIL NILAI PROTEIN==============//
+        $nilai = [];
+        $isi_array = [];
+        $counterr = 0;
+
+        foreach ($allJoinData as $key => $dt) {
+            foreach ($dt as $dta) {
+                $isi_array[] = $dta->protein;
+                $counterr++;
+
+                if ($counterr == 12) {
+                    $nilai[] = $isi_array;
+                    $isi_array = [];
+                    $counterr = 0;
+                }
+            }
+        }
+
+        //============RUMUS MENCARI NILAI PROTEIN=========//
+        $Protein = [];
+        foreach ($Berat as $key => $values) {
+            foreach ($values as $index => $value) {
+                $Protein[$key][] = ($value / 100) * $nilai[$key][$index];
+            }
+        }
+
+        //===================TOTAL PROTIN====================//
+        $totalProtein = [];
+        foreach ($Protein as $key => $value) {
+            $totalProtein[$key] = array_sum($value);
+        }
+
+
+        // ==============================================================================================//
+        //**************** MENCARI TOTAL KARBO ***********************//
+        // ==============================================================================================//
+
+
+        //==========MENGAMBIL NILAI kARBOHIDRAT==============//
+        $karbo = [];
+        $isi_array = [];
+        $counterr = 0;
+
+        foreach ($allJoinData as $key => $dt) {
+            foreach ($dt as $dta) {
+                $isi_array[] = $dta->karbohidrat;
+                $counterr++;
+
+                if ($counterr == 12) {
+                    $karbo[] = $isi_array;
+                    $isi_array = [];
+                    $counterr = 0;
+                }
+            }
+        }
+
+        //============RUMUS MENCARI NILAI PROTEIN=========//
+        $Karbohidrat = [];
+        foreach ($Berat as $key => $values) {
+            foreach ($values as $index => $value) {
+                $Karbohidrat[$key][] = ($value / 100) * $karbo[$key][$index];
+            }
+        }
+
+        //===================TOTAL PROTIN====================//
+        $totalKarbohidrat = [];
+        foreach ($Karbohidrat as $key => $value) {
+            $totalKarbohidrat[$key] = array_sum($value);
+        }
+
+
+        // ==============================================================================================//
+        //**************** MENCARI TOTAL LEMAK ***********************//
+        // ==============================================================================================//
+
+        //==========MENGAMBIL NILAI LEMAK==============//
+        $lemak = [];
+        $isi_array = [];
+        $counterr = 0;
+
+        foreach ($allJoinData as $key => $dt) {
+            foreach ($dt as $dta) {
+                $isi_array[] = $dta->lemak;
+                $counterr++;
+
+                if ($counterr == 12) {
+                    $lemak[] = $isi_array;
+                    $isi_array = [];
+                    $counterr = 0;
+                }
+            }
+        }
+
+        //============RUMUS MENCARI NILAI PROTEIN=========//
+        $Lemak = [];
+        foreach ($Berat as $key => $values) {
+            foreach ($values as $index => $value) {
+                $Lemak[$key][] = ($value / 100) * $lemak[$key][$index];
+            }
+        }
+
+        //===================TOTAL PROTIN====================//
+        $totalLemak = [];
+        foreach ($Lemak as $key => $value) {
+            $totalLemak[$key] = array_sum($value);
+        }
+
+        // ==============================================================================================//
+        //**************** MENCARI TOTAL ENERGI ***********************//
+        // ==============================================================================================//
+
+        //==========MENGAMBIL NILAI ENERGI==============//
+        $energi = [];
+        $isi_array = [];
+        $counterr = 0;
+
+        foreach ($allJoinData as $key => $dt) {
+            foreach ($dt as $dta) {
+                $isi_array[] = $dta->energi;
+                $counterr++;
+
+                if ($counterr == 12) {
+                    $energi[] = $isi_array;
+                    $isi_array = [];
+                    $counterr = 0;
+                }
+            }
+        }
+
+        //============RUMUS MENCARI NILAI PROTEIN=========//
+        $Energi = [];
+        foreach ($Berat as $key => $values) {
+            foreach ($values as $index => $value) {
+                $Energi[$key][] = ($value / 100) * $energi[$key][$index];
+            }
+        }
+
+        //===================TOTAL PROTIN====================//
+        $totalEnergi = [];
+        foreach ($Energi as $key => $value) {
+            $totalEnergi[$key] = array_sum($value);
+        }
+
+        // ==============================================================================================//
+        //**************** MENCARI TOTAL SELINGAN ***********************//
+        // ==============================================================================================//
+
+        //===================QUERY JOIN DATAMAKANAN => SELINGAN====================//
+        $allSelingan = [];
+        foreach ($paketList as $paket) {
+            $joindata = DB::table('data_makanan')
+                ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+                ->select(
+                    'data_makanan.paket',
+                    'data_makanan.waktu_makan',
+                    'data_makanan.menu',
+                    'selingan.nama_selingan',
+                    'selingan.protein',
+                    'selingan.karbohidrat',
+                    'selingan.lemak',
+                    'selingan.energi'
+                )->where('data_makanan.paket', $paket)->get();
+
+            $allSelingan[$paket] = $joindata;
+        }
+
+        //===================RUMUS MENGHITUNG BERAT SELINGAN====================//
+        $beratSelingan = [];
+        foreach ($allSelingan as $key => $values) {
+            foreach ($values as $value) {
+                $waktuMakan = $value->waktu_makan;
+                if ($waktuMakan == 'selingan pagi') {
+                    $beratSelingan[$key][] = ($selinganPagi / $value->energi) * 100;
+                } else {
+                    $beratSelingan[$key][] = ($selinganSore / $value->energi) * 100;
+                }
+            }
+        }
+
+
+        // ==============================================================================================//
+        //**************** MENGHITUNG TOTAL JUMLAH PROTEIN ***********************//
+        // ==============================================================================================//
+
+        //===================MENGAMBIL NILAI PROTEIN====================//
+        $protein_selingan = [];
+        foreach ($allSelingan as $paket => $items) {
+            foreach ($items as $item) {
+                if (!isset($protein_selingan[$paket])) {
+                    $protein_selingan[$paket] = [];
+                }
+                $protein_selingan[$paket][] = $item->protein;
+            }
+        }
+
+        //===================RUMUS MENGHITUNG PROTEIN SELINGAN====================//
+        $ProteinSelingan = [];
+        foreach ($beratSelingan as $key => $values) {
+            foreach ($values as $index => $berat) {
+                if (isset($protein_selingan[$key][$index])) {
+                    $ProteinSelingan[$key][] = ($berat / 100) * $protein_selingan[$key][$index];
+                }
+            }
+        }
+
+        //===================MENJUMLAHKAN PROTEIN PERPAKET====================//
+        $totalSelingan_Protein = [];
+        foreach ($ProteinSelingan as $key => $values) {
+            $totalSelingan_Protein[$key] = array_sum($values);
+        }
+
+        //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
+        $JumlahTotal_Protein = [];
+        // Mendapatkan kunci dari totalProteinMakanan
+        $keys = array_keys($totalProtein);
+        foreach ($totalProtein as $index => $valueSelingan) {
+            if (isset($keys[$index])) {
+                $keyMakanan = $keys[$index];
+                $JumlahTotal_Protein[$keyMakanan] = $valueSelingan + $totalProtein[$keyMakanan];
+            }
+        }
+
+        // ==============================================================================================//
+        //**************** MENGHITUNG TOTAL JUMLAH KARBOHIDRAT  ***********************//
+        // ==============================================================================================//
+
+        //===================MENGAMBIL NILAI KARBOHIDRAT====================//
+        $karbo_selingan = [];
+        foreach ($allSelingan as $paket => $items) {
+            foreach ($items as $item) {
+                if (!isset($karbo_selingan[$paket])) {
+                    $karbo_selingan[$paket] = [];
+                }
+                $karbo_selingan[$paket][] = $item->karbohidrat;
+            }
+        }
+
+        //===================RUMUS MENGHITUNG KARBO SELINGAN====================//
+        $KarboSelingan = [];
+        foreach ($beratSelingan as $key => $values) {
+            foreach ($values as $index => $berat) {
+                if (isset($karbo_selingan[$key][$index])) {
+                    $KarboSelingan[$key][] = ($berat / 100) * $karbo_selingan[$key][$index];
+                }
+            }
+        }
+
+        //===================MENJUMLAHKAN KARBO PERPAKET====================//
+        $totalSelingan_Karbo = [];
+        foreach ($KarboSelingan as $key => $values) {
+            $totalSelingan_Karbo[$key] = array_sum($values);
+        }
+
+        //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
+        $JumlahTotal_Karbo = [];
+        $keys = array_keys($totalKarbohidrat); // Mendapatkan kunci dari totalProteinMakanan
+        foreach ($totalKarbohidrat as $index => $valueSelingan) {
+            if (isset($keys[$index])) {
+                $keyMakanan = $keys[$index];
+                $JumlahTotal_Karbo[$keyMakanan] = $valueSelingan + $totalKarbohidrat[$keyMakanan];
+            }
+        }
+
+        // ==============================================================================================//
+        //              **************** MENGHITUNG TOTAL JUMLAH LEMAK  ***********************//
+        // ==============================================================================================//
+
+        //===================MENGAMBIL NILAI LEMAK====================//
+        $lemak_selingan = [];
+        foreach ($allSelingan as $paket => $items) {
+            foreach ($items as $item) {
+                if (!isset($lemak_selingan[$paket])) {
+                    $lemak_selingan[$paket] = [];
+                }
+                $lemak_selingan[$paket][] = $item->lemak;
+            }
+        }
+
+        //===================RUMUS MENGHITUNG LEMAK SELINGAN====================//
+        $LemakSelingan = [];
+        foreach ($beratSelingan as $key => $values) {
+            foreach ($values as $index => $berat) {
+                if (isset($lemak_selingan[$key][$index])) {
+                    $LemakSelingan[$key][] = ($berat / 100) * $lemak_selingan[$key][$index];
+                }
+            }
+        }
+
+        //===================MENJUMLAHKAN KARBO PERPAKET====================//
+        $totalSelingan_Lemak = [];
+        foreach ($LemakSelingan as $key => $values) {
+            $totalSelingan_Lemak[$key] = array_sum($values);
+        }
+
+        //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
+        $JumlahTotal_Lemak = [];
+        $keys = array_keys($totalLemak); // Mendapatkan kunci dari totalProteinMakanan
+        foreach ($totalLemak as $index => $valueSelingan) {
+            if (isset($keys[$index])) {
+                $keyMakanan = $keys[$index];
+                $JumlahTotal_Lemak[$keyMakanan] = $valueSelingan + $totalLemak[$keyMakanan];
+            }
+        }
+
+        // ==============================================================================================//
+                     //**************** MENGHITUNG TOTAL JUMLAH ENERGI  ***********************//
+        // ==============================================================================================//
+
+        //===================MENGAMBIL NILAI LEMAK====================//
+        $energi_selingan = [];
+        foreach ($allSelingan as $paket => $items) {
+            foreach ($items as $item) {
+                if (!isset($energi_selingan[$paket])) {
+                    $energi_selingan[$paket] = [];
+                }
+                $energi_selingan[$paket][] = $item->energi;
+            }
+        }
+
+        //===================RUMUS MENGHITUNG LEMAK SELINGAN====================//
+        $EnergiSelingan = [];
+        foreach ($beratSelingan as $key => $values) {
+            foreach ($values as $index => $berat) {
+                if (isset($energi_selingan[$key][$index])) {
+                    $EnergiSelingan[$key][] = ($berat / 100) * $energi_selingan[$key][$index];
+                }
+            }
+        }
+
+         //===================MENJUMLAHKAN KARBO PERPAKET====================//
+         $totalSelingan_Energi = [];
+         foreach ($EnergiSelingan as $key => $values) {
+             $totalSelingan_Energi[$key] = array_sum($values);
+         }
+
+         //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
+        $JumlahTotal_Energi = [];
+        $keys = array_keys($totalEnergi); // Mendapatkan kunci dari totalProteinMakanan
+        foreach ($totalEnergi as $index => $valueSelingan) {
+            if (isset($keys[$index])) {
+                $keyMakanan = $keys[$index];
+                $JumlahTotal_Energi[$keyMakanan] = $valueSelingan + $totalEnergi[$keyMakanan];
+            }
+        }
+
+        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi'));
         return $Hasil;
     }
 
 
-
-
-
     public function show(string $paket, Request $request)
     {
-        $data = DataMakanan::where('paket', 'LIKE', $paket)->get();
+        // $data = DataMakanan::where('paket', 'LIKE', $paket)->get();
 
         //query dibawah ini merupakan query join datamakanan dan submenu
         $joindata = DB::table('data_makanan')
@@ -207,7 +641,8 @@ class spkController extends Controller
                 'sub_menu.energi'
             )->get();
 
-            // dd($dataSelingan);
+        // dd($joindata);
+
         // Ambil nilai-nilai dari session untuk makan pagi
         $makananPokok_pagi = $request->session()->get('makananPokok_pagi');
         $lauk_pagi = $request->session()->get('lauk_pagi');
@@ -257,7 +692,6 @@ class spkController extends Controller
             ($Berat[10] / 100) * $joindata[10]->protein,
             ($Berat[11] / 100) * $joindata[11]->protein,
         ];
-      
 
         $Karbo = [
             ($Berat[0] / 100) * $joindata[0]->karbohidrat,
@@ -291,7 +725,7 @@ class spkController extends Controller
 
         $Energi = [
             ($Berat[0] / 100) * $joindata[0]->energi,
-            ($Berat[1] / 100) * $joindata[1]->energi,   
+            ($Berat[1] / 100) * $joindata[1]->energi,
             ($Berat[2] / 100) * $joindata[2]->energi,
             ($Berat[3] / 100) * $joindata[3]->energi,
             ($Berat[4] / 100) * $joindata[4]->energi,
@@ -303,27 +737,25 @@ class spkController extends Controller
             ($Berat[10] / 100) * $joindata[10]->energi,
             ($Berat[11] / 100) * $joindata[11]->energi,
         ];
-    
 
-         //query dibawah ini merupakan query join datamakanan dan selingan
+        //query dibawah ini merupakan query join datamakanan dan selingan
         $dataSelingan = DB::table('data_makanan')
-         ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
-         ->where('data_makanan.paket', '=', $paket)
-         ->where(function ($query) {
-             $query->where('data_makanan.waktu_makan', 'LIKE', 'selingan pagi')
-                   ->orWhere('data_makanan.waktu_makan', 'LIKE', 'selingan sore');
-         })
-         ->select(
-             'data_makanan.paket', 
-             'data_makanan.waktu_makan', 
-             'data_makanan.menu',
-             'selingan.protein', 
-             'selingan.karbohidrat', 
-             'selingan.lemak', 
-             'selingan.energi'
-         )->get();
+            ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+            ->where('data_makanan.paket', '=', $paket)
+            ->where(function ($query) {
+                $query->where('data_makanan.waktu_makan', 'LIKE', 'selingan pagi')
+                    ->orWhere('data_makanan.waktu_makan', 'LIKE', 'selingan sore');
+            })
+            ->select(
+                'data_makanan.paket',
+                'data_makanan.waktu_makan',
+                'data_makanan.menu',
+                'selingan.protein',
+                'selingan.karbohidrat',
+                'selingan.lemak',
+                'selingan.energi'
+            )->get();
 
-        //  dd($dataSelingan);
         //mengambil session selingan 
         $selinganPagi = $request->session()->get('selingan_pagi');
         $selinganSore = $request->session()->get('selingan_sore');
@@ -332,23 +764,24 @@ class spkController extends Controller
             ($selinganPagi / $dataSelingan[0]->energi) * 100,
             ($selinganSore / $dataSelingan[1]->energi) * 100,
         ];
-        $ProteinSelingan= [
+
+        $ProteinSelingan = [
             ($BeratSelingan[0] / 100) * $dataSelingan[0]->protein,
             ($BeratSelingan[1] / 100) * $dataSelingan[1]->protein,
         ];
-        $KarbohidratSelingan= [
+        $KarbohidratSelingan = [
             ($BeratSelingan[0] / 100) * $dataSelingan[0]->karbohidrat,
             ($BeratSelingan[1] / 100) * $dataSelingan[1]->karbohidrat,
         ];
-        $LemakSelingan= [
+        $LemakSelingan = [
             ($BeratSelingan[0] / 100) * $dataSelingan[0]->lemak,
             ($BeratSelingan[1] / 100) * $dataSelingan[1]->lemak,
         ];
-        $EnergiSelingan= [
+        $EnergiSelingan = [
             ($BeratSelingan[0] / 100) * $dataSelingan[0]->energi,
             ($BeratSelingan[1] / 100) * $dataSelingan[1]->energi,
         ];
-       
-        return view('website.user.submenu', compact('joindata', 'Berat', 'Protein', 'Karbo', 'Lemak', 'Energi','dataSelingan','BeratSelingan','ProteinSelingan','KarbohidratSelingan','LemakSelingan','EnergiSelingan'));
+
+        return view('website.user.submenu', compact('joindata', 'Berat', 'Protein', 'Karbo', 'Lemak', 'Energi', 'dataSelingan', 'BeratSelingan', 'ProteinSelingan', 'KarbohidratSelingan', 'LemakSelingan', 'EnergiSelingan'));
     }
 }
