@@ -4,7 +4,7 @@
     <div class="content-wrapper">
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
-                <div class="col ">
+                <div class="col-12">
                     <div class="alert alert-success" role="alert">
                         <div class="text-modal-container">
                             <h5 style="color: rgb(100, 100, 4)">
@@ -54,8 +54,8 @@
                                         </div>
                                     </div>
                                 </div>
+                            </h5>
                         </div>
-                        </h5>
                     </div>
 
                     <div class="card mb-0  shadow">
@@ -162,141 +162,203 @@
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="row">
                 <div class="col">
-                    <div class="card mb-4  shadow">
-                        <div class="card-header  d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#Kebutuhan Kalori</h5>
-                        </div>
-                        <div class="card-body">
-                            <form>
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold" for="basic-default-fullname">BMR balita</label> <br>
-                                    <h3><span
-                                            class="badge bg-label-primary me-3">{{ isset($nilaibmr) ? $nilaibmr : '-' }}</span>
-                                    </h3>
-                                    {{-- <h3>{{ isset($nilaibmr) ? $nilaibmr : '-' }}</h3> --}}
+                    <div class="card mb-4 shadow">
+                        <div>
+                            <div class="card-header  d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#Kebutuhan Kalori
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold" for="basic-default-fullname">BMR balita</label>
+                                        <br>
+                                        <h3><span
+                                                class="badge bg-label-primary me-3">{{ isset($nilaibmr) ? $nilaibmr : '-' }}</span>
+                                        </h3>
+                                        {{-- <h3>{{ isset($nilaibmr) ? $nilaibmr : '-' }}</h3> --}}
 
-                                    <label class="form-label fw-bold" for="basic-default-fullname">Total Kebutuhan kalori
-                                        balita</label>
-                                    <h3><span class="badge bg-label-warning me-3">{{ isset($tdee) ? $tdee : '-' }}</span>
-                                    </h3>
-                                    {{-- <h3>{{ isset($tdee) ? $tdee : '-' }}</h3> --}}
-                                    <label class="form-label fw-bold" for="basic-default-fullname">Distribusi kalori per
-                                        waktu
-                                        makan</label>
-                                    <div class="table-responsive text-nowrap me-3">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>makan pagi</th>
-                                                    <th>selingan pagi</th>
-                                                    <th>makan siang</th>
-                                                    <th>selingan sore</th>
-                                                    <th>makan malam</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>{{ isset($nilaiWaktu[0]) ? $nilaiWaktu[0] : '-' }}</td>
-                                                    <td>{{ isset($nilaiWaktu[1]) ? $nilaiWaktu[1] : '-' }}</td>
-                                                    <td>{{ isset($nilaiWaktu[2]) ? $nilaiWaktu[2] : '-' }}</td>
-                                                    <td>{{ isset($nilaiWaktu[3]) ? $nilaiWaktu[3] : '-' }}</td>
-                                                    <td>{{ isset($nilaiWaktu[4]) ? $nilaiWaktu[4] : '-' }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <br>
-                                    <hr>
-                                    <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#Persentase isi
-                                        piring balita 2-5 tahun</h5>
-                                    <h6>pada persentase isi piring dalam menyusun menu untuk balita 2-5 yaitu makanan pokok
-                                        sebanyak 35%, lauk 35%, sayur 15% dan buah 15%</h6>
-
-                                    <!-- Small table -->
-
-                                    <div class="card">
-
-                                        <div class="table-responsive text-nowrap">
-                                            <table class="table table-sm">
+                                        <label class="form-label fw-bold" for="basic-default-fullname">Total Kebutuhan
+                                            kalori
+                                            balita</label>
+                                        <h3><span
+                                                class="badge bg-label-warning me-3">{{ isset($tdee) ? $tdee : '-' }}</span>
+                                        </h3>
+                                        {{-- <h3>{{ isset($tdee) ? $tdee : '-' }}</h3> --}}
+                                        <label class="form-label fw-bold" for="basic-default-fullname">Distribusi kalori
+                                            per
+                                            waktu
+                                            makan</label>
+                                        <div class="table-responsive text-nowrap me-3">
+                                            <table class="table table-bordered">
                                                 <thead>
-                                                    <tr class="">
-                                                        <th>Jadwal Makan</th>
-                                                        <th>Makanan Pokok (kkal)</th>
-                                                        <th>Lauk (kkal)</th>
-                                                        <th>Sayur (kkal)</th>
-                                                        <th>Buah(kkal)</th>
+                                                    <tr>
+                                                        <th>makan pagi</th>
+                                                        <th>selingan pagi</th>
+                                                        <th>makan siang</th>
+                                                        <th>selingan sore</th>
+                                                        <th>makan malam</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody class="table-border-bottom-0">
+                                                <tbody>
                                                     <tr>
-                                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>Makan
-                                                                Pagi</strong></td>
-                                                        <td>{{ isset($nilaiisipiring[0]) ? $nilaiisipiring[0] : '-' }}</td>
-                                                        <td>{{ isset($nilaiisipiring[1]) ? $nilaiisipiring[1] : '-' }}</td>
-                                                        <td>{{ isset($nilaiisipiring[2]) ? $nilaiisipiring[2] : '-' }}</td>
-                                                        <td>{{ isset($nilaiisipiring[3]) ? $nilaiisipiring[3] : '-' }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>Makan
-                                                                Siang</strong></td>
-                                                        <td>{{ isset($nilaiisipiring[4]) ? $nilaiisipiring[4] : '-' }}</td>
-                                                        <td>{{ isset($nilaiisipiring[5]) ? $nilaiisipiring[5] : '-' }}</td>
-                                                        <td>{{ isset($nilaiisipiring[6]) ? $nilaiisipiring[6] : '-' }}</td>
-                                                        <td>{{ isset($nilaiisipiring[7]) ? $nilaiisipiring[7] : '-' }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i><strong>Makan
-                                                                Malam</strong></td>
-                                                        <td>{{ isset($nilaiisipiring[8]) ? $nilaiisipiring[8] : '-' }}</td>
-                                                        <td>{{ isset($nilaiisipiring[9]) ? $nilaiisipiring[9] : '-' }}</td>
-                                                        <td>{{ isset($nilaiisipiring[10]) ? $nilaiisipiring[10] : '-' }}
-                                                        </td>
-                                                        <td>{{ isset($nilaiisipiring[11]) ? $nilaiisipiring[11] : '-' }}
-                                                        </td>
+                                                        <td>{{ isset($nilaiWaktu[0]) ? $nilaiWaktu[0] : '-' }}</td>
+                                                        <td>{{ isset($nilaiWaktu[1]) ? $nilaiWaktu[1] : '-' }}</td>
+                                                        <td>{{ isset($nilaiWaktu[2]) ? $nilaiWaktu[2] : '-' }}</td>
+                                                        <td>{{ isset($nilaiWaktu[3]) ? $nilaiWaktu[3] : '-' }}</td>
+                                                        <td>{{ isset($nilaiWaktu[4]) ? $nilaiWaktu[4] : '-' }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <br>
+                                        <hr>
+                                        <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#Persentase
+                                            isi
+                                            piring balita 2-5 tahun</h5>
+                                        <h6>pada persentase isi piring dalam menyusun menu untuk balita 2-5 yaitu makanan
+                                            pokok
+                                            sebanyak 35%, lauk 35%, sayur 15% dan buah 15%</h6>
+
+                                        <!-- Small table -->
+
+                                        <div class="card">
+
+                                            <div class="table-responsive text-nowrap">
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr class="">
+                                                            <th>Jadwal Makan</th>
+                                                            <th>Makanan Pokok (kkal)</th>
+                                                            <th>Lauk (kkal)</th>
+                                                            <th>Sayur (kkal)</th>
+                                                            <th>Buah(kkal)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-border-bottom-0">
+                                                        <tr>
+                                                            <td><i
+                                                                    class="fab fa-angular fa-lg text-danger me-3"></i><strong>Makan
+                                                                    Pagi</strong></td>
+                                                            <td>{{ isset($nilaiisipiring[0]) ? $nilaiisipiring[0] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[1]) ? $nilaiisipiring[1] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[2]) ? $nilaiisipiring[2] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[3]) ? $nilaiisipiring[3] : '-' }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><i
+                                                                    class="fab fa-angular fa-lg text-danger me-3"></i><strong>Makan
+                                                                    Siang</strong></td>
+                                                            <td>{{ isset($nilaiisipiring[4]) ? $nilaiisipiring[4] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[5]) ? $nilaiisipiring[5] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[6]) ? $nilaiisipiring[6] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[7]) ? $nilaiisipiring[7] : '-' }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><i
+                                                                    class="fab fa-angular fa-lg text-danger me-3"></i><strong>Makan
+                                                                    Malam</strong></td>
+                                                            <td>{{ isset($nilaiisipiring[8]) ? $nilaiisipiring[8] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[9]) ? $nilaiisipiring[9] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[10]) ? $nilaiisipiring[10] : '-' }}
+                                                            </td>
+                                                            <td>{{ isset($nilaiisipiring[11]) ? $nilaiisipiring[11] : '-' }}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!--/ Small table -->
+
                                     </div>
-                                    <!--/ Small table -->
 
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="card-header  d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL BERAT MENU </h5>
+                                </form>
+                            </div>
                         </div>
 
-
-                        <div class="table-responsive text-nowrap mx-5 mb-5">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Paket</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-1">
-                                    @php
-                                        $no = 1;
-                                    @endphp
-                                    @foreach ($query as $item)
+                        <div>
+                            <div class="card-header  d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL ALTERNATIF
+                                </h5>
+                            </div>
+                            <div class="table-responsive text-nowrap mx-5 mb-5">
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $no++ }}</td>
-                                            <td>{{ $item }}</td>
-                                            <td>
-                                                <a href="{{ url('show', ['paket'=> $item]) }}"
-                                                    class="btn btn-info btn-sm">
-                                                    <i class="fa-solid fa-eye"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            <th>No</th>
+                                            <th>Paket</th>
+                                            <th>Total Protein</th>
+                                            <th>Total Karbohidrat</th>
+                                            <th>Total Lemak</th>
+                                            <th>TotaL Energi</th>
 
-                                </tbody>
-                            </table>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-1">
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @for ($i = 0; $i < count($query); $i++)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $query[$i] }}</td>
+                                                <td>{{ $JumlahTotal_Protein[$i] }}</td>
+                                                <td>{{ $JumlahTotal_Karbo[$i] }}</td>
+                                                <td>{{ $JumlahTotal_Lemak[$i] }}</td>
+                                                <td>{{ $JumlahTotal_Energi[$i] }}</td>
+                                            </tr>
+                                        @endfor
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="card-header  d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL MENU YANG
+                                    DIREKOMENDASIKAN</h5>
+                            </div>
+
+                            <div class="table-responsive text-nowrap mx-5 mb-5">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Paket</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-1">
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @foreach ($query as $item)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $item }}</td>
+                                                <td>
+                                                    <a href="{{ url('show', ['paket' => $item]) }}"
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
