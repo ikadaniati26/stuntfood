@@ -11,7 +11,7 @@
       @endif
 
       <div class="card">
-        <h5 class="card-header mb-0">#Data Paket Menu Makanan</h5>
+        <h5 class="card-header mb-0">#Data Paket Menu Makanan{{ session('auth_user') }}</h5>
       
         <div class="table-responsive text-nowrap">
           <a href="{{ url('created') }}">
@@ -23,7 +23,7 @@
                 <th>Nomor</th>
                 <th>Paket</th>
                 <th>Waktu makan</th>
-                <th>Nama Makanan</th>
+                <th>Namaa Makanan</th>
                 <th>protein</th>
                 <th>karbohidrat</th>
                 <th>lemak</th>
@@ -40,7 +40,7 @@
                   <td>{{ $no++ }}</td>
                   <td>{{ $item->paket }}</td>
                   <td>{{ $item->waktu_makan }}</td>
-                  <td>{{ $item->nama_makanan }}</td>
+                  <td>{{ $item->nmenu }}</td>
                   <td>{{ $item->protein }}</td>
                   <td>{{ $item->lemak }}</td>
                   <td>{{ $item->karbohidrat }}</td>
