@@ -49,15 +49,16 @@
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
-      {{-- <nav id="navbar" class="navbar">
+      <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#features">Features</a></li>
-          <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
+          <li><a class="nav-link scrollto active" href="#hero">Beranda</a></li>
+          <li><a class="nav-link scrollto" href="#info">Apa itu Stunting</a></li>
+          <li><a class="nav-link scrollto" href="#konsep">Konsep Isi Piring</a></li>
+          <li><a class="nav-link scrollto" href="#fitur">Fitur Aplikasi</a></li>
+          {{-- <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
           <li><a class="nav-link scrollto" href="#team">Team</a></li>
-          <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li> --}}
+          <li class="dropdown"><a href="#"><span>Artikel</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
@@ -74,15 +75,15 @@
               <li><a href="#">Drop Down 4</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          {{-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> --}}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar --> --}}
+      </nav><!-- .navbar -->
 
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= Hero Section ======= -->
+  <!-- ======= Hero Section ========== -->
   <section id="hero">
 
     <div class="container">
@@ -120,49 +121,80 @@
   </section><!-- End Hero -->
 
   <main id="main">
-
     <!-- ======= About Section ======= -->
-    <section id="about" class="about">
+    <section id="info" class="about">
       <div class="container-fluid">
 
         <div class="row">
-          <div class="col-xl-6 col-lg-6  d-flex justify-content-center align-items-stretch " data-aos="fade-right">
+          <div class="col-xl-4 col-lg-4  d-flex justify-content-center align-items-stretch " data-aos="fade-right">
             <img src="{{ asset('/public/assets/img/gambar/cs.png')}}" width="500" height="500" >
             {{-- <a href="https://www.youtube.com/watch?v=StpBR2W8G5A" class="glightbox play-btn mb-4"></a> --}}
           
           </div>
 
-          <div class="col-xl-6 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5" data-aos="fade-left">
+          <div class="col-xl-8 col-lg-8 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-3 px-lg-5" data-aos="fade-left">
 
-            <h3>Apa itu Stunting?</h3>
-            <p>Stunting adalah kondisi yang ditandai dengan kurangnya tinggi badan anak apabila dibandingkan dengan anak-anak seusianya. Sederhananya, stunting merupakan sebutan bagi gangguan pertumbuhan pada anak. Penyebab utama dari stunting adalah kurangnya asupan nutrisi selama masa pertumbuhan anak.
+          <h3>Apa itu Stunting?</h3>
+            <p>Stunting adalah kondisi yang ditandai dengan kurangnya tinggi badan anak apabila dibandingkan dengan anak-anak seusianya.   Sederhananya, stunting merupakan sebutan bagi gangguan pertumbuhan pada anak.
+              Penyebab utama dari stunting adalah kurangnya asupan nutrisi selama masa pertumbuhan anak. Banyak yang tidak menyadari bahwa tinggi pendeknya anak bisa menjadi tanda adanya masalah gizi kronis.
+              Perlu diingat bahwa anak pendek belum tentu mengalami stunting. Namun anak yang mengidap stunting pasti berperawakan pendek. Anak dengan asupan gizi terbatas sejak kecil dan telah berlangsung lama berisiko mengalami pertumbuhan yang terhambat.
             </p>
 
-            <h3>Stunting dan dampaknya?</h3>
-              <p>Menurut Kemenkes Stunting merupakan kondisi yang terjadi akibat kekurangan gizi kronis dan sering mengalami infeksi, ditandai dengan pertumbuhan dan perkembangan fisik anak yang tidak mencapai standar. Dampaknya sangat signifikan terhadap tumbuh kembang anak, termasuk peningkatan resiko penyakit, gangguan kecerdasan, serta fungsi tubuh yang tidak optimal. 
-              </p>
-
-            <h3>Faktor Penyebab Stunting</h3>
-            <p>
-              Stunting pada anak dipengaruhi oleh sejumlah faktor baik dari lingkungan eksternal maupun internal yang sebenarnya dapat di cegah dah diperbaiki, antara lain:
-            </p>
+          <h3>Cara Mencegah Stunting?</h3>
+            <p>  
+              Cara mencegah stunting dapat dilakukan dengan menerapkan beberapa upaya berikut ini:
               <ol>
-                <li>kurangnya asupan gizi yang disebabkan oleh kurangnya pengetahuan terhadap gizi</li>
-                <li>infeksi yang berulang</li>
-                <li>Terbatas dalam mendapatkan pelayanan kesehatan</li>
-                <li>Pola asuh yang salah</li>
-                <li>kurangnya pengetahuan tentang Perilaku Hidup Bersih dan Sehat (PHBS).</li>
-              </ol>
+                <li>Memastikan anak memakan buah dan sayur yang sehat</li>
+                <li>Mencukupi asupan gizi sejak pembuahan sel telur hingga anak berusia 2 tahun</li>
+                <li>Memberikan ASI eksklusif hingga bayi berumur 6 bulan</li>
+                <li>Mengusahakan anak mendapatkan imunisasi lengkap</li>
+              </ol>             
+            </p>
+      </div>
+    </section>
+    <!-- End About Section -->
+
+    <!-- ======konsep isi piring ===== -->
+    <section id="konsep" class="about">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-7 col-lg-7  d-flex justify-content-center align-items-stretch " data-aos="fade-right">
+            <img src="{{ asset('/public/assets/img/gambar/gambarposter.jpg')}}" width="700" height="500" >
+          </div>
+          <div class="col-xl-5 col-lg-5 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-3 px-lg-5" data-aos="fade-left">
+          <h3>Isi Piringku Balita 2-5 Tahun</h3>
+          <p>
+             Pada usia 2-5 tahun, lima aspek utama yang perlu diperhatikan yaitu kemampuan berbahasa, kemampuan sensorik, kemampuan kognitif, kemampuan fisik serta kemampuan sosial emosional.
+          </p>
+            <p>Berdasarkan survei studi status Gizi Indonesia, prevalensi stunting atau gizi buruk di indonesia saat ini mencapai 24,4 persen,  isi piringku merupakan suatu program dari pemerintah untuk mengetahui bagaimana porsi makan yang tepat untuk memenuhi kebutuhan gizi. salah satu penunjang kebutuhan gizinya. melalui program isi piringku dengan harapan kebutuhan gizi balita tercukupi dan bebas dari permasalahan gizi buruk.
+            </p>
+            <p>
+              Adapun dalam anjuran program ISI PIRINGKU untuk balita usia 2-5 tahun ialah dalam memberikan makanan utama adalah3-4 kali sehari, dan 1-2 kali makanan selingan, Protein Hewani, dimana protein hewani dinilai efektif dalam mencegah anak mengalami stunting. 
+            </p>
           </div>
         </div>
+    </section>
+    <!--  ======end isi piring ===== -->
 
+   <!-- ======= Fitur Aplikasi ======= -->
+   <section id="fitur" class="about">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xl-5 col-lg-5 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-3 px-lg-5" data-aos="fade-left">
+        <h3>Fitur Aplikasi_ _ _ _</h3>
+        
+        <p>
+           Pada usia 2-5 tahun, lima aspek utama yang perlu diperhatikan yaitu kemampuan berbahasa, kemampuan sensorik, kemampuan kognitif, kemampuan fisik serta kemampuan sosial emosional.
+        </p>
+          
+        </div>
       </div>
-    </section><!-- End About Section -->
+  </section>
+    <!-- ===== End Fitur Aplikasi ==== -->
 
-    
-   
 
-  </main><!-- End #main -->
+  </main>
+  <!-- End #main -->
 
   <!-- ======= Footer ======= -->
   {{-- <footer id="footer">

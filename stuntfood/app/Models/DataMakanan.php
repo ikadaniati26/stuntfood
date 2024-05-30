@@ -12,6 +12,4 @@ class DataMakanan extends Model
     public $timestamps = false;
     protected $table = "data_makanan";
     protected $fillable = ['idData_makanan','paket','waktu_makan', 'menu'];
-
-
 }

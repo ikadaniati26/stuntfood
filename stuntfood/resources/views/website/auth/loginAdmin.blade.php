@@ -139,7 +139,8 @@
               <h4 class="mb-2">Welcome Admin..👋</h4>
               <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-              <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
+              <form id="formAuthentication" class="mb-3" action="{{ url('/login') }}" method="POST">
+                @csrf
                 <div class="mb-3">
                   <label for="email" name="name" class="form-label">Username</label>
                   <input
