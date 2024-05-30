@@ -31,7 +31,7 @@
         <ul class="navbar-nav flex-row align-items-center ms-auto">
           <!-- Place this tag where you want the button to render. -->
           <li class="nav-item lh-1 me-3">
-            <a
+            {{-- <a
               class="github-button"
               href="https://github.com/themeselection/sneat-html-admin-template-free"
               data-icon="octicon-star"
@@ -39,7 +39,9 @@
               data-show-count="true"
               aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
               >Star</a
-            >
+            > --}}
+            <a href="{{ route('logout') }}"><button type="button" class="btn btn-danger">Keluar</button>
+            </a>
           </li>
 
           <!-- User -->

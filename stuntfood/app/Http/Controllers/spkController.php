@@ -608,13 +608,20 @@ class spkController extends Controller
 
          //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
         $JumlahTotal_Energi = [];
-        $keys = array_keys($totalEnergi); // Mendapatkan kunci dari totalProteinMakanan
-        foreach ($totalEnergi as $index => $valueSelingan) {
-            if (isset($keys[$index])) {
-                $keyMakanan = $keys[$index];
-                $JumlahTotal_Energi[$keyMakanan] = $valueSelingan + $totalEnergi[$keyMakanan];
-            }
+        $indexSelingan = array_values($totalSelingan_Energi); //Merubah index array ke numeric
+        for ($i=0; $i < count($indexSelingan); $i++) { 
+            $JumlahTotal_Energi[$i] = $totalEnergi[$i] . '+' . $indexSelingan[$i];
         }
+
+        // $keys = array_keys($totalSelingan_Energi); // Mendapatkan kunci dari totalProteinMakanan
+        // foreach ($totalSelingan_Energi as $index => $valueSelingan) {
+        //     if (isset($keys[$index])) {
+        //         $keyMakanan = $keys[$index];
+        //         $JumlahTotal_Energi[$keyMakanan] = $valueSelingan + $totalEnergi[$keyMakanan];
+        //     }
+        // }
+
+        // dd($JumlahTotal_Energi);
 
         $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi'));
         return $Hasil;

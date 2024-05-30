@@ -23,30 +23,34 @@ Route::get('/', function () {
     return view('landingpage.lp');
 });
 
-Route::get('/spk', [spkController::class,'index'])->name('form_user');
-Route::post('/proses', [spkController::class,'proses'])->name('proses');
-Route::get('/show/{id}', [spkController::class,'show'])->name('detail');
+//========== Login ==============// 
+Route::post('/login', [authController::class, 'login'])->name('login');
+Route::get('/login', [authController::class, 'index'])->name('form_login');
+Route::get('/logout', [authController::class, 'logout'])->name('logout');
+
+
+//========== AI ==============// 
+Route::get('/spk', [spkController::class, 'index'])->name('form_user');
+Route::post('/proses', [spkController::class, 'proses'])->name('proses');
+Route::get('/show/{id}', [spkController::class, 'show'])->name('detail');
 // Route::get('/submenu/{id}', [spkController::class,'submenu'])->name('submenu');
-Route::get('/submenu/{id}', [spkController::class,'proses'])->name('submenu');
-Route::get('/show/{paket}', [spkController::class,'show']);
-Route::post('/login',[authController::class,'login'])->name('login');
+Route::get('/submenu/{id}', [spkController::class, 'proses'])->name('submenu');
+Route::get('/show/{paket}', [spkController::class, 'show']);
 
-
-
-// //========== Admin ==============// 
-Route::get('/prosesadmin', [AdminController::class,'store'])->name('prosesadmin');
-Route::get('created',[AdminController::class,'create']);
+//========== Admin ==============// 
+Route::get('/prosesadmin', [AdminController::class, 'store'])->name('prosesadmin');
+Route::get('created', [AdminController::class, 'create']);
 Route::post('/simpan', [AdminController::class, 'store'])->name('store');
-Route::get('datamakananadmin',[AdminController::class,'datamakanan']);
-Route::view('/login','website.auth.loginAdmin')->name('form_login');
 
+Route::middleware(['customAuth'])->group(function () {
+    //============ CRUD ===============//
+    Route::get('datamakananadmin', [AdminController::class, 'datamakanan']);
+    Route::get('/editDataMakanan/{id}', [AdminController::class, 'edit'])->name('edit');
+    Route::patch('/update/{id}', [AdminController::class, 'update'])->name('update');
+    Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('hapus');
 
-//============ CRUD ===============//
-Route::get('/editDataMakanan/{id}', [AdminController::class, 'edit'])->name('edit');
-Route::patch('/update/{id}', [AdminController::class, 'update'])->name('update');
-Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('hapus');
-
-Route::post('/prosesadmin',[AdminController::class, 'prosesForm'])->name('prosesadmin');
+    Route::post('/prosesadmin', [AdminController::class, 'prosesForm'])->name('prosesadmin');
+});
 
 
 //=========== PERHITUNGAN =========//
