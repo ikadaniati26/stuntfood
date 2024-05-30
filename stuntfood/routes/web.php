@@ -33,37 +33,21 @@ Route::get('/logout', [authController::class, 'logout'])->name('logout');
 Route::get('/spk', [spkController::class, 'index'])->name('form_user');
 Route::post('/proses', [spkController::class, 'proses'])->name('proses');
 Route::get('/show/{id}', [spkController::class, 'show'])->name('detail');
-// Route::get('/submenu/{id}', [spkController::class,'submenu'])->name('submenu');
 Route::get('/submenu/{id}', [spkController::class, 'proses'])->name('submenu');
 Route::get('/show/{paket}', [spkController::class, 'show']);
 
-//========== Admin ==============// 
-Route::get('/prosesadmin', [AdminController::class, 'store'])->name('prosesadmin');
-Route::get('created', [AdminController::class, 'create']);
-Route::post('/simpan', [AdminController::class, 'store'])->name('store');
-
 Route::middleware(['customAuth'])->group(function () {
+    //========== Admin ==============// 
+    Route::post('/prosesadmin', [AdminController::class, 'store'])->name('prosesadmin');
+    Route::get('created', [AdminController::class, 'create']);
+
     //============ CRUD ===============//
     Route::get('datamakananadmin', [AdminController::class, 'datamakanan']);
     Route::get('/editDataMakanan/{id}', [AdminController::class, 'edit'])->name('edit');
     Route::patch('/update/{id}', [AdminController::class, 'update'])->name('update');
     Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('hapus');
-
-    Route::post('/prosesadmin', [AdminController::class, 'prosesForm'])->name('prosesadmin');
 });
 
 
 //=========== PERHITUNGAN =========//
 Route::get('/data-makanan', [spkController::class, 'subMenu']);
-
-
-// Route::view('index', 'website.user.datamakanan')->name('dashboarduser');
-// Route::view('/datamakanan', '/user/datamakanan');
-
-//=============== LP ===============//
-// Route::view('/spk', 'website.user.spk')->name('form_user');
-// Route::get('/spk', [spkController::class, 'index'])->name('form_user');
-
-// Route::get('datamakananuser',[spkController::class,'datamakananuser']);
-
-// Route::view('/form','admin.formInput')->name('form');

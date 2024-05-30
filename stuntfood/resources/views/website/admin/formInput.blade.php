@@ -17,11 +17,10 @@
                             <h5 class="fw-bold">#Form Input Menu Pagi</h5>
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
-                               
+                            <div class="col-md-2">                            
                                 <div class="mb-3">
                                     <label for="paket" class="form-label">Paket</label>
-                                    <select class="form-control" name="paket_pagi">
+                                    <select class="form-control" name="paket">
                                         <option value="A" >Paket A</option>
                                         <option value="B" >Paket B</option>
                                         <option value="C" >Paket C</option>
@@ -33,7 +32,8 @@
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <label for="waktu_makan" class="form-label">Waktu Makan</label>
-                                    <input type="text" class="form-control" name="waktumakan_pagi">
+                                    <input type="text" class="form-control" value="makan pagi" disabled>
+                                    <input type="hidden" name="waktumakan_pagi" value="makan pagi">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -50,13 +50,13 @@
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-around">
                                         <div class="me-2">
-                                            <label for="nama_makanan" class="form-label">Nama makanan</label>
+                                            <label for="nama_makanan" class="form-label">Nama</label>
                                             <input type="text" class="form-control me-3" name="mp_pagi">
                                         </div>
                                         <div class="me-2">
                                             <label for="jenis_makanan" class="form-label">Jenis Makanan</label>
                                             <input type="text" class="form-control me-3" value="makananpokok" disabled >
-                                            <input type="hidden"  value="makananpokok" name="jmp_pagi">
+                                            <input type="hidden"  value="makananpokok" name="j_mp">
                                         </div>
                                         <div class="me-2">
                                             <label for="protein" class="form-label">Protein</label>
@@ -74,9 +74,6 @@
                                             <label for="karbo" class="form-label">energi</label>
                                             <input type="text" class="form-control" name="energimp_pagi">
                                         </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
-                                        </div>
                                     </div>
                                 </div>
                                 {{-- lauk --}}
@@ -87,7 +84,7 @@
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" value="lauk"  disabled >
-                                            <input type="hidden" value="lauk" name="jlauk_pagi">
+                                            <input type="hidden" value="lauk" name="j_lauk">
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" name="proteinlauk_pagi">
@@ -101,9 +98,6 @@
                                         <div class="">
                                             <input type="text" class="form-control" name="energilauk_pagi">
                                         </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
-                                        </div>
                                     </div>
                                 </div>
                                 {{-- sayur --}}
@@ -114,7 +108,7 @@
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" value="sayur" disabled>
-                                            <input type="hidden" value="sayur" name="jsyr_pagi">
+                                            <input type="hidden" value="sayur" name="j_sayur">
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" name="proteinsyr_pagi">
@@ -128,9 +122,6 @@
                                         <div class="">
                                             <input type="text" class="form-control" name="energisyr_pagi">
                                         </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
-                                        </div>
                                     </div>
                                 </div>
                                 {{-- buah --}}
@@ -141,7 +132,7 @@
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" value="buah" disabled>
-                                            <input type="hidden" name="jbuah_pagi" value="lauk">
+                                            <input type="hidden" name="j_buah" value="lauk">
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" name="proteinbuah_pagi">
@@ -164,7 +155,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             {{-- form input siang --}}
@@ -175,16 +165,11 @@
                             <h5 class="fw-bold">#Form Input Menu Siang</h5>
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="paket" class="form-label">Paket</label>
-                                    <select class="form-control" name="paketsiang">
-                                        <option value="A">Paket A</option>
-                                        <option value="B">Paket B</option>
-                                        <option value="C">Paket C</option>
-                                        <option value="D">Paket D</option>
-                                        <option value="E">Paket E</option>
-                                    </select>
+                                    <label for="waktu_makan" class="form-label">Waktu Makan</label>
+                                    <input type="text" class="form-control" value="makan siang" disabled>
+                                    <input type="hidden" name="waktumakan_siang" value="makan siang">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -325,16 +310,11 @@
                             <h5 class="fw-bold">#Form Input Menu Malam</h5>
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="paket" class="form-label">Paket</label>
-                                    <select class="form-control" name="paket_malam">
-                                        <option value="A">Paket A</option>
-                                        <option value="B">Paket B</option>
-                                        <option value="C">Paket C</option>
-                                        <option value="D">Paket D</option>
-                                        <option value="E">Paket E</option>
-                                    </select>
+                                    <label for="waktu_makan" class="form-label">Waktu Makan</label>
+                                    <input type="text" class="form-control" value="makan malam" disabled>
+                                    <input type="hidden" name="waktumakan_malam" value="makan malam">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -475,16 +455,11 @@
                             <h5 class="fw-bold">#Form Input Selingan pagi</h5>
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="paket" class="form-label">Paket</label>
-                                    <select class="form-control" name="paketselingan_pagi">
-                                        <option value="A">Paket A</option>
-                                        <option value="B">Paket B</option>
-                                        <option value="C">Paket C</option>
-                                        <option value="D">Paket D</option>
-                                        <option value="E">Paket E</option>
-                                    </select>
+                                    <label for="waktu_makan" class="form-label">Waktu Selingan</label>
+                                    <input type="text" class="form-control" value="selingan pagi" disabled>
+                                    <input type="hidden" name="selingan pagi" value="selingan pagi">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -539,16 +514,11 @@
                             <h5 class="fw-bold">#Form Input Selingan Sore</h5>
                         </div>
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="paket" class="form-label">Paket</label>
-                                    <select class="form-control" name="paketselingan_sore">
-                                        <option value="A">Paket A</option>
-                                        <option value="B">Paket B</option>
-                                        <option value="C">Paket C</option>
-                                        <option value="D">Paket D</option>
-                                        <option value="E">Paket E</option>
-                                    </select>
+                                    <label for="waktu_makan" class="form-label">Waktu Sore</label>
+                                    <input type="text" class="form-control" value="selingan sore" disabled>
+                                    <input type="hidden" name="selingan sore" value="selingan sore">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -596,8 +566,8 @@
         </div>
         <!-- Tombol untuk menyalin form -->
         <div class="container d-flex  gap-2 mt-3 mx-4">
-            <button type="button" class="btn btn-primary " id="copyForm"
-                style="background-color: blue">TambahForm</button>
+            {{-- <button type="button" class="btn btn-primary " id="copyForm"
+                style="background-color: blue">TambahForm</button> --}}
             <button type="submit" class="btn btn-success" id="submitButton"
                 style="background-color: green">Submit</button>
         </div>

@@ -11,34 +11,6 @@ use PhpParser\Node\Stmt\Foreach_;
 
 class spkController extends Controller
 {
-    public function __construct(Request $request)
-    {
-        // $paketList = DataMakanan::distinct()->pluck('paket');
-        // $allJoinData = [];
-
-        // foreach ($paketList as $paket) {
-        //     $joindata = DB::table('data_makanan')
-        //         ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
-        //         ->where('data_makanan.paket', $paket)
-        //         ->select(
-        //             'data_makanan.paket',
-        //             'data_makanan.waktu_makan',
-        //             'data_makanan.menu',
-        //             'sub_menu.nama_makanan',
-        //             'sub_menu.jenis_makanan',
-        //             'sub_menu.protein',
-        //             'sub_menu.karbohidrat',
-        //             'sub_menu.lemak',
-        //             'sub_menu.energi'
-        //         )->get();
-
-        // Simpan hasil query untuk paket saat ini ke dalam array
-        // $allJoinData[$paket] = $joindata;
-        // }
-
-        // dd($makananPokok_pagi);
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -484,15 +456,10 @@ class spkController extends Controller
 
         //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
         $JumlahTotal_Protein = [];
-        // Mendapatkan kunci dari totalProteinMakanan
-        $keys = array_keys($totalProtein);
-        foreach ($totalProtein as $index => $valueSelingan) {
-            if (isset($keys[$index])) {
-                $keyMakanan = $keys[$index];
-                $JumlahTotal_Protein[$keyMakanan] = $valueSelingan + $totalProtein[$keyMakanan];
-            }
+        $indexSelingan = array_values($totalSelingan_Protein); //Merubah index array ke numeric
+        for ($i = 0; $i < count($indexSelingan); $i++) {
+            $JumlahTotal_Protein[$i] = $totalProtein[$i] + $indexSelingan[$i];
         }
-
         // ==============================================================================================//
         //**************** MENGHITUNG TOTAL JUMLAH KARBOHIDRAT  ***********************//
         // ==============================================================================================//
@@ -526,12 +493,9 @@ class spkController extends Controller
 
         //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
         $JumlahTotal_Karbo = [];
-        $keys = array_keys($totalKarbohidrat); // Mendapatkan kunci dari totalProteinMakanan
-        foreach ($totalKarbohidrat as $index => $valueSelingan) {
-            if (isset($keys[$index])) {
-                $keyMakanan = $keys[$index];
-                $JumlahTotal_Karbo[$keyMakanan] = $valueSelingan + $totalKarbohidrat[$keyMakanan];
-            }
+        $indexSelingan = array_values($totalSelingan_Karbo); //Merubah index array ke numeric
+        for ($i = 0; $i < count($indexSelingan); $i++) {
+            $JumlahTotal_Karbo[$i] = $totalKarbohidrat[$i] + $indexSelingan[$i];
         }
 
         // ==============================================================================================//
@@ -567,16 +531,14 @@ class spkController extends Controller
 
         //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
         $JumlahTotal_Lemak = [];
-        $keys = array_keys($totalLemak); // Mendapatkan kunci dari totalProteinMakanan
-        foreach ($totalLemak as $index => $valueSelingan) {
-            if (isset($keys[$index])) {
-                $keyMakanan = $keys[$index];
-                $JumlahTotal_Lemak[$keyMakanan] = $valueSelingan + $totalLemak[$keyMakanan];
-            }
+        $indexSelingan = array_values($totalSelingan_Lemak); //Merubah index array ke numeric
+        for ($i = 0; $i < count($indexSelingan); $i++) {
+            $JumlahTotal_Lemak[$i] = $totalLemak[$i] + $indexSelingan[$i];
         }
+        
 
         // ==============================================================================================//
-                     //**************** MENGHITUNG TOTAL JUMLAH ENERGI  ***********************//
+        //**************** MENGHITUNG TOTAL JUMLAH ENERGI  ***********************//
         // ==============================================================================================//
 
         //===================MENGAMBIL NILAI LEMAK====================//
@@ -600,29 +562,19 @@ class spkController extends Controller
             }
         }
 
-         //===================MENJUMLAHKAN KARBO PERPAKET====================//
-         $totalSelingan_Energi = [];
-         foreach ($EnergiSelingan as $key => $values) {
-             $totalSelingan_Energi[$key] = array_sum($values);
-         }
+        //===================MENJUMLAHKAN KARBO PERPAKET====================//
+        $totalSelingan_Energi = [];
+        foreach ($EnergiSelingan as $key => $values) {
+            $totalSelingan_Energi[$key] = array_sum($values);
+        }
 
-         //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
-        // $JumlahTotal_Energi = [];
-        // $keys = array_keys($totalEnergi); // Mendapatkan kunci dari totalProteinMakanan
-        // foreach ($totalEnergi as $index => $valueSelingan) {
-        //     if (isset($keys[$index])) {
-        //         $keyMakanan = $keys[$index];
-        //         $JumlahTotal_Energi[$keyMakanan] = $valueSelingan + $totalEnergi[$keyMakanan];
-        //     }
-        // }
-
+        //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
         $JumlahTotal_Energi = [];
         $indexSelingan = array_values($totalSelingan_Energi); //Merubah index array ke numeric
-        for ($i=0; $i < count($indexSelingan); $i++) { 
+        for ($i = 0; $i < count($indexSelingan); $i++) {
             $JumlahTotal_Energi[$i] = $totalEnergi[$i] + $indexSelingan[$i];
         }
 
-// dd($totalSelingan_Protein);
         $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi'));
         return $Hasil;
     }
