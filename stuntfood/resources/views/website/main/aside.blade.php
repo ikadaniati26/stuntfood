@@ -36,12 +36,12 @@
                  </li>
 
                  <!-- Dashboard -->
-                 {{-- <li class="menu-item">
-                     <a href="{{ url('created') }}" class="menu-link">
+                 <li class="menu-item">
+                     <a href="#" class="menu-link">
                          <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                         <div data-i18n="Analytics"> Form Tambah Makanan</div>
+                         <div data-i18n="Analytics"> Resep </div>
                      </a>
-                 </li> --}}
+                 </li>
              </ul>
 
            

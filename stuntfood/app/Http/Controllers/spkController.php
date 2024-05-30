@@ -148,7 +148,7 @@ class spkController extends Controller
                 break;
         }
 
-        //===================PERHITUNGAN TOTAL KALORI================
+        //===================PERHITUNGAN TOTAL KALORI================//
         $tdee = $nilaibmr * $nilaiaktivitas * $nilaistress;
 
         $makanPagi = 25 / 100 * $tdee;
@@ -159,20 +159,20 @@ class spkController extends Controller
 
         $nilaiWaktu = [$makanPagi, $selinganPagi, $makanSiang, $selinganSore, $makanMalam];
 
-        //========LOGIKA RUMUS PERSENTASE ISI PIRINGKU 2-5 TAHUN=========
+        //========LOGIKA RUMUS PERSENTASE ISI PIRINGKU 2-5 TAHUN======//
         //pagi
         $makananPokok = $makanPagi * 35 / 100;
-        $lauk         = $makanPagi * 25 / 100;
+        $lauk         = $makanPagi * 35 / 100;
         $sayur        = $makanPagi * 15 / 100;
         $buah         = $makanPagi * 15 / 100;
         //siang
         $makananPokokS = $makanSiang * 35 / 100;
-        $laukS         = $makanSiang * 25 / 100;
+        $laukS         = $makanSiang * 35 / 100;
         $sayurS        = $makanSiang * 15 / 100;
         $buahS         = $makanSiang * 15 / 100;
         //malam
         $makananPokokM = $makanMalam * 35 / 100;
-        $laukM         = $makanMalam * 25 / 100;
+        $laukM         = $makanMalam * 35 / 100;
         $sayurM        = $makanMalam * 15 / 100;
         $buahM         = $makanMalam * 15 / 100;
 
@@ -607,15 +607,22 @@ class spkController extends Controller
          }
 
          //===================MENJUMLAHKAN TOTMAKANAN + TOTSELINGAN====================//
+        // $JumlahTotal_Energi = [];
+        // $keys = array_keys($totalEnergi); // Mendapatkan kunci dari totalProteinMakanan
+        // foreach ($totalEnergi as $index => $valueSelingan) {
+        //     if (isset($keys[$index])) {
+        //         $keyMakanan = $keys[$index];
+        //         $JumlahTotal_Energi[$keyMakanan] = $valueSelingan + $totalEnergi[$keyMakanan];
+        //     }
+        // }
+
         $JumlahTotal_Energi = [];
-        $keys = array_keys($totalEnergi); // Mendapatkan kunci dari totalProteinMakanan
-        foreach ($totalEnergi as $index => $valueSelingan) {
-            if (isset($keys[$index])) {
-                $keyMakanan = $keys[$index];
-                $JumlahTotal_Energi[$keyMakanan] = $valueSelingan + $totalEnergi[$keyMakanan];
-            }
+        $indexSelingan = array_values($totalSelingan_Energi); //Merubah index array ke numeric
+        for ($i=0; $i < count($indexSelingan); $i++) { 
+            $JumlahTotal_Energi[$i] = $totalEnergi[$i] + $indexSelingan[$i];
         }
 
+// dd($totalSelingan_Protein);
         $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi'));
         return $Hasil;
     }

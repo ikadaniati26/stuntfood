@@ -29,8 +29,13 @@ Route::get('/show/{id}', [spkController::class,'show'])->name('detail');
 // Route::get('/submenu/{id}', [spkController::class,'submenu'])->name('submenu');
 Route::get('/submenu/{id}', [spkController::class,'proses'])->name('submenu');
 Route::get('/show/{paket}', [spkController::class,'show']);
-Route::post('/login',[authController::class,'login'])->name('login');
+// Route::post('/login',[authController::class,'login'])->name('login');
 
+//coba login
+Route::post('/login', [authController::class, 'showLoginForm'])->name('login');
+Route::post('/login',[authController::class,'login'])->name('login');
+Route::get('/home', [authController::class, 'home'])->middleware('auth');
+// Route::post('/logout', [authController::class, 'logout'])->name('logout');
 
 
 // //========== Admin ==============// 
