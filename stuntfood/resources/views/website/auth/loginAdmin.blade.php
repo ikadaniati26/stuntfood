@@ -33,7 +33,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('/public/assets/img/favicon/favicon.ico')}}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('/public/assets/img/favicon/favicon.ico') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,25 +44,25 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/fonts/boxicons.css')}}" />
+    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/fonts/boxicons.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/demo.css')}}" />
+    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('/public/assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
+    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
     <!-- Page CSS -->
     <!-- Page -->
-    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/css/pages/page-auth.css')}}" />
+    <link rel="stylesheet" href="{{ asset('/public/assets/vendor/css/pages/page-auth.css') }}" />
     <!-- Helpers -->
-    <script src="{{ asset('/public/assets/vendor/js/helpers.js')}}"></script>
+    <script src="{{ asset('/public/assets/vendor/js/helpers.js') }}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ asset('/public/assets/js/config.js')}}"></script>
+    <script src="{{ asset('/public/assets/js/config.js') }}"></script>
   </head>
 
   <body>
@@ -139,18 +139,11 @@
               <h4 class="mb-2">Welcome Admin..👋</h4>
               <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-              <form id="formAuthentication" class="mb-3" action="{{ url('/login') }}" method="POST">
+              <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                   <label for="email" name="name" class="form-label">Username</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="email-username"
-                    placeholder="Enter your email or username"
-                    autofocus
-                  />
+                  <input type="text" class="form-control" id="email" name="username" placeholder="Enter your email or username" autofocus/>
                 </div>
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
@@ -160,14 +153,9 @@
                     </a>
                   </div>
                   <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
+                    <input type="password" id="password" class="form-control"
+                      name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      aria-describedby="password"/>
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
@@ -200,22 +188,22 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ asset('/public/assets/vendor/libs/jquery/jquery.js')}}"></script>
-    <script src="{{ asset('/public/assets/vendor/libs/popper/popper.js')}}"></script>
-    <script src="{{ asset('/public/assets/vendor/js/bootstrap.js')}}"></script>
-    <script src="{{ asset('/public/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+    <script src="{{ asset('/public/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('/public/assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('/public/assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('/public/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-    <script src="{{ asset('/public/assets/vendor/js/menu.js')}}"></script>
+    <script src="{{ asset('/public/assets/vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="{{ asset('/public/assets/js/main.js')}}"></script>
+    <script src="{{ asset('/public/assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
 
     <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="{{url('https://buttons.github.io/buttons.js')}}"></script>
+    <script async defer src="{{ url('https://buttons.github.io/buttons.js') }}"></script>
   </body>
 </html>

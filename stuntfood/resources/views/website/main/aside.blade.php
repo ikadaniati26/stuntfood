@@ -19,6 +19,7 @@
              <div class="menu-inner-shadow"></div>
 
              <ul class="menu-inner py-1">
+                @if (session('Role') != 'Bidan')
                  <li class="menu-item active">
                      <a href="{{ url('/spk') }}" class="menu-link">
                          <i class="menu-icon fas fa-calculator" ></i>
@@ -26,7 +27,9 @@
                          <div data-i18n="Analytics" style="color: black">SPK</div>
                      </a>
                  </li>
+                 @endif
 
+                 @if (session('Role') == 'Bidan')
                  <!-- Dashboard -->
                  <li class="menu-item">
                      <a href="{{ url('/datamakananadmin') }}" class="menu-link">
@@ -34,7 +37,9 @@
                          <div data-i18n="Analytics"> Data Makanan</div>
                      </a>
                  </li>
+                 @endif
 
+                @if (session('Role') != 'Bidan')
                  <!-- Dashboard -->
                  <li class="menu-item">
                      <a href="#" class="menu-link">
@@ -42,6 +47,7 @@
                          <div data-i18n="Analytics"> Resep </div>
                      </a>
                  </li>
+                 @endif
              </ul>
 
            

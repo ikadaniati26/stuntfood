@@ -11,7 +11,7 @@
       @endif
 
       <div class="card">
-        <h5 class="card-header mb-0">#Data Paket Menu Makanan{{ session('auth_user') }}</h5>
+        <h5 class="card-header mb-0">#Data Paket Menu Makanan</h5>
       
         <div class="table-responsive text-nowrap">
           <a href="{{ url('created') }}">

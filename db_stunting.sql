@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Bulan Mei 2024 pada 05.26
+-- Waktu pembuatan: 29 Bulan Mei 2024 pada 05.53
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -40,15 +40,10 @@ CREATE TABLE `data_makanan` (
 
 INSERT INTO `data_makanan` (`idData_makanan`, `paket`, `waktu_makan`, `menu`) VALUES
 (1, 'A', 'makan pagi', 'tumis bayam'),
-(2, 'A', 'makan malam', 'tumis buncis'),
-(3, 'A', 'makan siang', 'sayur sop'),
-(4, 'B', 'makan pagi', 'cah sawi'),
-(7, 'B', 'makan siang', 'tumis pakcoy'),
-(8, 'B', 'makan malam', 'oseng buncis capar'),
-(10, 'A', 'selingan pagi', 'susu'),
-(11, 'A', 'selingan sore', 'biskuit'),
-(12, 'B', 'selingan pagi', 'lumpia'),
-(13, 'B', 'selingan sore', 'pisang goreng');
+(2, 'A', 'makan siang', 'sayur sop'),
+(3, 'A', 'makan malam', 'tumis buncis'),
+(4, 'A', 'selingan pagi', 'susu'),
+(5, 'A', 'selingan sore', 'biskuit');
 
 -- --------------------------------------------------------
 
@@ -140,10 +135,8 @@ CREATE TABLE `selingan` (
 --
 
 INSERT INTO `selingan` (`id`, `nama_selingan`, `protein`, `karbohidrat`, `lemak`, `energi`, `Data_makanan_idData_makanan`) VALUES
-(3, 'lumpia', '1.5', '3.3', '2.5', '2.3', 12),
-(4, 'pisang goreng', '1.2', '3.1', '2.6', '2.1', 13),
-(5, 'susu', '2.9', '3.3', '2.5', '2.3', 10),
-(6, 'biskuit', '1.1', '3.2', '3.3', '5.5', 11);
+(1, 'susu', '2.9', '3.3', '2.5', '2.3', 4),
+(2, 'biskuit', '1.1', '3.2', '3.3', '5.5', 5);
 
 -- --------------------------------------------------------
 
@@ -167,30 +160,18 @@ CREATE TABLE `sub_menu` (
 --
 
 INSERT INTO `sub_menu` (`id`, `nama_makanan`, `jenis_makanan`, `protein`, `karbohidrat`, `lemak`, `energi`, `Data_makanan_idData_makanan`) VALUES
-(1, 'nasi', 'makananpokok', '1.2', '2.2', '2.2', '2.1', 1),
-(2, 'tempe', 'lauk', '2.4', '4.4', '3.3', '3.1', 1),
+(1, 'nasi', 'makananpokok', '1.2', '2.2', '2.2', '2.3', 1),
+(2, 'tempe', 'lauk', '2.4', '4.4', '3.3', '3.2', 1),
 (3, 'tumis bayam', 'sayur', '1.1', '1.2', '1.3', '1.4', 1),
-(4, 'pepaya', 'buah', '2.2', '2.3', '2.4', '2.9', 1),
-(5, 'nasi', 'makananpokok', '3.3', '3.3', '4.4', '5.3', 2),
-(6, 'telur dadar', 'lauk', '3.4', '4.4', '4.4', '5.5', 2),
-(7, 'tumis buncis', 'sayur', '4.4', '6.6', '7.7', '4.5', 2),
-(8, 'pisang', 'buah', '3.5', '5.5', '5.6', '6.7', 2),
-(9, 'nasi', 'makananpokok', '3.4', '4.4', '4.2', '4.2', 3),
-(10, 'sayur sop', 'sayur', '3.3', '3.2', '3.5', '5.5', 3),
-(11, 'pindang', 'lauk', '4.4', '6.6', '1.3', '4.5', 3),
-(12, 'buah naga', 'buah', '3.5', '1.2', '1.3', '1.4', 3),
-(13, 'nasi merah', 'makananpokok', '4.4', '5.5', '4.4', '5.5', 4),
-(14, 'tahu goreng', 'lauk', '1.1', '2.2', '3.3', '4.4', 4),
-(15, 'cah sawi', 'sayur', '4.4', '7.4', '1.3', '4.5', 4),
-(16, 'anggur', 'buah', '1.1', '1.2', '1.3', '1.4', 4),
-(21, 'nasi', 'makananpokok', '1.2', '3.3', '2.5', '2.3', 7),
-(22, 'telur dadar', 'lauk', '2.4', '3.2', '3.3', '5.5', 7),
-(23, 'telur dadar', 'sayur', '4.4', '6.6', '1.3', '4.5', 7),
-(24, 'semangka', 'buah', '1.1', '1.2', '5.6', '1.4', 7),
-(25, 'nasi', 'makananpokok', '1.2', '3.3', '2.5', '2.3', 8),
-(26, 'tempe menjes', 'lauk', '2.4', '3.2', '3.5', '5.5', 8),
-(27, 'tumis pakcoy', 'sayur', '4.4', '6.6', '1.3', '1.1', 8),
-(28, 'apel', 'buah', '1.1', '1.2', '1.3', '1.4', 8);
+(4, 'pepaya', 'buah', '2.2', '2.3', '2.4', '2.5', 1),
+(5, 'nasi', 'makananpokok', '3.4', '4.4', '4.2', '4.2', 2),
+(6, 'pindang', 'lauk', '3.3', '3.2', '3.5', '5.5', 2),
+(7, 'sayur sop', 'sayur', '4.4', '6.6', '1.3', '4.5', 2),
+(8, 'buah naga', 'buah', '3.5', '1.2', '1.3', '1.4', 2),
+(9, 'nasi', 'makananpokok', '3.3', '3.3', '4.4', '5.3', 3),
+(10, 'telur dadar', 'lauk', '3.4', '4.4', '4.4', '5.5', 3),
+(11, 'tumis buncis', 'sayur', '4.4', '6.6', '7.7', '4.5', 3),
+(12, 'pisang', 'buah', '3.5', '5.5', '5.6', '6.7', 3);
 
 -- --------------------------------------------------------
 
@@ -278,7 +259,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `data_makanan`
 --
 ALTER TABLE `data_makanan`
-  MODIFY `idData_makanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idData_makanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -302,13 +283,13 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT untuk tabel `selingan`
 --
 ALTER TABLE `selingan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `sub_menu`
 --
 ALTER TABLE `sub_menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

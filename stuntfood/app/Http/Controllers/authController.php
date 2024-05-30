@@ -9,49 +9,34 @@ use Illuminate\Support\Facades\Log;
    
 class AuthController extends Controller
 {
-    private $users = [
-        'admin' => 'password', // Username => Password
-    ];
-
-    public function showLoginForm()
+    public function index()
     {
         return view('website.auth.loginAdmin');
     }
 
     public function login(Request $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
+        $validUsers = [
+            'admin' => [
+                'password' => 'admin',
+                'Role' => 'Bidan'
+            ]
+        ];
 
         $username = $request->input('username');
         $password = $request->input('password');
 
-        if (isset($this->users[$username]) && $this->users[$username] === $password) {
-            session(['auth_user' => $username]);
-            return redirect()->route('home');
+        if (isset($validUsers[$username]) && isset($validUsers[$username]['password']) && $validUsers[$username]['password'] == $password) {
+            session(['Role' => $validUsers[$username]['Role']]);
+            return redirect('datamakananadmin');
         }
 
-        return back()->withErrors(['login' => 'Username atau password salah']);
-    }
-
-    public function home()
-    {
-        return view('home');
+        return redirect('/login')->with('error', 'Username atau password yang anda masukan salah ...');
     }
 
     public function logout()
     {
-        session()->forget('auth_user');
-        return redirect()->route('login');
+        session()->flush();
+        return redirect('/');
     }
 }
-
-   
-   
-   
-    
-
-
-
