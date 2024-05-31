@@ -132,7 +132,7 @@
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" value="buah" disabled>
-                                            <input type="hidden" name="j_buah" value="lauk">
+                                            <input type="hidden" name="j_buah" value="buah">
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" name="proteinbuah_pagi">
@@ -145,9 +145,6 @@
                                         </div>
                                         <div class="">
                                             <input type="text" class="form-control" name="energibuah_pagi">
-                                        </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
                                         </div>
                                     </div>
                                 </div>
@@ -210,9 +207,6 @@
                                             <label for="karbo" class="form-label">energi</label>
                                             <input type="text" class="form-control" name="energimp_siang">
                                         </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
-                                        </div>
                                     </div>
                                 </div>
                                 {{-- lauk --}}
@@ -236,9 +230,6 @@
                                         </div>
                                         <div class="">
                                             <input type="text" class="form-control" name="energilauk_siang">
-                                        </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
                                         </div>
                                     </div>
                                 </div>
@@ -264,9 +255,6 @@
                                         <div class="">
                                             <input type="text" class="form-control" name="energisyr_siang">
                                         </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
-                                        </div>
                                     </div>
                                 </div>
                                 {{-- buah --}}
@@ -277,7 +265,7 @@
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" value="buah" disabled>
-                                            <input type="hidden" name="jbuah_siang" value="lauk">
+                                            <input type="hidden" name="j_buah" value="buah">
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" name="proteinbuah_siang">
@@ -290,9 +278,6 @@
                                         </div>
                                         <div class="">
                                             <input type="text" class="form-control" name="energibuah_siang">
-                                        </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
                                         </div>
                                     </div>
                                 </div>
@@ -354,9 +339,6 @@
                                         <div class="">
                                             <label for="karbo" class="form-label">energi</label>
                                             <input type="text" class="form-control" name="energimp_malam">
-                                        </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
                                         </div>
                                     </div>
                                 </div>
@@ -422,7 +404,7 @@
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" value="buah" disabled>
-                                            <input type="hidden" value="lauk"  name="jbuah_malam">
+                                            <input type="hidden" value="buah"  name="j_buah">
                                         </div>
                                         <div class="me-2">
                                             <input type="text" class="form-control me-3" name="proteinbuah_malam">
@@ -435,9 +417,6 @@
                                         </div>
                                         <div class="">
                                             <input type="text" class="form-control" name="energibuah_malam">
-                                        </div>
-                                        <div class="">
-                                            <input type="hidden" name="iddatamakanan">
                                         </div>
                                     </div>
                                 </div>
@@ -459,7 +438,7 @@
                                 <div class="mb-3">
                                     <label for="waktu_makan" class="form-label">Waktu Selingan</label>
                                     <input type="text" class="form-control" value="selingan pagi" disabled>
-                                    <input type="hidden" name="selingan pagi" value="selingan pagi">
+                                    <input type="hidden" name="waktumakan_SPagi" value="selingan pagi">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -474,10 +453,6 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-around">
-                                        <div class="me-2">
-                                            <label for="nama_makanan" class="form-label">Nama makanan</label>
-                                            <input type="text" class="form-control me-3" name="selingan_pagi">
-                                        </div>
                                         <div class="me-2">
                                             <label for="protein" class="form-label">Protein</label>
                                             <input type="text" class="form-control me-3" name="proteinselingan_pagi">
@@ -518,7 +493,7 @@
                                 <div class="mb-3">
                                     <label for="waktu_makan" class="form-label">Waktu Sore</label>
                                     <input type="text" class="form-control" value="selingan sore" disabled>
-                                    <input type="hidden" name="selingan sore" value="selingan sore">
+                                    <input type="hidden" name="waktumkn_Ssore" value="selingan sore">
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -533,10 +508,6 @@
                             <div class="col-md-12">
                                 <div class="mb-3">
                                     <div class="d-flex justify-content-around">
-                                        <div class="me-2">
-                                            <label for="nama_makanan" class="form-label">Nama makanan</label>
-                                            <input type="text" class="form-control me-3" name="selingan_sore">
-                                        </div>
                                         <div class="me-2">
                                             <label for="protein" class="form-label">Protein</label>
                                             <input type="text" class="form-control me-3" name="proteinselingan_sore">
