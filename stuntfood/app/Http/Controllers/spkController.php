@@ -380,7 +380,7 @@ class spkController extends Controller
             }
         }
 
-        //===================TOTAL PROTIN====================//
+        //===================TOTAL PROTEIN====================//
         $totalEnergi = [];
         foreach ($Energi as $key => $value) {
             $totalEnergi[$key] = array_sum($value);
@@ -575,7 +575,35 @@ class spkController extends Controller
             $JumlahTotal_Energi[$i] = $totalEnergi[$i] + $indexSelingan[$i];
         }
 
-        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi'));
+        //===============LOGIKA BOBOT KRITERIA=======================================//
+         // Data kriteria
+         $kriteria = [
+            ['kriteria' => 'protein', 'kode' => 'C1', 'bobot' => 0.6],
+            ['kriteria' => 'karbohidrat', 'kode' => 'C2', 'bobot' => 0.25],
+            ['kriteria' => 'lemak', 'kode' => 'C3', 'bobot' => 0.25],
+        ];
+        // Menghitung total bobot
+          $totalBobot = array_sum(array_column($kriteria, 'bobot'));
+        // Membuat fungsi untuk menghitung bobot kepentingan berdasarkan kode kriteria
+        function hitungBobotKepentingan($kriteria, $kode, $totalBobot) {
+            foreach ($kriteria as $item) {
+                if ($item['kode'] === $kode) {
+                    return $item['bobot'] / $totalBobot;
+                }
+            }
+        }
+
+        $bobotKriteria = [
+            'C1' => hitungBobotKepentingan($kriteria, 'C1', $totalBobot),
+            'C2' => hitungBobotKepentingan($kriteria, 'C2', $totalBobot),
+            'C3' => hitungBobotKepentingan($kriteria, 'C3', $totalBobot),
+        ];
+        
+
+        //menghitung vektor s
+        
+
+        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi','kriteria','totalBobot','bobotKriteria'));
         return $Hasil;
     }
 
