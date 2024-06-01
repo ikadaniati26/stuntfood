@@ -17,8 +17,11 @@ class spkController extends Controller
     public function index()
     {
         $query = [];
+        $kriteria = [];
+        $bobotKriteria = [];
+        $totalBobot = [];
 
-        return view('website.user.spk', compact('query'));
+        return view('website.user.spk', compact('query', 'kriteria', 'bobotKriteria', 'totalBobot'));
     }
 
     public function proses(Request $request)
