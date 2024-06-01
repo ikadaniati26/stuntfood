@@ -326,6 +326,120 @@
 
                         <div>
                             <div class="card-header  d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL KRITERIA
+                                </h5>
+                            </div>
+                            <div class="table-responsive text-nowrap mx-5 mb-5">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Kriteria</th>
+                                            <th>Kode</th>
+                                            <th>Bobot</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-1">
+                                        @foreach($kriteria as $item) 
+                                            <tr>
+                                                <td>{{ $item['kriteria']}} </td>
+                                                <td>{{ $item['kode']}} </td>
+                                                <td>{{ $item['bobot']}} </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <div class="mt-4">
+                                    <p>Total Bobot: {{ $totalBobot }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                          <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL BOBOT KEPENTINGAN</h5>
+                        </div>
+                        <div class="table-responsive text-nowrap mx-5 mb-5">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                {{-- <th>Bobot</th> --}}
+                                <th>C1</th>
+                                <th>C2</th>
+                                <th>C3</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <td>{{ $bobotKriteria['C1'] }}</td>
+                                <td>{{ $bobotKriteria['C2'] }}</td> 
+                                <td>{{ $bobotKriteria['C3'] }}</td>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <div>
+                            <div class="card-header  d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#PERBANDINGAN ALTERNATIF DAN KRITERIA
+                                </h5>
+                            </div>
+                            <div class="table-responsive text-nowrap mx-5 mb-5">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Paket</th>
+                                            <th>C1</th>
+                                            <th>C2</th>
+                                            <th>C3</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-1">
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @for ($i = 0; $i < count($query); $i++)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $query[$i] }}</td>
+                                                <td>{{ $JumlahTotal_Protein[$i] }}</td>
+                                                <td>{{ $JumlahTotal_Karbo[$i] }}</td>
+                                                <td>{{ $JumlahTotal_Lemak[$i] }}</td>
+                                            </tr>
+                                        @endfor
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="card-header  d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#VEKTOR S
+                                </h5>
+                            </div>
+                            <div class="table-responsive text-nowrap mx-5 mb-5">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Paket</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-1">
+                                        @php
+                                            $no = 1;
+                                        @endphp
+                                        @for ($i = 0; $i < count($query); $i++)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $query[$i] }}</td>
+                                                <td></td>
+                                            </tr>
+                                        @endfor
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="card-header  d-flex justify-content-between align-items-center">
                                 <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL MENU YANG
                                     DIREKOMENDASIKAN</h5>
                             </div>
