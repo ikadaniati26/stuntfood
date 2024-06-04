@@ -8,6 +8,7 @@ use App\Models\sub_menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Foreach_;
+use App\Http\Requests\KalkulatorKaloriRequest;
 
 class spkController extends Controller
 {
@@ -20,12 +21,40 @@ class spkController extends Controller
         $kriteria = [];
         $bobotKriteria = [];
         $totalBobot = [];
+        $peringkat = [];
 
-        return view('website.user.spk', compact('query', 'kriteria', 'bobotKriteria', 'totalBobot'));
+        return view('website.user.spk', compact('query', 'kriteria', 'bobotKriteria', 'totalBobot', 'peringkat'));
     }
 
     public function proses(Request $request)
     {
+
+        //===================MEMBUAT VALIDASI FORM====================//
+
+        $messages = [
+            'umur.required' => 'Umur wajib diisi.',
+            'umur.numeric' => 'Umur harus berupa bilangan bulat.',
+            'umur.string'  => 'inputan harus berupa angka',
+            'umur.max' => 'Umur harus antara 2 dan 5 tahun.',
+            'umur.min' => 'Umur harus antara 2 dan 5 tahun.',
+            'jk.required' => 'Jenis kelamin wajib dipilih.',
+            'beratbadan.required' => 'Berat badan wajib diisi.',
+            'beratbadan.min' => 'Berat badan harus antara 8kg - 24kg.',
+            'beratbadan.max' => 'Berat badan harus antara 8kg - 24kg.',
+            'aktivitas.required' => 'Faktor aktivitas wajib dipilih.',
+            'aktivitas.in' => 'Faktor aktivitas harus salah satu dari pilihan yang tersedia.',
+            'stress.required' => 'Faktor stress wajib dipilih.',
+            'stress.in' => 'Faktor stress harus salah satu dari pilihan yang tersedia.',
+        ];
+
+        $request->validate([
+            'umur' => 'required | min:2 | max:5 | numeric',
+            'jk' => 'required',
+            'beratbadan' => 'required | min:9 | max:24',
+            'aktivitas  => required',
+            'stress     => required',
+        ], $messages);
+
         // =====================INPUTAN USER=========================== //
         $umur = $request->umur;
         $jeniskelamin = $request->jk;
@@ -538,7 +567,7 @@ class spkController extends Controller
         for ($i = 0; $i < count($indexSelingan); $i++) {
             $JumlahTotal_Lemak[$i] = $totalLemak[$i] + $indexSelingan[$i];
         }
-        
+
 
         // ==============================================================================================//
         //**************** MENGHITUNG TOTAL JUMLAH ENERGI  ***********************//
@@ -579,21 +608,24 @@ class spkController extends Controller
         }
 
         //===============LOGIKA BOBOT KRITERIA=======================================//
-         // Data kriteria
-         $kriteria = [
+        // Data kriteria
+        $kriteria = [
             ['kriteria' => 'protein', 'kode' => 'C1', 'bobot' => 0.6],
             ['kriteria' => 'karbohidrat', 'kode' => 'C2', 'bobot' => 0.25],
             ['kriteria' => 'lemak', 'kode' => 'C3', 'bobot' => 0.25],
         ];
         // Menghitung total bobot
-          $totalBobot = array_sum(array_column($kriteria, 'bobot'));
+        $totalBobot = array_sum(array_column($kriteria, 'bobot'));
+
         // Membuat fungsi untuk menghitung bobot kepentingan berdasarkan kode kriteria
-        function hitungBobotKepentingan($kriteria, $kode, $totalBobot) {
+        function hitungBobotKepentingan($kriteria, $kode, $totalBobot)
+        {
             foreach ($kriteria as $item) {
                 if ($item['kode'] === $kode) {
                     return $item['bobot'] / $totalBobot;
                 }
             }
+            return 0;
         }
 
         $bobotKriteria = [
@@ -601,12 +633,45 @@ class spkController extends Controller
             'C2' => hitungBobotKepentingan($kriteria, 'C2', $totalBobot),
             'C3' => hitungBobotKepentingan($kriteria, 'C3', $totalBobot),
         ];
-        
+
 
         //menghitung vektor s
-        
+        $hasil = [];
+        for ($i = 0; $i < count($query); $i++) {
+            $nilaiC1 = $JumlahTotal_Protein[$i];
+            $nilaiC2 = $JumlahTotal_Karbo[$i];
+            $nilaiC3 = $JumlahTotal_Lemak[$i];
 
-        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi','kriteria','totalBobot','bobotKriteria'));
+            $bobotC1 = $bobotKriteria['C1'];
+            $bobotC2 = $bobotKriteria['C2'];
+            $bobotC3 = $bobotKriteria['C3'];
+
+            $hasil[$i] = pow($nilaiC1, $bobotC1) * pow($nilaiC2, $bobotC2) * pow($nilaiC3, $bobotC3);
+        }
+
+        // Total semua vektor S
+        $totalVektorS = array_sum($hasil);
+
+        // Menghitung vektor V
+        $vektorV = [];
+        for ($i = 0; $i < count($hasil); $i++) {
+            $vektorV[$i] = $hasil[$i] / $totalVektorS;
+        }
+        // Mengurutkan vektor V secara menurun
+        arsort($vektorV);
+
+        // Inisialisasi array untuk menyimpan peringkat
+        $peringkat = [];
+
+        // Tetapkan peringkat untuk setiap nilai vektor V
+        $ranking = 1;
+        foreach ($vektorV as $vektor) {
+            $peringkat[$ranking] = $vektor;
+            $ranking++;
+        }
+
+        // dd($totalVektorS);
+        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi', 'kriteria', 'totalBobot', 'bobotKriteria', 'hasil', 'totalVektorS', 'vektorV', 'peringkat'));
         return $Hasil;
     }
 

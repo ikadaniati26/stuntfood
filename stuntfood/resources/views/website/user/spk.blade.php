@@ -58,7 +58,7 @@
                         </div>
                     </div>
 
-                    <div class="card mb-0  shadow">
+                    {{-- <div class="card mb-0  shadow">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-bolder"></span>#Kalkulator kebutuhan
                                 kalori
@@ -74,6 +74,11 @@
                                         <input type="text" class="form-control" id="basic-default-fullname"
                                             placeholder="{{ isset($komponen_input[0]) ? $komponen_input[0] : 'Umur' }}"
                                             name="umur" />
+                                            @if ($errors->has('username'))
+                                            <span class="error text-danger mb-2">
+                                                {{ $errors->first('username') }}
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -152,7 +157,121 @@
                                 </div>
                             </form>
                         </div>
+                    </div> --}}
+                    <div class="card mb-0 shadow">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-bolder"></span>#Kalkulator kebutuhan kalori</h5>
+    </div>
+
+    <div class="card-body">
+        <form action='{{ route('proses') }}' method="POST">
+            @csrf
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Input Umur</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="basic-default-fullname"
+                        placeholder="{{ isset($komponen_input[0]) ? $komponen_input[0] : 'Umur' }}"
+                        name="umur" value="{{ old('umur') }}" />
+                    @if ($errors->has('umur'))
+                        <span class="error text-danger mb-2">
+                            {{ $errors->first('umur') }}
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Jenis Kelamin</label>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="jk" id="flexRadioDefault1" value="laki-laki"
+                            {{ isset($komponen_input[1]) && $komponen_input[1] == 'laki-laki' ? 'checked' : '' }} 
+                            {{old('jk') == 'laki-laki' ? 'checked' : ''}}>
+                        <label class="form-check-label" for="flexRadioDefault1">Laki-laki</label>
                     </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="jk" id="flexRadioDefault2" value="perempuan"
+                            {{ isset($komponen_input[1]) && $komponen_input[1] == 'perempuan' ? 'checked' : '' }} 
+                            {{old('jk') == 'perempuan' ? 'checked' : ''}}>
+                        <label class="form-check-label" for="flexRadioDefault2">Perempuan</label>
+                    </div>
+                    @if ($errors->has('jk'))
+                        <span class="error text-danger mb-2">
+                            {{ $errors->first('jk') }}
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Berat Badan</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="basic-default-fullname"
+                        placeholder="{{ isset($komponen_input[2]) ? $komponen_input[2] : 'Berat Badan' }}"
+                        name="beratbadan" />
+                    @if ($errors->has('beratbadan'))
+                        <span class="error text-danger mb-2">
+                            {{ $errors->first('beratbadan') }}
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Faktor Aktivitas</label>
+                <div class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example" name="aktivitas">
+                        <option selected disabled>
+                            {{ isset($komponen_input[3]) ? $komponen_input[3] : 'Pilih Inputan' }}
+                        </option>
+                        <option value="bedrest">Bedrest</option>
+                        <option value="gerakterbatas">Bisa Bergerak Terbatas</option>
+                        <option value="bisajalan">Bisa Berjalan</option>
+                        <option value="normal">Aktivitas Normal</option>
+                    </select>
+                    @if ($errors->has('aktivitas'))
+                        <span class="error text-danger mb-2">
+                            {{ $errors->first('aktivitas') }}
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Faktor Stress</label>
+                <div class="col-sm-10">
+                    <select class="form-select" aria-label="Default select example" name="stress">
+                        <option selected disabled>
+                            {{ isset($komponen_input[4]) ? $komponen_input[4] : 'Pilih faktor stress' }}
+                        </option>
+                        <option value="tidakada">tidak ada faktor stress</option>
+                        <option value="operasi">Operasi</option>
+                        <option value="trauma">Trauma</option>
+                        <option value="infeksi">Infeksi berat</option>
+                        <option value="peradangan">Peradangan/inflamasi saluran cerna selaput organ perut</option>
+                        <option value="patahtulang">Patah Tulang</option>
+                        <option value="infeksi dengan trauma">Infeksi dengan trauma</option>
+                        <option value="sepsis">sepsis</option>
+                        <option value="cederakepala">cedera kepala</option>
+                        <option value="kanker">kanker/Tumor</option>
+                    </select>
+                    @if ($errors->has('stress'))
+                        <span class="error text-danger mb-2">
+                            {{ $errors->first('stress') }}
+                        </span>
+                    @endif
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-sm-2">
+                    <button type="submit" class="btn btn-primary" style="background-color: blue">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
                 </div>
             </div>
         </div>
@@ -339,45 +458,46 @@
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-1">
-                                        @foreach($kriteria as $item) 
+                                        @foreach ($kriteria as $item)
                                             <tr>
-                                                <td>{{ $item['kriteria']}} </td>
-                                                <td>{{ $item['kode']}} </td>
-                                                <td>{{ $item['bobot']}} </td>
+                                                <td>{{ $item['kriteria'] }} </td>
+                                                <td>{{ $item['kode'] }} </td>
+                                                <td>{{ $item['bobot'] }} </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="mt-4">
-                                    <p>Total Bobot: {{ isset( $totalBobot )}}</p>
-                                </div>
                             </div>
                         </div>
 
                         <div class="card-header d-flex justify-content-between align-items-center">
-                          <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL BOBOT KEPENTINGAN</h5>
+                            <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL BOBOT
+                                KEPENTINGAN</h5>
                         </div>
                         <div class="table-responsive text-nowrap mx-5 mb-5">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                {{-- <th>Bobot</th> --}}
-                                <th>C1</th>
-                                <th>C2</th>
-                                <th>C3</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                <td>{{ isset( $bobotKriteria['C1']) }}</td>
-                                <td>{{ isset($bobotKriteria['C2']) }}</td> 
-                                <td>{{ isset($bobotKriteria['C3']) }}</td>
-                            </tbody>
-                          </table>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>C1</th>
+                                        <th>C2</th>
+                                        <th>C3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td>{{ isset($bobotKriteria['C1']) ? $bobotKriteria['C1'] : 'N/A' }}</td>
+                                    <td>{{ isset($bobotKriteria['C2']) ? $bobotKriteria['C2'] : 'N/A' }}</td>
+                                    <td>{{ isset($bobotKriteria['C3']) ? $bobotKriteria['C3'] : 'N/A' }}</td>
+                                </tbody>
+                            </table>
+                            <div class="mt-4">
+                                <p>Total Bobot: {{ isset($totalBobot) }}</p>
+                            </div>
                         </div>
 
                         <div>
                             <div class="card-header  d-flex justify-content-between align-items-center">
-                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#PERBANDINGAN ALTERNATIF DAN KRITERIA
+                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#PERBANDINGAN
+                                    ALTERNATIF DAN KRITERIA
                                 </h5>
                             </div>
                             <div class="table-responsive text-nowrap mx-5 mb-5">
@@ -420,7 +540,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Paket</th>
-                                            <th></th>
+                                            <th>Nilai vektor S</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-1">
@@ -431,13 +551,49 @@
                                             <tr>
                                                 <td>{{ $no++ }}</td>
                                                 <td>{{ $query[$i] }}</td>
-                                                <td></td>
+                                                <td>{{ $hasil[$i] }}</td>
                                             </tr>
                                         @endfor
                                     </tbody>
                                 </table>
+                                <div class="mt-4">
+                                    <p>Total Bobot: {{ isset($totalVektorS) ? $totalVektorS : 'N/A' }}</p>
+                                </div>
                             </div>
                         </div>
+
+                        <div>
+                            <div class="card-header  d-flex justify-content-between align-items-center">
+                                <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#VEKTOR V
+                                </h5>
+                            </div>
+                            <div class="table-responsive text-nowrap mx-5 mb-5">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Paket</th>
+                                            <th>Nilai vektor V</th>
+                                            <th>RANK</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-1">
+                                        @php
+                                        $no = 1;
+                                    @endphp
+                                    @foreach ($peringkat as $rank => $vektor)
+                                        <tr>
+                                            <td>{{ $no++ }}</td>
+                                            <td>{{ $query[$loop->index] }}</td>
+                                            <td>{{ $vektor }}</td>
+                                            <td>{{ $rank }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <div>
                             <div class="card-header  d-flex justify-content-between align-items-center">
                                 <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-light"></span>#TABEL MENU YANG
@@ -445,7 +601,7 @@
                             </div>
 
                             <div class="table-responsive text-nowrap mx-5 mb-5">
-                                <table class="table">
+                                {{-- <table class="table">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -471,7 +627,33 @@
                                         @endforeach
 
                                     </tbody>
+                                </table> --}}
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Paket</th>
+                                            <th>Aksi</th>
+                                            {{-- <th>Rank</th> --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-border-bottom-1">
+                                        @foreach ($peringkat as $rank => $vektor)
+                                            <tr>
+                                                <td>{{ $rank }}</td> {{-- Menampilkan ranking vektor V --}}
+                                                <td>{{ $query[$rank - 1] }}</td> {{-- Mengambil paket berdasarkan peringkat --}}
+                                                <td>
+                                                    <a href="{{ url('show', ['paket' => $query[$rank - 1]]) }}" class="btn btn-info btn-sm">
+                                                        <i class="fa-solid fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                               
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
+                                
                             </div>
                         </div>
                     </div>
