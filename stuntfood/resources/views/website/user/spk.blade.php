@@ -468,7 +468,7 @@
                                     </tbody>
                                 </table>
                                 <div class="mt-4">
-                                    <p>Total Bobot: {{ $totalBobot }}</p>
+                                    <p>Total Bobot: {{ isset($totalBobot) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -488,9 +488,9 @@
                               </tr>
                             </thead>
                             <tbody>
-                                <td>{{ $bobotKriteria['C1'] }}</td>
-                                <td>{{ $bobotKriteria['C2'] }}</td> 
-                                <td>{{ $bobotKriteria['C3'] }}</td>
+                                <td>{{ isset( $bobotKriteria['C1']) ? $bobotKriteria['C1'] : 'N/A' }}</td>
+                                <td>{{ isset($bobotKriteria['C2']) ? $bobotKriteria['C2'] : 'N/A' }}</td> 
+                                <td>{{ isset($bobotKriteria['C3']) ? $bobotKriteria['C3'] : 'N/A' }}</td>
                             </tbody>
                           </table>
                         </div>
