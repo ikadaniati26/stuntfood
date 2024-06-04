@@ -40,10 +40,13 @@ Route::middleware(['customAuth'])->group(function () {
     //========== Admin ==============// 
     Route::post('/prosesadmin', [AdminController::class, 'store'])->name('prosesadmin');
     Route::get('created', [AdminController::class, 'create']);
+    Route::get('/submenu/{id}', [AdminController::class, 'proses'])->name('submenu');
 
     //============ CRUD ===============//
     Route::get('datamakananadmin', [AdminController::class, 'datamakanan']);
-    Route::get('/editDataMakanan/{id}', [AdminController::class, 'edit'])->name('edit');
+    Route::get('/datamakanan/{paket}', [AdminController::class, 'datamakanan']);
+    Route::get('/showadmin/{paket}', [AdminController::class, 'showadmin'])->name('showadmin');
+    Route::get('/editDataMakanan/{paket}', [AdminController::class, 'edit'])->name('edit');
     Route::patch('/update/{id}', [AdminController::class, 'update'])->name('update');
     Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('hapus');
 });
