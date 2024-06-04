@@ -23,11 +23,7 @@
                 <th>Nomor</th>
                 <th>Paket</th>
                 <th>Waktu makan</th>
-                <th>Namaa Makanan</th>
-                <th>protein</th>
-                <th>karbohidrat</th>
-                <th>lemak</th>
-                <th>energi</th>
+                <th>Menu</th>
                 <th>aksi</th>
               </tr>
             </thead>
@@ -35,22 +31,23 @@
               @php
                    $no=1;
               @endphp
-                @foreach ($query as $item)
+                @foreach ($query as $index => $item)
                 <tr>
                   <td>{{ $no++ }}</td>
                   <td>{{ $item->paket }}</td>
                   <td>{{ $item->waktu_makan }}</td>
-                  <td>{{ $item->nmenu }}</td>
-                  <td>{{ $item->protein }}</td>
-                  <td>{{ $item->lemak }}</td>
-                  <td>{{ $item->karbohidrat }}</td>
-                  <td>{{ $item->energi }}</td>
-                  <td>
-                    <form method="POST" action="{{ route('hapus', ['id'=>$item->idData_makanan]) }}">
+                  <td>{{ $item->menu }}</td>
+                  @if ($index % 5 == 0)
+                  <td rowspan="5">
+                    <form method="POST" action="{{ route('hapus', ['id'=>$no]) }}">
                       @csrf
                       @method('DELETE')
-                      <a class="btn btn-warning btn-sm" title="Edit Akun Bidan"
-                          href="{{ route('edit', ['id'=>$item->idData_makanan]) }}">
+                      <a href="{{ url('showadmin', ['paket' => $item->paket]) }}" class="btn btn-info btn-sm">
+                        <i class="fa-solid fa-eye"></i>
+                      </a>
+                  
+                      <a class="btn btn-warning btn-sm" title="Edit"
+                          href="{{ route('edit', ['paket'=>$item->paket]) }}">
                           <i class="fa-solid fa-pencil"></i>
                       </a>
                       &nbsp;
@@ -60,15 +57,19 @@
                           <i class="fa-solid fa-trash"></i>
                       </button>
                     </form>
-                  
-                  
                   </td>
+                  @endif
                 </tr>
                 @endforeach
             </tbody>
           </table>
+      
+
         </div>
       </div>
+    </div>
+  </div>
+
 
   <!-- Tautkan Font Awesome CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">

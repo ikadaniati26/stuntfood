@@ -365,35 +365,87 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    // public function show(string $id)
+    // {
+    //     //
+    // }
+    public function showadmin(string $paket, Request $request)
     {
-        //
+        //query dibawah ini merupakan query join datamakanan dan submenu
+        $joindata = DB::table('data_makanan')
+            ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+            ->where('data_makanan.paket', 'LIKE', $paket)
+            ->select(
+                'data_makanan.paket',
+                'data_makanan.waktu_makan',
+                'data_makanan.menu',
+                'sub_menu.nama_makanan',
+                'sub_menu.jenis_makanan',
+                'sub_menu.protein',
+                'sub_menu.karbohidrat',
+                'sub_menu.lemak',
+                'sub_menu.energi'
+            )->get();
+
+        //query dibawah ini merupakan query join datamakanan dan selingan
+        $dataSelingan = DB::table('data_makanan')
+            ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+            ->where('data_makanan.paket', '=', $paket)
+            ->where(function ($query) {
+                $query->where('data_makanan.waktu_makan', 'LIKE', 'selingan pagi')
+                    ->orWhere('data_makanan.waktu_makan', 'LIKE', 'selingan sore');
+            })
+            ->select(
+                'data_makanan.paket',
+                'data_makanan.waktu_makan',
+                'data_makanan.menu',
+                'selingan.protein',
+                'selingan.karbohidrat',
+                'selingan.lemak',
+                'selingan.energi'
+            )->get();
+
+        return view('website.admin.submenuadmin', compact('joindata', 'paket', 'dataSelingan'));
     }
 
 
     public function edit($id)
     {
-        $data = DataMakanan::all()->first();
-        return view('website.admin.formEdit', compact('data'));
+        $dataMakanan = DataMakanan::where('paket', 'LIKE', $id)->get();
+        // Ambil semua idData_makanan dari hasil query dataMakanan
+        $idDataMakananArray = $dataMakanan->pluck('idData_makanan')->toArray();
+
+        $subMenu = DB::table('data_makanan')
+            ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+            ->whereIn('data_makanan.idData_makanan', $idDataMakananArray)
+            ->select('data_makanan.*', 'sub_menu.*')
+            ->get();
+
+        $selingan = DB::table('data_makanan')
+            ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+            ->whereIn('data_makanan.idData_makanan', $idDataMakananArray)
+            ->select('data_makanan.*', 'selingan.*')
+            ->get();
+        // dd($subMenu);
+        return view('website.admin.formEdit', compact('dataMakanan', 'subMenu', 'selingan', 'idDataMakananArray'));
     }
+
 
     public function update(Request $request, $id)
     {
-        $paket = $request->paket;
-        $waktu_makan = $request->waktu_makan;
-        $nama_makanan = $request->nama_makanan;
-        $protein = $request->protein;
-        $lemak = $request->lemak;
-        $karbohidrat = $request->karbohidrat;
+        // DB::table('sub_menu')
+        //     ->where('id', 1)
+        //     ->update([
+        //         'id' => $value1,
+        //         'nama_makanan' => $value2,
+        //         'jenis_makanan' => $value3,
+        //         'protein' => $value4,
+        //         'karbohidrat' => $value5,
+        //         'lemak' => $value6,
+        //         'energi' => $value7,
+        //         'Data_makanan_idData_makanan' => $value8
+        //     ]);
 
-        DataMakanan::where('idData_makanan', $id)->update([
-            'paket' => $paket,
-            'waktu_makan' => $waktu_makan,
-            'nama_makanan' => $nama_makanan,
-            'protein' => $protein,
-            'lemak' => $lemak,
-            'karbohidrat' => $karbohidrat
-        ]);
         return redirect('datamakananadmin')->with('success', 'Data berhasil diupdate');
     }
     /**
@@ -401,7 +453,21 @@ class AdminController extends Controller
      */
     public function delete($id)
     {
-        DataMakanan::where('idData_makanan', $id)->delete();
-        return redirect('datamakananadmin')->with('success', 'Data berhasil dihapus');
+    //     $dataMakanan = DataMakanan::where('paket', 'LIKE', $id)->get();
+    //     // Ambil semua idData_makanan dari hasil query dataMakanan
+    //     $idDataMakananArray = $dataMakanan->pluck('idData_makanan')->toArray();
+    //     $subMenu = DB::table('data_makanan')
+    //     ->join('sub_menu', 'sub_menu.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+    //     ->whereIn('data_makanan.idData_makanan', $idDataMakananArray)
+    //     ->select('data_makanan.*', 'sub_menu.*')
+    //     ->get();
+
+    //     $selingan = DB::table('data_makanan')
+    //     ->join('selingan', 'selingan.Data_makanan_idData_makanan', '=', 'data_makanan.idData_makanan')
+    //     ->whereIn('data_makanan.idData_makanan', $idDataMakananArray)
+    //     ->select('data_makanan.*', 'selingan.*')
+    //     ->get();
+
+    //     return redirect('datamakananadmin')->with('success', 'Data berhasil dihapus');
     }
 }
