@@ -39,7 +39,7 @@
                   <td>{{ $item->menu }}</td>
                   @if ($index % 5 == 0)
                   <td rowspan="5">
-                    <form method="POST" action="{{ route('hapus', ['id'=>$no]) }}">
+                    <form method="POST" action="{{ route('hapus', ['paket'=>$item->paket]) }}">
                       @csrf
                       @method('DELETE')
                       <a href="{{ url('showadmin', ['paket' => $item->paket]) }}" class="btn btn-info btn-sm">
