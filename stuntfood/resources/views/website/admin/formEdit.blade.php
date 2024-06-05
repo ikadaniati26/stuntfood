@@ -6,8 +6,19 @@
             {{ session('success') }}
         </div>
     @endif
-    <form action=""  method="POST">
+    @php
+        $idmakan_pagi = $subMenu[0]->idData_makanan;
+        $idmakan_siang = $subMenu[4]->idData_makanan;
+        $idmakan_malam = $subMenu[8]->idData_makanan;
+        $idmakan_selinganPG = $selingan[0]->idData_makanan;
+        $idmakan_selinganSR = $selingan[1]->idData_makanan;
+
+        // dd($selingan);
+    @endphp
+    <form action="{{ route('update', ['idmakan_pagi'=> $idmakan_pagi, 'idmakan_siang'=> $idmakan_siang,
+    'idmakan_malam'=> $idmakan_malam, 'idmakan_selinganPG'=> $idmakan_selinganPG, 'idmakan_selinganSR'=>$idmakan_selinganSR]) }}"  method="POST">
         @method('PATCH')
+        @csrf
         <div class="container mt-3 mb-3">
             {{-- form input pagi --}}
             <div class="card mt-1 mb-5 shadow" id="cardTemplate">
@@ -20,7 +31,6 @@
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="paket" class="form-label">Paket</label>
-
                                     <select class="form-control" name="paket">
                                         <option value="{{ $subMenu[0]->paket }}">{{ $subMenu[0]->paket }}</option>
                                     </select>
@@ -57,7 +67,7 @@
                                             <label for="jenis_makanan" class="form-label">Jenis Makanan</label>
                                             <input type="text" class="form-control me-3"
                                                 value="{{ $subMenu[0]->jenis_makanan }}" disabled>
-                                            <input type="hidden" value="#" name="j_mp">
+                                            <input type="hidden" value="makananpokok" name="j_mp">
                                         </div>
                                         <div class="me-2">
                                             <label for="protein" class="form-label">Protein</label>

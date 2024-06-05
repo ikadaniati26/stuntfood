@@ -159,118 +159,126 @@
                         </div>
                     </div> --}}
                     <div class="card mb-0 shadow">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-bolder"></span>#Kalkulator kebutuhan kalori</h5>
-    </div>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-bolder"></span>#Kalkulator kebutuhan
+                                kalori</h5>
+                        </div>
 
-    <div class="card-body">
-        <form action='{{ route('proses') }}' method="POST">
-            @csrf
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Input Umur</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="basic-default-fullname"
-                        placeholder="{{ isset($komponen_input[0]) ? $komponen_input[0] : 'Umur' }}"
-                        name="umur" value="{{ old('umur') }}" />
-                    @if ($errors->has('umur'))
-                        <span class="error text-danger mb-2">
-                            {{ $errors->first('umur') }}
-                        </span>
-                    @endif
-                </div>
-            </div>
+                        <div class="card-body">
+                            <form action='{{ route('proses') }}' method="POST">
+                                @csrf
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Input Umur</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="basic-default-fullname"
+                                            placeholder="{{ isset($komponen_input[0]) ? $komponen_input[0] : 'Umur' }}"
+                                            name="umur" value="{{ old('umur') }}" />
+                                        @if ($errors->has('umur'))
+                                            <span class="error text-danger mb-2">
+                                                {{ $errors->first('umur') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
 
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Jenis Kelamin</label>
-                <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="jk" id="flexRadioDefault1" value="laki-laki"
-                            {{ isset($komponen_input[1]) && $komponen_input[1] == 'laki-laki' ? 'checked' : '' }} 
-                            {{old('jk') == 'laki-laki' ? 'checked' : ''}}>
-                        <label class="form-check-label" for="flexRadioDefault1">Laki-laki</label>
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Jenis
+                                        Kelamin</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="jk"
+                                                id="flexRadioDefault1" value="laki-laki"
+                                                {{ isset($komponen_input[1]) && $komponen_input[1] == 'laki-laki' ? 'checked' : '' }}
+                                                {{ old('jk') == 'laki-laki' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="flexRadioDefault1">Laki-laki</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="jk"
+                                                id="flexRadioDefault2" value="perempuan"
+                                                {{ isset($komponen_input[1]) && $komponen_input[1] == 'perempuan' ? 'checked' : '' }}
+                                                {{ old('jk') == 'perempuan' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="flexRadioDefault2">Perempuan</label>
+                                        </div>
+                                        @if ($errors->has('jk'))
+                                            <span class="error text-danger mb-2">
+                                                {{ $errors->first('jk') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Berat Badan</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="basic-default-fullname"
+                                            placeholder="{{ isset($komponen_input[2]) ? $komponen_input[2] : 'Berat Badan' }}"
+                                            name="beratbadan" />
+                                        @if ($errors->has('beratbadan'))
+                                            <span class="error text-danger mb-2">
+                                                {{ $errors->first('beratbadan') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Faktor
+                                        Aktivitas</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" aria-label="Default select example" name="aktivitas">
+                                            <option selected disabled>
+                                                {{ isset($komponen_input[3]) ? $komponen_input[3] : 'Pilih Inputan' }}
+                                            </option>
+                                            <option value="bedrest">Bedrest</option>
+                                            <option value="gerakterbatas">Bisa Bergerak Terbatas</option>
+                                            <option value="bisajalan">Bisa Berjalan</option>
+                                            <option value="normal">Aktivitas Normal</option>
+                                        </select>
+                                        @if ($errors->has('aktivitas'))
+                                            <span class="error text-danger mb-2">
+                                                {{ $errors->first('aktivitas') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Faktor
+                                        Stress</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" aria-label="Default select example" name="stress">
+                                            <option selected disabled>
+                                                {{ isset($komponen_input[4]) ? $komponen_input[4] : 'Pilih faktor stress' }}
+                                            </option>
+                                            <option value="tidakada">tidak ada faktor stress</option>
+                                            <option value="operasi">Operasi</option>
+                                            <option value="trauma">Trauma</option>
+                                            <option value="infeksi">Infeksi berat</option>
+                                            <option value="peradangan">Peradangan/inflamasi saluran cerna selaput organ
+                                                perut</option>
+                                            <option value="patahtulang">Patah Tulang</option>
+                                            <option value="infeksi dengan trauma">Infeksi dengan trauma</option>
+                                            <option value="sepsis">sepsis</option>
+                                            <option value="cederakepala">cedera kepala</option>
+                                            <option value="kanker">kanker/Tumor</option>
+                                        </select>
+                                        @if ($errors->has('stress'))
+                                            <span class="error text-danger mb-2">
+                                                {{ $errors->first('stress') }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-sm-10 offset-sm-2">
+                                        <button type="submit" class="btn btn-primary"
+                                            style="background-color: blue">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="jk" id="flexRadioDefault2" value="perempuan"
-                            {{ isset($komponen_input[1]) && $komponen_input[1] == 'perempuan' ? 'checked' : '' }} 
-                            {{old('jk') == 'perempuan' ? 'checked' : ''}}>
-                        <label class="form-check-label" for="flexRadioDefault2">Perempuan</label>
-                    </div>
-                    @if ($errors->has('jk'))
-                        <span class="error text-danger mb-2">
-                            {{ $errors->first('jk') }}
-                        </span>
-                    @endif
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Berat Badan</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="basic-default-fullname"
-                        placeholder="{{ isset($komponen_input[2]) ? $komponen_input[2] : 'Berat Badan' }}"
-                        name="beratbadan" />
-                    @if ($errors->has('beratbadan'))
-                        <span class="error text-danger mb-2">
-                            {{ $errors->first('beratbadan') }}
-                        </span>
-                    @endif
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Faktor Aktivitas</label>
-                <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" name="aktivitas">
-                        <option selected disabled>
-                            {{ isset($komponen_input[3]) ? $komponen_input[3] : 'Pilih Inputan' }}
-                        </option>
-                        <option value="bedrest">Bedrest</option>
-                        <option value="gerakterbatas">Bisa Bergerak Terbatas</option>
-                        <option value="bisajalan">Bisa Berjalan</option>
-                        <option value="normal">Aktivitas Normal</option>
-                    </select>
-                    @if ($errors->has('aktivitas'))
-                        <span class="error text-danger mb-2">
-                            {{ $errors->first('aktivitas') }}
-                        </span>
-                    @endif
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="basic-default-fullname">Faktor Stress</label>
-                <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" name="stress">
-                        <option selected disabled>
-                            {{ isset($komponen_input[4]) ? $komponen_input[4] : 'Pilih faktor stress' }}
-                        </option>
-                        <option value="tidakada">tidak ada faktor stress</option>
-                        <option value="operasi">Operasi</option>
-                        <option value="trauma">Trauma</option>
-                        <option value="infeksi">Infeksi berat</option>
-                        <option value="peradangan">Peradangan/inflamasi saluran cerna selaput organ perut</option>
-                        <option value="patahtulang">Patah Tulang</option>
-                        <option value="infeksi dengan trauma">Infeksi dengan trauma</option>
-                        <option value="sepsis">sepsis</option>
-                        <option value="cederakepala">cedera kepala</option>
-                        <option value="kanker">kanker/Tumor</option>
-                    </select>
-                    @if ($errors->has('stress'))
-                        <span class="error text-danger mb-2">
-                            {{ $errors->first('stress') }}
-                        </span>
-                    @endif
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-sm-10 offset-sm-2">
-                    <button type="submit" class="btn btn-primary" style="background-color: blue">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 
                 </div>
             </div>
@@ -467,9 +475,6 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="mt-4">
-                                    <p>Total Bobot: {{ isset($totalBobot) }}</p>
-                                </div>
                             </div>
                         </div>
 
@@ -478,21 +483,24 @@
                                 KEPENTINGAN</h5>
                         </div>
                         <div class="table-responsive text-nowrap mx-5 mb-5">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                {{-- <th>Bobot</th> --}}
-                                <th>C1</th>
-                                <th>C2</th>
-                                <th>C3</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                <td>{{ isset( $bobotKriteria['C1']) ? $bobotKriteria['C1'] : 'N/A' }}</td>
-                                <td>{{ isset($bobotKriteria['C2']) ? $bobotKriteria['C2'] : 'N/A' }}</td> 
-                                <td>{{ isset($bobotKriteria['C3']) ? $bobotKriteria['C3'] : 'N/A' }}</td>
-                            </tbody>
-                          </table>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        {{-- <th>Bobot</th> --}}
+                                        <th>C1</th>
+                                        <th>C2</th>
+                                        <th>C3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <td>{{ isset($bobotKriteria['C1']) ? $bobotKriteria['C1'] : 'N/A' }}</td>
+                                    <td>{{ isset($bobotKriteria['C2']) ? $bobotKriteria['C2'] : 'N/A' }}</td>
+                                    <td>{{ isset($bobotKriteria['C3']) ? $bobotKriteria['C3'] : 'N/A' }}</td>
+                                </tbody>
+                            </table>
+                            <div class="mt-4">
+                                <p>Total Bobot: {{ isset($totalBobot) }}</p>
+                            </div>
                         </div>
 
                         <div>
@@ -580,16 +588,16 @@
                                     </thead>
                                     <tbody class="table-border-bottom-1">
                                         @php
-                                        $no = 1;
-                                    @endphp
-                                    @foreach ($peringkat as $rank => $vektor)
-                                        <tr>
-                                            <td>{{ $no++ }}</td>
-                                            <td>{{ $query[$loop->index] }}</td>
-                                            <td>{{ $vektor }}</td>
-                                            <td>{{ $rank }}</td>
-                                        </tr>
-                                    @endforeach
+                                            $no = 1;
+                                        @endphp
+                                        @foreach ($peringkat as $rank => $vektor)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $query[$loop->index] }}</td>
+                                                <td>{{ $vektor }}</td>
+                                                <td>{{ $rank }}</td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -645,16 +653,17 @@
                                                 <td>{{ $rank }}</td> {{-- Menampilkan ranking vektor V --}}
                                                 <td>{{ $query[$rank - 1] }}</td> {{-- Mengambil paket berdasarkan peringkat --}}
                                                 <td>
-                                                    <a href="{{ url('show', ['paket' => $query[$rank - 1]]) }}" class="btn btn-info btn-sm">
+                                                    <a href="{{ url('show', ['paket' => $query[$rank - 1]]) }}"
+                                                        class="btn btn-info btn-sm">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </a>
                                                 </td>
-                                               
+
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                
+
                             </div>
                         </div>
                     </div>

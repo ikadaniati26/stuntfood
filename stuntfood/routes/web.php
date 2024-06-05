@@ -47,8 +47,8 @@ Route::middleware(['customAuth'])->group(function () {
     Route::get('/datamakanan/{paket}', [AdminController::class, 'datamakanan']);
     Route::get('/showadmin/{paket}', [AdminController::class, 'showadmin'])->name('showadmin');
     Route::get('/editDataMakanan/{paket}', [AdminController::class, 'edit'])->name('edit');
-    Route::patch('/update/{id}', [AdminController::class, 'update'])->name('update');
-    Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('hapus');
+    Route::patch('/update/{idmakan_pagi}/{idmakan_siang}/{idmakan_malam}/{idmakan_selinganPG}/{idmakan_selinganSR}', [AdminController::class, 'update'])->name('update');
+    Route::delete('/delete/{paket}', [AdminController::class, 'delete'])->name('hapus');
 });
 
 
