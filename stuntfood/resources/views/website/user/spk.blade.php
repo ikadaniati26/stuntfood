@@ -48,7 +48,6 @@
                                                         data-bs-dismiss="modal">
                                                         Close
                                                     </button>
-                                                    {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -57,107 +56,6 @@
                             </h5>
                         </div>
                     </div>
-
-                    {{-- <div class="card mb-0  shadow">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-bolder"></span>#Kalkulator kebutuhan
-                                kalori
-                            </h5>
-                        </div>
-
-                        <div class="card-body">
-                            <form action='{{ route('proses') }}' method="POST">
-                                @csrf
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Input Umur</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="basic-default-fullname"
-                                            placeholder="{{ isset($komponen_input[0]) ? $komponen_input[0] : 'Umur' }}"
-                                            name="umur" />
-                                            @if ($errors->has('username'))
-                                            <span class="error text-danger mb-2">
-                                                {{ $errors->first('username') }}
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Jenis
-                                        Kelamin</label>
-                                    <div class="col-sm-10">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="jk"
-                                                id="flexRadioDefault1" value="laki-laki"
-                                                {{ isset($komponen_input[1]) && $komponen_input[1] == 'laki-laki' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="flexRadioDefault1">Laki-laki</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="jk"
-                                                id="flexRadioDefault2" value="perempuan"
-                                                {{ isset($komponen_input[1]) && $komponen_input[1] == 'perempuan' ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="flexRadioDefault2">Perempuan</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Berat Badan</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="basic-default-fullname"
-                                            placeholder="{{ isset($komponen_input[2]) ? $komponen_input[2] : 'Berat Badan' }}"
-                                            name="beratbadan" />
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname"
-                                        type="null">Faktor Aktivitas</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-select" aria-label="Default select example" name="aktivitas">
-                                            <option selected disabled>
-                                                {{ isset($komponen_input[3]) ? $komponen_input[3] : 'Pilih Inputan' }}
-                                            </option>
-                                            <option value="bedrest">Bedrest</option>
-                                            <option value="gerakterbatas">Bisa Bergerak Terbatas</option>
-                                            <option value="bisajalan">Bisa Berjalan</option>
-                                            <option value="normal">Aktivitas Normal</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-default-fullname">Faktor
-                                        Stress</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-select" aria-label="Default select example" name="stress">
-                                            <option selected disabled>
-                                                {{ isset($komponen_input[4]) ? $komponen_input[4] : 'Pilih faktor stress' }}
-                                            </option>
-                                            <option value="tidakada">tidak ada faktor stress</option>
-                                            <option value="operasi">Operasi</option>
-                                            <option value="trauma">Trauma</option>
-                                            <option value="infeksi">Infeksi berat</option>
-                                            <option value="peradangan">Peradangan/inflamasi saluran cerna selaput organ
-                                                perut</option>
-                                            <option value="patahtulang">Patah Tulang</option>
-                                            <option value="infeksi dengan trauma">Infeksi dengan trauma</option>
-                                            <option value="sepsis">sepsis</option>
-                                            <option value="cederakepala">cedera kepala</option>
-                                            <option value="kanker">kanker/Tumor</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-10 offset-sm-2">
-                                        <button type="submit" class="btn btn-primary"
-                                            style="background-color: blue">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div> --}}
                     <div class="card mb-0 shadow">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="fw-bold py-1 mb-0"><span class="text-muted fw-bolder"></span>#Kalkulator kebutuhan
@@ -212,7 +110,7 @@
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="basic-default-fullname"
                                             placeholder="{{ isset($komponen_input[2]) ? $komponen_input[2] : 'Berat Badan' }}"
-                                            name="beratbadan" />
+                                            name="beratbadan" value="{{ old('beratbadan') }}">
                                         @if ($errors->has('beratbadan'))
                                             <span class="error text-danger mb-2">
                                                 {{ $errors->first('beratbadan') }}
@@ -229,10 +127,16 @@
                                             <option selected disabled>
                                                 {{ isset($komponen_input[3]) ? $komponen_input[3] : 'Pilih Inputan' }}
                                             </option>
-                                            <option value="bedrest">Bedrest</option>
-                                            <option value="gerakterbatas">Bisa Bergerak Terbatas</option>
-                                            <option value="bisajalan">Bisa Berjalan</option>
-                                            <option value="normal">Aktivitas Normal</option>
+                                            <option value="bedrest"{{ old('aktivitas') == 'bedrest' ? 'selected' : '' }}>
+                                                Bedrest</option>
+                                            <option
+                                                value="gerakterbatas"{{ old('aktivitas') == 'gerakterbatas' ? 'selected' : '' }}>
+                                                Bisa Bergerak Terbatas</option>
+                                            <option
+                                                value="bisajalan"{{ old('aktivitas') == 'bisajalan' ? 'selected' : '' }}>
+                                                Bisa Berjalan</option>
+                                            <option value="normal"{{ old('aktivitas') == 'normal' ? 'selected' : '' }}>
+                                                Aktivitas Normal</option>
                                         </select>
                                         @if ($errors->has('aktivitas'))
                                             <span class="error text-danger mb-2">
@@ -250,17 +154,30 @@
                                             <option selected disabled>
                                                 {{ isset($komponen_input[4]) ? $komponen_input[4] : 'Pilih faktor stress' }}
                                             </option>
-                                            <option value="tidakada">tidak ada faktor stress</option>
-                                            <option value="operasi">Operasi</option>
-                                            <option value="trauma">Trauma</option>
-                                            <option value="infeksi">Infeksi berat</option>
-                                            <option value="peradangan">Peradangan/inflamasi saluran cerna selaput organ
-                                                perut</option>
-                                            <option value="patahtulang">Patah Tulang</option>
-                                            <option value="infeksi dengan trauma">Infeksi dengan trauma</option>
-                                            <option value="sepsis">sepsis</option>
-                                            <option value="cederakepala">cedera kepala</option>
-                                            <option value="kanker">kanker/Tumor</option>
+                                            <option value="tidakada" {{ old('stress') == 'tidakada' ? 'selected' : '' }}>
+                                                tidak ada faktor stress</option>
+                                            <option value="operasi" {{ old('stress') == 'operasi' ? 'selected' : '' }}>
+                                                Operasi</option>
+                                            <option value="trauma" {{ old('stress') == 'trauma' ? 'selected' : '' }}>
+                                                Trauma</option>
+                                            <option value="infeksi" {{ old('stress') == 'infeksi' ? 'selected' : '' }}>
+                                                Infeksi berat</option>
+                                            <option value="peradangan"
+                                                {{ old('stress') == 'peradangan' ? 'selected' : '' }}>Peradangan/inflamasi
+                                                saluran cerna selaput organ perut</option>
+                                            <option value="patahtulang"
+                                                {{ old('stress') == 'patahtulang' ? 'selected' : '' }}>Patah Tulang
+                                            </option>
+                                            <option value="infeksi dengan trauma"
+                                                {{ old('stress') == 'infeksi dengan trauma' ? 'selected' : '' }}>Infeksi
+                                                dengan trauma</option>
+                                            <option value="sepsis" {{ old('stress') == 'sepsis' ? 'selected' : '' }}>
+                                                sepsis</option>
+                                            <option value="cederakepala"
+                                                {{ old('stress') == 'cederakepala' ? 'selected' : '' }}>cedera kepala
+                                            </option>
+                                            <option value="kanker" {{ old('stress') == 'kanker' ? 'selected' : '' }}>
+                                                kanker/Tumor</option>
                                         </select>
                                         @if ($errors->has('stress'))
                                             <span class="error text-danger mb-2">
@@ -475,6 +392,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
 
