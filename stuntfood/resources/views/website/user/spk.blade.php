@@ -69,8 +69,7 @@
                                     <label class="col-sm-2 col-form-label" for="basic-default-fullname">Input Umur</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="basic-default-fullname"
-                                            placeholder="{{ isset($komponen_input[0]) ? $komponen_input[0] : 'Umur' }}"
-                                            name="umur" value="{{ old('umur') }}" />
+                                            name="umur" value="{{ old('umur') }} {{ isset($komponen_input[0]) ? $komponen_input[0] : '' }}" />
                                         @if ($errors->has('umur'))
                                             <span class="error text-danger mb-2">
                                                 {{ $errors->first('umur') }}
@@ -109,8 +108,7 @@
                                     <label class="col-sm-2 col-form-label" for="basic-default-fullname">Berat Badan</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="basic-default-fullname"
-                                            placeholder="{{ isset($komponen_input[2]) ? $komponen_input[2] : 'Berat Badan' }}"
-                                            name="beratbadan" value="{{ old('beratbadan') }}">
+                                            name="beratbadan" value="{{ old('beratbadan') }} {{ isset($komponen_input[2]) ? $komponen_input[2] : '' }}">
                                         @if ($errors->has('beratbadan'))
                                             <span class="error text-danger mb-2">
                                                 {{ $errors->first('beratbadan') }}
@@ -213,7 +211,6 @@
                                 </h5>
                             </div>
                             <div class="card-body">
-                                <form>
                                     <div class="mb-3">
                                         <label class="form-label fw-bold" for="basic-default-fullname">BMR balita</label>
                                         <br>
@@ -326,8 +323,6 @@
                                         <!--/ Small table -->
 
                                     </div>
-
-                                </form>
                             </div>
                         </div>
 
@@ -498,7 +493,6 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
                                             <th>Paket</th>
                                             <th>Nilai vektor V</th>
                                             <th>RANK</th>
@@ -507,15 +501,15 @@
                                     <tbody class="table-border-bottom-1">
                                         @php
                                             $no = 1;
+                                            $count = count($hasilPengurutan);
                                         @endphp
-                                        @foreach ($peringkat as $rank => $vektor)
+                                        @for ($i = 0; $i < $count; $i++)
                                             <tr>
+                                                <td>{{$hasilPengurutan[$i]['label']}}</td>
+                                                <td>{{$hasilPengurutan[$i]['value']}}</td>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $query[$loop->index] }}</td>
-                                                <td>{{ $vektor }}</td>
-                                                <td>{{ $rank }}</td>
                                             </tr>
-                                        @endforeach
+                                        @endfor
                                     </tbody>
                                 </table>
                             </div>
@@ -528,7 +522,7 @@
                             </div>
 
                             <div class="table-responsive text-nowrap mx-5 mb-5">
-                                {{-- <table class="table">
+                                <table class="table">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -540,48 +534,20 @@
                                         @php
                                             $no = 1;
                                         @endphp
-                                        @foreach ($query as $item)
+                                        @for ($i = 0; $i < $count; $i++)
                                             <tr>
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $item }}</td>
+                                                <td>{{$hasilPengurutan[$i]['label']}}</td>
                                                 <td>
-                                                    <a href="{{ url('show', ['paket' => $item]) }}"
+                                                    <a href="{{ url('show', ['paket' => $hasilPengurutan[$i]['label']]) }}"
                                                         class="btn btn-info btn-sm">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </a>
                                                 </td>
                                             </tr>
-                                        @endforeach
-
-                                    </tbody>
-                                </table> --}}
-
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Paket</th>
-                                            <th>Aksi</th>
-                                            {{-- <th>Rank</th> --}}
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-border-bottom-1">
-                                        @foreach ($peringkat as $rank => $vektor)
-                                            <tr>
-                                                <td>{{ $rank }}</td> {{-- Menampilkan ranking vektor V --}}
-                                                <td>{{ $query[$rank - 1] }}</td> {{-- Mengambil paket berdasarkan peringkat --}}
-                                                <td>
-                                                    <a href="{{ url('show', ['paket' => $query[$rank - 1]]) }}"
-                                                        class="btn btn-info btn-sm">
-                                                        <i class="fa-solid fa-eye"></i>
-                                                    </a>
-                                                </td>
-
-                                            </tr>
-                                        @endforeach
+                                        @endfor
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>

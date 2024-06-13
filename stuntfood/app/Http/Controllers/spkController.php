@@ -21,9 +21,9 @@ class spkController extends Controller
         $kriteria = [];
         $bobotKriteria = [];
         $totalBobot = [];
-        $peringkat = [];
+        $hasilPengurutan = [];
 
-        return view('website.user.spk', compact('query', 'kriteria', 'bobotKriteria', 'totalBobot', 'peringkat'));
+        return view('website.user.spk', compact('query', 'kriteria', 'bobotKriteria', 'totalBobot', 'hasilPengurutan'));
     }
 
     public function proses(Request $request)
@@ -657,21 +657,23 @@ class spkController extends Controller
         for ($i = 0; $i < count($hasil); $i++) {
             $vektorV[$i] = $hasil[$i] / $totalVektorS;
         }
-        // Mengurutkan vektor V secara menurun
-        arsort($vektorV);
-
-        // Inisialisasi array untuk menyimpan peringkat
-        $peringkat = [];
-
-        // Tetapkan peringkat untuk setiap nilai vektor V
-        $ranking = 1;
-        foreach ($vektorV as $vektor) {
-            $peringkat[$ranking] = $vektor;
-            $ranking++;
+        
+        // Melabeli nilai dengan ABC
+        $pengurutan = [];
+        $labels = DataMakanan::distinct()->pluck('paket');
+        for ($i=0; $i < count($vektorV) ; $i++) { 
+            $pengurutan[$i] = ['label' => $labels[$i], 'value' => $vektorV[$i]];
         }
 
-        // dd($totalVektorS);
-        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi', 'kriteria', 'totalBobot', 'bobotKriteria', 'hasil', 'totalVektorS', 'vektorV', 'peringkat'));
+        // Mengurutkan vektor V secara menurun
+        usort($pengurutan, function($a, $b) {
+            return $b['value'] <=> $a['value'];
+        });
+        
+        // Menyimpan hasil pengurutan ke dalam variabel
+        $hasilPengurutan = $pengurutan;
+
+        $Hasil = view('website.user.spk', compact('nilaibmr', 'tdee', 'nilaiWaktu', 'komponen_input', 'nilaiisipiring', 'query', 'JumlahTotal_Protein', 'JumlahTotal_Karbo', 'JumlahTotal_Lemak', 'JumlahTotal_Energi', 'kriteria', 'totalBobot', 'bobotKriteria', 'hasil', 'totalVektorS', 'vektorV', 'hasilPengurutan'));
         return $Hasil;
     }
 
