@@ -318,6 +318,7 @@ class AdminController extends Controller
 
         //================INPUT SUBMENU================//
         selingan::create([
+            'nama_selingan' => $menuselingan_pagi,
             'protein' => $proteinsp_pagi,
             'karbohidrat' => $karbosp_pagi,
             'lemak' => $lemaksp_pagi,
@@ -342,6 +343,7 @@ class AdminController extends Controller
 
         //================INPUT SUBMENU================//
         selingan::create([
+            'nama_selingan' => $menuselingan_sore,
             'protein' => $proteinss_sore,
             'karbohidrat' => $karboss_sore,
             'lemak' => $lemakss_sore,
