@@ -460,18 +460,16 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
+                                            
                                             <th>Paket</th>
                                             <th>Nilai vektor S</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-1">
-                                        @php
-                                            $no = 1;
-                                        @endphp
+                                       
                                         @for ($i = 0; $i < count($query); $i++)
                                             <tr>
-                                                <td>{{ $no++ }}</td>
+                                               
                                                 <td>{{ $query[$i] }}</td>
                                                 <td>{{ $hasil[$i] }}</td>
                                             </tr>
@@ -493,9 +491,9 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
+                                            <th>RANK</th>
                                             <th>Paket</th>
                                             <th>Nilai vektor V</th>
-                                            <th>RANK</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-1">
@@ -505,9 +503,9 @@
                                         @endphp
                                         @for ($i = 0; $i < $count; $i++)
                                             <tr>
+                                                <td>{{ $no++ }}</td>
                                                 <td>{{$hasilPengurutan[$i]['label']}}</td>
                                                 <td>{{$hasilPengurutan[$i]['value']}}</td>
-                                                <td>{{ $no++ }}</td>
                                             </tr>
                                         @endfor
                                     </tbody>
@@ -525,18 +523,18 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
+                                            {{-- <th>No</th> --}}
                                             <th>Paket</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-border-bottom-1">
-                                        @php
+                                        {{-- @php
                                             $no = 1;
-                                        @endphp
+                                        @endphp --}}
                                         @for ($i = 0; $i < $count; $i++)
                                             <tr>
-                                                <td>{{ $no++ }}</td>
+                                                {{-- <td>{{ $no++ }}</td> --}}
                                                 <td>{{$hasilPengurutan[$i]['label']}}</td>
                                                 <td>
                                                     <a href="{{ url('show', ['paket' => $hasilPengurutan[$i]['label']]) }}"

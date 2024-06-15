@@ -26,6 +26,8 @@
                                         <option value="C" >Paket C</option>
                                         <option value="D" >Paket D</option>
                                         <option value="E" >Paket E</option>
+                                        <option value="F" >Paket F</option>
+                                        <option value="G" >Paket G</option>
                                     </select>
                                 </div>
                             </div>
