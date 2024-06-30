@@ -54,11 +54,8 @@
           <li><a class="nav-link scrollto active" href="#hero">Beranda</a></li>
           <li><a class="nav-link scrollto" href="#info">Apa itu Stunting</a></li>
           <li><a class="nav-link scrollto" href="#konsep">Konsep Isi Piring</a></li>
-          <li><a class="nav-link scrollto" href="#fitur">Fitur Aplikasi</a></li>
-          {{-- <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
-          <li><a class="nav-link scrollto" href="#team">Team</a></li>
-          <li><a class="nav-link scrollto" href="#pricing">Pricing</a></li> --}}
-          <li class="dropdown"><a href="#"><span>Artikel</span> <i class="bi bi-chevron-down"></i></a>
+        
+          {{-- <li class="dropdown"><a href="#"><span>Artikel</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
@@ -74,7 +71,7 @@
               <li><a href="#">Drop Down 3</a></li>
               <li><a href="#">Drop Down 4</a></li>
             </ul>
-          </li>
+          </li> --}}
           {{-- <li><a class="nav-link scrollto" href="#contact">Contact</a></li> --}}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -91,7 +88,7 @@
         <div class="col-lg-7 pt-5 pt-lg-0 order-2 order-lg-1 d-flex align-items-center">
           <div data-aos="zoom-out">
             <h1>Selamat datang di website <span>StuntFood</span></h1>
-            <h2>Sistem rekomendasi menu makanan untuk pencegahan stunting pada balita menggunakan metode weighted product</h2>
+            <h2>Sistem Rekomendasi Menu Makanan untuk Pencegahan Stunting Pada Balita Menggunakan Metode Weighted Product</h2>
             <div class="text-center text-lg-start">
               <a href="{{ route('form_user') }}" class="btn-get-started scrollto">Get Started</a>
             </div>
@@ -159,7 +156,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-7 col-lg-7  d-flex justify-content-center align-items-stretch " data-aos="fade-right">
-            <img src="{{ asset('/public/assets/img/gambar/gambarposter.jpg')}}" width="700" height="500" >
+            <img src="{{ asset('/public/assets/img/gambar/gambarposter.jpg')}}" width="600" height="400" >
           </div>
           <div class="col-xl-5 col-lg-5 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-3 px-lg-5" data-aos="fade-left">
           <h3>Isi Piringku Balita 2-5 Tahun</h3>
@@ -177,7 +174,7 @@
     <!--  ======end isi piring ===== -->
 
    <!-- ======= Fitur Aplikasi ======= -->
-   <section id="fitur" class="about">
+   {{-- <section id="fitur" class="about">
     <div class="container-fluid">
       <div class="row">
         <div class="col-xl-5 col-lg-5 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-3 px-lg-5" data-aos="fade-left">
@@ -189,7 +186,7 @@
           
         </div>
       </div>
-  </section>
+  </section> --}}
     <!-- ===== End Fitur Aplikasi ==== -->
 
 

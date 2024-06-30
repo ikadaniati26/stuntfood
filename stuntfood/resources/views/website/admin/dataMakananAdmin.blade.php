@@ -17,7 +17,7 @@
           <a href="{{ url('created') }}">
               <button id="addForm" type="button" class="btn btn-primary  mt-4 mx-4" style="background-color: blue">+tambah data</button>
           </a>
-          <table class="table">
+          {{-- <table class="table">
             <thead>
               <tr>
                 <th>Nomor</th>
@@ -62,8 +62,65 @@
                 </tr>
                 @endforeach
             </tbody>
-          </table>
-      
+          </table> --}}
+          <table class="table">
+            <thead >
+                <tr>
+                    <th>Nomor</th>
+                    <th>Paket</th>
+                    <th>Waktu makan</th>
+                    <th>Menu</th>
+                    <th>aksi</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-1">
+                @php
+                    $no = 1;
+                    $prev_paket = null;
+                @endphp
+                @foreach ($query as $index => $item)
+                    @if ($index == 0 || $item->paket != $prev_paket)
+                        @php
+                            $rowspan = $query->where('paket', $item->paket)->count();
+                        @endphp
+                        <tr>
+                            <td rowspan="{{ $rowspan }}">{{ $no++ }}</td>
+                            <td rowspan="{{ $rowspan }}">{{ $item->paket }}</td>
+                            <td>{{ $item->waktu_makan }}</td>
+                            <td>{{ $item->menu }}</td>
+                            <td rowspan="{{ $rowspan }}">
+                                <form method="POST" action="{{ route('hapus', ['paket'=>$item->paket]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a href="{{ url('showadmin', ['paket' => $item->paket]) }}" class="btn btn-info btn-sm">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a class="btn btn-warning btn-sm" title="Edit"
+                                        href="{{ route('edit', ['paket'=>$item->paket]) }}">
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </a>
+                                    &nbsp;
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        title="Hapus Pegawai"
+                                        onclick="return confirm('Anda Yakin Data akan diHapus?')">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td>{{ $item->waktu_makan }}</td>
+                            <td>{{ $item->menu }}</td>
+                        </tr>
+                    @endif
+                    @php
+                        $prev_paket = $item->paket;
+                    @endphp
+                @endforeach
+            </tbody>
+        </table>
+        
 
         </div>
       </div>

@@ -188,7 +188,7 @@
                                 <div class="row mb-3">
                                     <div class="col-sm-10 offset-sm-2">
                                         <button type="submit" class="btn btn-primary"
-                                            style="background-color: blue">Submit</button>
+                                            style="background-color: blue">Hitung</button>
                                     </div>
                                 </div>
                             </form>

@@ -54,3 +54,15 @@ Route::middleware(['customAuth'])->group(function () {
 
 //=========== PERHITUNGAN =========//
 Route::get('/data-makanan', [spkController::class, 'subMenu']);
+
+//=========== RESEP =========//
+Route::get('/resep', [AdminController::class, 'resep'])->name('resep');
+Route::get('/subresep', [AdminController::class, 'subresep'])->name('subresep');
+Route::get('/detailresep/{id}', [AdminController::class, 'detailresep'])->name('detailresep');
+Route::get('/data', [AdminController::class, 'data'])->name('data');
+Route::get('/create', [AdminController::class, 'createresep'])->name('create');
+Route::post('/store', [AdminController::class, 'storeresep'])->name('store');
+Route::get('/edit/{id}', [AdminController::class, 'editresep'])->name('editresep');
+Route::patch('/updateresep/{id}', [AdminController::class, 'updateresep'])->name('updateresep');
+Route::delete('/destroy/{id}', [AdminController::class, 'destroy'])->name('destroy');
+Route::get('/showresep/{paket}', [spkController::class, 'showresep'])->name('showresep');

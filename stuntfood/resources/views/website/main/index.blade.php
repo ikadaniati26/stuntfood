@@ -50,6 +50,10 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('/public/assets/js/config.js') }}"></script>
+
+    <!-- Include CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -62,6 +66,7 @@
 
 
     @include('website.main.footer')
+
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -86,5 +91,20 @@
     
     <script async defer src="{{ url('https://buttons.github.io/buttons.js') }}"></script>
     <script src="{{ url('https://kit.fontawesome.com/83bc8e55c0.js')}}" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
+     <!-- Include JS -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
+     <script>
+         $(document).ready(function() {
+             $('#summernote').summernote({
+                 placeholder: 'Type your text here...',
+                 tabsize: 2,
+                 height: 200
+             });
+         });
+     </script>
   </body>
 </html>

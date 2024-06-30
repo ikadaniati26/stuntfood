@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DataMakanan;
 use App\Models\sub_menu;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\Foreach_;
@@ -25,6 +26,7 @@ class spkController extends Controller
 
         return view('website.user.spk', compact('query', 'kriteria', 'bobotKriteria', 'totalBobot', 'hasilPengurutan'));
     }
+
 
     public function proses(Request $request)
     {
@@ -840,5 +842,12 @@ class spkController extends Controller
         ];
 
         return view('website.user.submenu', compact('joindata', 'Berat', 'Protein', 'Karbo', 'Lemak', 'Energi', 'dataSelingan', 'BeratSelingan', 'ProteinSelingan', 'KarbohidratSelingan', 'LemakSelingan', 'EnergiSelingan'));
+    }
+
+
+    public function showresep(string $paket)
+    {
+        $resep = Blog::where('paket', 'LIKE', $paket)->get();
+        return view('website.user.resep', compact('resep'));
     }
 }

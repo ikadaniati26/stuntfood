@@ -8,7 +8,10 @@
                     <div class="card mb-4 shadow">
                         <div class="me-3 px-5 mt-5 mb-5">
                             <div>
-                                <h3>Tabel Sub Menu</h3>
+                                <a href="{{ route('showresep', ['paket'=>$joindata[0]->paket]) }}" target="_blank" class="btn btn-info float-end">Lihat resep</a>
+
+                                <h3>Tabel Sub Menu</h3> 
+
                                 <p>berdasarkan paket menu yang direkomendasikan diatas, maka disarankan memberikan makanan
                                     lengkap dalam satu piring sebanyak 3x dalam sehari, dengan berat yang sudah
                                     direkomendasikan berikut ini:

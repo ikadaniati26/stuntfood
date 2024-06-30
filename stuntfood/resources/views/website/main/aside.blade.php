@@ -4,12 +4,13 @@
          <!-- Menu -->
          <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme"  >
              <div class="app-brand demo">
-                 <a href="index.html" class="app-brand-link">
-                    
-                     <i class="fa-solid fa-plate-wheat "></i> <span class="app-brand-text demo  fw-bolder ms-2" style="color:  rgb(3, 3, 112)">STUNTFOOD</span>
-                     <img src="" alt="">
-                 </a>
-
+                <a href="index.html" class="app-brand-link">
+                   
+                    <span class="app-brand-text demo fw-bolder ms-2" style="color: rgb(3, 3, 112)">STUNTFOOD</span>
+                    <img src="" alt="">
+                </a>
+                
+                
                  <a href="javascript:void(0);"
                      class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                      <i class="bx bx-chevron-left bx-sm align-middle"></i>
@@ -30,19 +31,33 @@
                  @endif
 
                  @if (session('Role') == 'Bidan')
-                 <!-- Dashboard -->
+                 <!-- Data Makanan -->
                  <li class="menu-item">
                      <a href="{{ url('/datamakananadmin') }}" class="menu-link">
-                         <i class="menu-icon fas fa-home"></i>
+                         <i class="menu-icon fas fa-apple-alt text-primary"></i> <!-- Ikon berwarna untuk makanan -->
                          <div data-i18n="Analytics"> Data Makanan</div>
                      </a>
                  </li>
                  @endif
+                 
+                 
+
+                 
+                 @if (session('Role') == 'Bidan')
+                 <!-- Data Resep -->
+                 <li class="menu-item">
+                     <a href="{{ url('/data') }}" class="menu-link">
+                         <i class="menu-icon fas fa-book text-primary"></i> <!-- Ikon berwarna untuk resep -->
+                         <div data-i18n="Analytics"> Data Resep</div>
+                     </a>
+                 </li>
+                 @endif
+                 
 
                 @if (session('Role') != 'Bidan')
                  <!-- Dashboard -->
                  <li class="menu-item">
-                     <a href="#" class="menu-link">
+                     <a href="{{ url('/resep') }}" class="menu-link">
                          <i class="menu-icon tf-icons bx bx-home-circle"></i>
                          <div data-i18n="Analytics"> Resep </div>
                      </a>

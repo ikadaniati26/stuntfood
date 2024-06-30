@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\DataMakanan;
 use App\Models\selingan;
 use App\Models\sub_menu;
+use App\Models\Blog; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session; // Changed to use the correct namespace for Session
 use PhpParser\Node\Stmt\Return_;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 
 class AdminController extends Controller
 {
@@ -730,4 +734,150 @@ class AdminController extends Controller
         }
         return redirect('datamakananadmin')->with('success', 'Data berhasil dihapus');
     }
+
+    public function resep()
+    {
+        // Logika untuk metode resep
+        return view('website.user.resep');
+    }
+
+
+    public function subresep()
+    {
+        // Logika untuk metode resep
+        return view('website.user.subResep');
+    }
+
+    public function detailresep(string $id)
+    {
+        // Logika untuk metode resep
+        $blog = DB::table('blogs')
+            ->where('id', $id)
+            ->first();
+        // dd($blog);
+        return view('website.blog.detailResep',compact('blog') );
+    }
+
+    public function data()
+    {
+        $artikels = Blog::all();
+        return view('website.blog.data', compact('artikels'));
+        dd($artikels);
+    }
+
+    public function createresep()
+    {
+        return view('website.blog.create');
+    }
+
+    public function storeresep(Request $request)
+    {
+        $messages = [
+            'paket.required' => 'judul wajib diisi!',
+            'judul.required' => 'judul wajib diisi!',
+            'image.required' => 'gambar wajib diisi!',
+            'desc.required'  =>'deskripsi wajib diisi!',
+        ];
+
+        $request->validate([
+            'paket' => 'required',
+            'judul' => 'required',
+            'image' => 'required',
+            'desc'  => 'required'
+        ], $messages);
+
+            $paket = $request->paket;
+            $judul = $request->judul;
+            $input_image = $request->image; 
+            // $ekstensi = $input_image. '.jpg';
+              // Ambil nama asli file
+            $originalName = $input_image->getClientOriginalName();
+
+            $file = $request->file('image'); //Mengambil inputan file
+            // $nama = $ekstensi; 
+            $file->move('public/assets/img/gambar/resep', $originalName); //Memindahkan file
+            
+            $desc = $request->desc;
+
+            Blog::create([
+                'paket' => $paket,
+                'judul' => $judul,
+                'image' => $originalName,
+                'desc'  => $desc
+            ]);
+
+            return redirect('data');
+    }
+
+   
+
+public function editresep($id)
+{
+    // Logika untuk metode edit resep
+    $hasil_edit = DB::table('blogs')->where('id', '=', $id)->get();
+    return view('website.blog.edit', compact('hasil_edit'));
+}
+
+public function updateresep(Request $request, string $id)
+{
+    $ubah = Blog::findOrFail($id);
+    $awal = $ubah->image;
+
+    // Validasi input
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'paket' => 'nullable|string|max:255',
+        'desc' => 'nullable|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    $dt = [
+        'paket' => $request->paket,
+        'judul' => $request->judul,
+        'desc' => $request->desc,
+        'image' => $awal, // Set image dengan gambar yang lama sebagai default
+    ];
+
+    // Jika ada file gambar yang diunggah dan valid
+    if ($request->hasFile('image') && $request->file('image')->isValid()) {
+        // Mengambil file gambar yang diunggah
+        $imageFile = $request->file('image');
+        $imageName = $imageFile->getClientOriginalName();
+        
+        // Pindahkan file ke direktori tujuan
+        $imageFile->move(public_path('assets/img/gambar/resep'), $imageName);
+
+        // Update nama file gambar di data yang akan disimpan
+        $dt['image'] = $imageName;
+    }
+
+    // Update data blog di database
+    $ubah->update($dt);
+
+    return redirect('data')->with('success', 'Data resep berhasil diupdate');
+}
+
+
+public function destroy(string $id)
+{
+    // Ambil data blog berdasarkan id
+    $blog = DB::table('blogs')->where('id', $id)->first();
+
+    // Hapus data blog dari database
+    DB::table('blogs')->where('id', $id)->delete();
+
+    // Hapus file gambar jika ada
+    if (!empty($blog->image)) {
+        $imagePath = public_path('assets/img/gambar/resep/') . $blog->image;
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
+    }
+
+    return redirect('data')->with('success', 'Data resep berhasil dihapus');
+}
+
+
+
+ 
 }

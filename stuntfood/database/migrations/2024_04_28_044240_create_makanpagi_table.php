@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ModelMakanPagi', function (Blueprint $table) {
             $table->id();
-            $table->varchar('paket');
-            $table->varchar('nama_makanan');
+            $table->string('paket');
+            $table->string('nama_makanan');
             $table->decimal('protein');
             $table->decimal('karbohidrat');
             $table->decimal('lemak');
